@@ -7,6 +7,8 @@ const app = express(),
 // place holder for the data
 const users = [];
 
+console.log("Path: ", path);
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../my-app/build')));
 
@@ -24,6 +26,9 @@ app.post('/api/user', (req, res) => {
 
 app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
+  // E:/Google Drive/Prosjekter/Software Development/ReactNode/react-nodejs-example/
+  console.log("Root dirname: ", ___dirname);
+  // res.sendFile('E:/Google Drive/Prosjekter/Software Development/ReactNode/react-nodejs-example/my-app/build/index.html'); // Denne måten å gjøre det på fungerer fint lokalt
 });
 
 app.listen(port, () => {

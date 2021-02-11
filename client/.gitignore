@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+#/build //Need to upload this to elb
 
 # misc
 .DS_Store

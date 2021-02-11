@@ -1,7 +1,11 @@
+import path from 'path';
 import express from "express";
 
 const PORT = process.env.HTTP_PORT || 4001;
 const app = express();
+
+//Serve static files from client
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 //API
 app.get("/", (req, res) => {

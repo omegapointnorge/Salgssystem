@@ -1,5 +1,5 @@
 node_modules
-server.compiled.js
+#server.compiled.js
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

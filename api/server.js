@@ -8,7 +8,7 @@ const app = express(),
 const users = [];
 
 console.log("Path: ", path);
-
+console.log("Ny commit!");
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../my-app/build')));
 

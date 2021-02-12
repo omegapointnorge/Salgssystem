@@ -20,5 +20,5 @@ app.get("/flower", (req, res) => {
 
 //SERVER
 app.listen(PORT, () => {
-  console.log(`This herehere Server listening at port ${PORT}.`);
+  console.log(`Express server listening at port ${PORT}.`);
 });

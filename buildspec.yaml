@@ -16,13 +16,12 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - ls node_modules
 # Include only the files required for your application to run.
 artifacts:
   files:
-    #- "**/*"
-    - server.compiled.js
-    - client/build/*
-    - "**/node_modules"
-    - Procfile
-    - .elasticbeanstalk/*
+    - "**/*"
+    #- server.compiled.js
+    #- client/build/*
+    #- "**/node_modules"
+    #- Procfile
+    #- .elasticbeanstalk/*

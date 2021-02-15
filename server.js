@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+const users = [];
+
 //Serve static files from client
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.use(bodyParser.json());

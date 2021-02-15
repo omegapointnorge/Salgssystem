@@ -21,7 +21,7 @@ artifacts:
     #- "**/*"
     - server.compiled.js
     - client/build/*
-    - node_modules
-    - client/node_modules
+    - node_modules/*
+    - client/node_modules/*
     - Procfile
     - .elasticbeanstalk/*

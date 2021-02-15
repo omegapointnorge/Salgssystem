@@ -4,13 +4,12 @@
 /node_modules
 /.pnp
 .pnp.js
-#/build
 
 # testing
 /coverage
 
 # production
-#/build //Need to upload this to elb
+/build
 
 # misc
 .DS_Store

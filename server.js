@@ -1,8 +1,7 @@
 import path from "path";
-import uuid from "uuid";
 import express from "express";
 import bodyParser from "body-parser";
-import * as dataBase from "./database";
+import * as DataBase from "./database";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -14,14 +13,14 @@ app.use(bodyParser.json());
 //API
 app.get("/api/users", async (_, res) => {
   // console.debug("api/users called!");
-  let users = (await dataBase.getAllUsers()).Items;
+  let users = (await DataBase.getAllUsers()).Items;
   res.json(users);
 });
 
 app.post("/api/user", async (req, res) => {
   // console.debug("api/user called!");
   const user = req.body.user;
-  await dataBase.putUsers(user);
+  await DataBase.putUsers(user);
   res.json("user added");
 });
 

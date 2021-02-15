@@ -1,6 +1,7 @@
-import path from 'path';
+import path from "path";
 import express from "express";
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
+import * as dataBase from "./database";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -8,20 +9,22 @@ const app = express();
 const users = [];
 
 //Serve static files from client
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, "client", "build")));
 app.use(bodyParser.json());
 
 //API
-app.get('/api/users', (req, res) => {
-  console.log('api/users called!')
+app.get("/api/users", (req, res) => {
+  console.log("api/users called!");
   res.json(users);
+  dataBase.getAllUsers();
 });
 
-app.post('/api/user', (req, res) => {
+app.post("/api/user", (req, res) => {
   const user = req.body.user;
-  console.log('Adding user:::::', user);
+  console.log("Adding user:::::", user);
   users.push(user);
-  res.json("user addedd");
+  res.json("user added");
+  dataBase.putUsers(user);
 });
 
 // app.get('/', (req,res) => {

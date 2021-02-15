@@ -6,12 +6,14 @@ phases:
       #installs dependencies into the node_modules/ directory
       - npm ci
       - npm --prefix client ci
+      - ls
   build:
     commands:
       - echo Build started on `date`
       - echo Compiling
       - npm run build
       - npm run --prefix client build
+      - ls
   post_build:
     commands:
       - echo Build completed on `date`

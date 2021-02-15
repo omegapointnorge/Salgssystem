@@ -1,4 +1,5 @@
 import path from "path";
+import uuid from "uuid";
 import express from "express";
 import bodyParser from "body-parser";
 import * as dataBase from "./database";
@@ -6,33 +7,23 @@ import * as dataBase from "./database";
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-const users = [];
-
 //Serve static files from client
 app.use(express.static(path.join(__dirname, "client", "build")));
 app.use(bodyParser.json());
 
 //API
-app.get("/api/users", (req, res) => {
-  console.log("api/users called!");
+app.get("/api/users", async (_, res) => {
+  // console.debug("api/users called!");
+  let users = (await dataBase.getAllUsers()).Items;
   res.json(users);
-  dataBase.getAllUsers();
 });
 
-app.post("/api/user", (req, res) => {
+app.post("/api/user", async (req, res) => {
+  // console.debug("api/user called!");
   const user = req.body.user;
-  console.log("Adding user:::::", user);
-  users.push(user);
+  await dataBase.putUsers(user);
   res.json("user added");
-  dataBase.putUsers(user);
 });
-
-// app.get('/', (req,res) => {
-//   res.sendFile(path.join(__dirname, 'my-app', 'build', 'index.html'));
-//   // E:/Google Drive/Prosjekter/Software Development/ReactNode/react-nodejs-example/
-//   console.log("Root dirname: ", ___dirname);
-//   // res.sendFile('E:/Google Drive/Prosjekter/Software Development/ReactNode/react-nodejs-example/my-app/build/index.html'); // Denne måten å gjøre det på fungerer fint lokalt
-// });
 
 //SERVER
 app.listen(PORT, () => {

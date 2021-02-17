@@ -1,11 +1,10 @@
-const AWS = require("aws-sdk");
+import AWS from "aws-sdk";
+require("dotenv").config();
 
-AWS.config.update({ region: "eu-central-1" });
+AWS.config.update({ region: process.env.AWS_REGION || "eu-central-1" });
 const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();
 
-console.log("Kommentar for commit?");
-
-const TABLE_NAME = "Salgssystem";
+const TABLE_NAME = `Salgssystem_${process.env.NODE_ENV || "development"}`;
 
 export const getAllUsers = async (_) => {
   var params = {

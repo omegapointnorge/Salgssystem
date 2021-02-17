@@ -1,5 +1,4 @@
 import AWS from "aws-sdk";
-require("dotenv").config();
 
 AWS.config.update({ region: process.env.AWS_REGION || "eu-central-1" });
 const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();

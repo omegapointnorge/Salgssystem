@@ -13,15 +13,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-            plugins: ["@babel/plugin-transform-runtime"],
-          },
-        },
       },
     ],
   },
@@ -30,7 +24,7 @@ module.exports = {
     filename: "server.bundle.js",
   },
   resolve: {
-    extensions: [".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   optimization: {
     minimizer: [new TerserPlugin({ extractComments: false })],

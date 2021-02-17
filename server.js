@@ -10,6 +10,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, "client", "build")));
 app.use(bodyParser.json());
 
+// Test av TypeScript:
+Greeter.greet();
+
 //API
 app.get("/api/users", async (_, res) => {
   // console.debug("api/users called!");

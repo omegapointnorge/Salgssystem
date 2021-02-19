@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 app.use(bodyParser.json());
 
 // Test av TypeScript:
-Greeter.greet();
+// Greeter.greet();
 
 //API
 app.get("/api/case", async (_, res) => {

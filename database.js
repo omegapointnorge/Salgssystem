@@ -1,13 +1,12 @@
-const AWS = require("aws-sdk");
+import AWS from "aws-sdk";
+import uuid from "uuid";
 
-AWS.config.update({ region: "eu-central-1" });
+AWS.config.update({ region: process.env.AWS_REGION || "eu-central-1" });
 const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();
 
-console.log("Kommentar for commit?");
+const TABLE_NAME = `Salgssystem_${process.env.NODE_ENV || "development"}`;
 
-const TABLE_NAME = "Salgssystem";
-
-export const getAllUsers = async (_) => {
+export const getAllCases = async (_) => {
   var params = {
     TableName: TABLE_NAME,
   };
@@ -19,13 +18,12 @@ export const getAllUsers = async (_) => {
   }
 };
 
-export const putUsers = async ({ email, firstName, lastName }) => {
+export const saveCase = async (case_object) => {
   var params = {
     TableName: TABLE_NAME,
     Item: {
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
+      ...case_object,
+      ID: case_object.ID || uuid(),
     },
   };
 

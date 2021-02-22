@@ -34,7 +34,7 @@
   grid-template: 4fr 1fr / 1fr 1fr;
   min-height: 0;
 }
-.caseContainer {
+.tagContainer {
   display: inline-block;
   min-height: 0;
   min-width: 0;
@@ -58,17 +58,6 @@
   background-color: rgb(47, 147, 241);
   border-radius: 3px;
 }
-
-.tag {
-  background: lightcoral;
-  box-sizing: border-box;
-  margin: 2px;
-  border-radius: 2rem;
-  padding: 0.25rem 1rem;
-  max-width: 100%;
-  word-wrap: break-word;
-}
-
 input,
 textarea {
   width: 100%;

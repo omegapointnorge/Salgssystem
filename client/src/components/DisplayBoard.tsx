@@ -1,6 +1,7 @@
-import React from 'react'
 
-export const DisplayBoard = ({numberOfUsers, getAllUsers}) => {
+type Props = {numberOfUsers: number, getAllUsers: any}
+
+export const DisplayBoard = ({numberOfUsers, getAllUsers}: Props) => {
     
     return(
         <div className="display-board">

@@ -1,8 +1,5 @@
-import React from 'react'
-
-
-const CreateUser = ({onChangeForm, createUser }) => {
-
+type Props = {onChangeForm: any, createUser: any};
+const CreateUser = ({onChangeForm, createUser}: Props) => {
 
     return(
         <div className="container">

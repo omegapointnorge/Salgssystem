@@ -1,20 +1,17 @@
 import styles from "./TagContainer.module.css";
 import CaseTag from "../CaseTag/CaseTag";
-import { useState } from "react";
 
-const TagContainer = ({ caseTags = [] }) => {
-  const [local_caseTags, setCaseTags] = useState([...caseTags]);
-
+const TagContainer = ({ caseTags = [], onChangeTags }) => {
   const onEnterPressedTags = (event) => {
     if (event.key === "Enter" && event.target.value?.length > 0) {
-      setCaseTags([...local_caseTags, event.target.value]);
+      onChangeTags([...caseTags, event.target.value]);
       event.target.value = "";
     }
   };
 
   const onClickTag = (index) => {
-    const newTags = [...local_caseTags].filter((_, i) => i !== index);
-    setCaseTags(newTags);
+    const newTags = [...caseTags].filter((_, i) => i !== index);
+    onChangeTags(newTags);
   };
   return (
     <div className={styles.tagContainer}>
@@ -25,7 +22,7 @@ const TagContainer = ({ caseTags = [] }) => {
         onKeyDown={(e) => onEnterPressedTags(e)}
       />
       <div className={styles.tags}>
-        {local_caseTags.map((tag, i) => (
+        {caseTags.map((tag, i) => (
           <CaseTag key={i} onClickHandler={() => onClickTag(i)} tag={tag} />
         ))}
       </div>

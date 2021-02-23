@@ -1,0 +1,4 @@
+.cardList {
+    display: grid;
+    grid-auto-columns: min-content(300px);
+}

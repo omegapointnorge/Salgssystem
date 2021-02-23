@@ -15,13 +15,9 @@ const CardList = (props) => {
 
   return (
     <div>
-      <CaseCard />
-      <div>
-        CASES:
-        {cases.map((c) => (
-          <CaseCard case_object={c} key={c.ID} />
-        ))}
-      </div>
+      {cases.map((caseObject) => (
+        <CaseCard caseObject={caseObject} key={caseObject.ID} saveCase={CaseService.createCase} />
+      ))}
     </div>
   );
 };

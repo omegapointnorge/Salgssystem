@@ -5,8 +5,7 @@ import { Header } from "./components/Header";
 import { Users } from "./components/Users";
 import { DisplayBoard } from "./components/DisplayBoard";
 import CreateUser from "./components/CreateUser";
-import * as UserService from "./services/UserService";
-import CaseCard from "./components/CaseCard/CaseCard";
+import CardList from "./components/CardList/CardList";
 
 class App extends Component {
   state = {
@@ -19,7 +18,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <CaseCard></CaseCard>
+        <CardList />
         <div className="container mrgnbtm">
           <div className="row">
             <div className="col-md-8">

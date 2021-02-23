@@ -10,18 +10,20 @@ const app = express();
 app.use(express.static(path.join(__dirname, "client", "build")));
 app.use(bodyParser.json());
 
+// Test av TypeScript:
+// Greeter.greet();
+
 //API
-app.get("/api/users", async (_, res) => {
-  // console.debug("api/users called!");
-  let users = (await DataBase.getAllUsers()).Items;
-  res.json(users);
+app.get("/api/case", async (_, res) => {
+  // console.debug("GET api/case called!");
+  let cases = (await DataBase.getAllCases()).Items;
+  res.json(cases);
 });
 
-app.post("/api/user", async (req, res) => {
-  // console.debug("api/user called!");
-  const user = req.body.user;
-  await DataBase.putUsers(user);
-  res.json("user added");
+app.post("/api/case", async (req, res) => {
+  // console.debug("POST api/case called!");
+  await DataBase.saveCase(req.body);
+  res.json("case added");
 });
 
 //SERVER

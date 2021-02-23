@@ -1,10 +1,9 @@
-import React from 'react'
-
-export const Users = ({users}) => {
+type Props = {user: any, index: number};
+export const Users = ({users}: {users:any[]}) => {
 
     if (users.length === 0) return null
 
-    const UserRow = (user,index) => {
+    const UserRow = ({user,index}: Props) => {
 
         return(
               <tr key = {index} className={index%2 === 0?'odd':'even'}>
@@ -16,7 +15,7 @@ export const Users = ({users}) => {
           )
     }
 
-    const userTable = users.map((user,index) => UserRow(user,index))
+    const userTable = users.map((user,index) => UserRow({user,index}))
 
     return(
         <div className="container">

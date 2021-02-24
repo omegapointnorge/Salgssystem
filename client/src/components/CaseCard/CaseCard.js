@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { useDeepCompareEffect } from "../../hooks";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
 
-const INITIAL_STATE = {
-  ID: "",
+const EMPTY_STATE = {
   ansvarlig: "",
-  caseTags: "",
+  caseTags: [],
   dato: new Date(),
   frist: null,
   kontakt: "",
@@ -13,8 +13,13 @@ const INITIAL_STATE = {
   profilert: "",
 };
 
-const CaseCard = ({ caseObject = INITIAL_STATE, saveCase }) => {
-  const [caseValues, setcaseValues] = useState(caseObject);
+const CaseCard = ({ caseObject, saveCase }) => {
+  const INITIAL_STATE = caseObject
+    ? { ...caseObject, dato: new Date(caseObject?.dato) }
+    : EMPTY_STATE;
+
+  const [caseValues, setCaseValues] = useState(INITIAL_STATE);
+  const [formValues, setFormValues] = useState(INITIAL_STATE);
 
   const {
     ansvarlig,
@@ -24,31 +29,37 @@ const CaseCard = ({ caseObject = INITIAL_STATE, saveCase }) => {
     kontakt,
     kunde,
     profilert,
-  } = caseValues;
+  } = formValues;
+
+  useDeepCompareEffect((_) => {
+    saveCase(caseValues);
+  }, caseValues);
 
   const handleBlur = (event) => {
     const currentTarget = event.currentTarget;
 
     setTimeout(() => {
       if (!currentTarget.contains(document.activeElement)) {
-        saveCase(caseValues);
+        setCaseValues(formValues);
       }
     }, 0);
   };
 
   const onChange = (event) => {
-    setcaseValues({
-      ...caseValues,
+    setFormValues({
+      ...formValues,
       [event.target.name]: event.target.value,
     });
   };
 
-  const onChangeTags = (tags) => {
-    setcaseValues({
-      ...caseValues,
-      caseTags: tags,
+  const onChangeTags = (caseTags) => {
+    setFormValues({
+      ...formValues,
+      caseTags: caseTags,
     });
   };
+
+  const onDoubleClick = (event) => {};
 
   return (
     <div className={styles.card} onBlur={(e) => handleBlur(e)}>
@@ -57,12 +68,7 @@ const CaseCard = ({ caseObject = INITIAL_STATE, saveCase }) => {
         <div className={styles.ownerAvatar}>{ansvarlig}</div>
       </div>
       <div className={styles.details}>
-        <input
-          name="dato"
-          placeholder="Dato"
-          defaultValue={dato}
-          onChange={onChange}
-        />
+        <div>{dato.toLocaleDateString()}</div>
         <input
           name="kontakt"
           placeholder="Kontakt"

@@ -17,7 +17,6 @@ const TagContainer = ({ caseTags = [], onChangeTags }) => {
     <div className={styles.tagContainer}>
       <input
         name="case"
-        id="case"
         placeholder="Case tags"
         onKeyDown={(e) => onEnterPressedTags(e)}
       />

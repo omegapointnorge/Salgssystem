@@ -1,4 +1,24 @@
 .cardList {
-    display: grid;
-    grid-auto-columns: min-content(300px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.addCardButton {
+  font-size: 2rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.5rem;
+}
+button {
+  margin: 1rem;
+  outline: none;
+  border: none;
+  background: lightgray;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  transition: transform 0.1s;
+}
+button:hover {
+  transform: scale(1.05);
 }

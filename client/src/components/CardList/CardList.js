@@ -1,6 +1,7 @@
 import * as CaseService from "../../services/CaseService";
 import { useEffect, useState } from "react";
 import CaseCard from "../CaseCard/CaseCard";
+import styles from "./CardList.module.css";
 
 const CardList = (props) => {
   const [cases, setCases] = useState([]);
@@ -13,11 +14,24 @@ const CardList = (props) => {
     fetchCases();
   }, []);
 
+  const onClick = () => {
+    setCases([null, ...cases]);
+  };
+
   return (
     <div>
-      {cases.map((caseObject) => (
-        <CaseCard caseObject={caseObject} key={caseObject.ID} saveCase={CaseService.createCase} />
-      ))}
+      <button onClick={onClick}>
+        <span className={styles.addCardButton}>&#43;</span>
+      </button>
+      <div className={styles.cardList}>
+        {cases.map((caseObject, i) => (
+          <CaseCard
+            caseObject={caseObject}
+            key={caseObject?.ID || i}
+            saveCase={CaseService.createCase}
+          />
+        ))}
+      </div>
     </div>
   );
 };

@@ -13,13 +13,14 @@ const EMPTY_STATE = {
   profilert: "",
 };
 
-const CaseCard = ({ caseObject, saveCase }) => {
+const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
   const INITIAL_STATE = caseObject
     ? { ...caseObject, dato: new Date(caseObject?.dato) }
     : EMPTY_STATE;
 
   const [caseValues, setCaseValues] = useState(INITIAL_STATE);
   const [formValues, setFormValues] = useState(INITIAL_STATE);
+  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
   const {
     ansvarlig,
@@ -59,10 +60,36 @@ const CaseCard = ({ caseObject, saveCase }) => {
     });
   };
 
-  const onDoubleClick = (event) => {};
+  const onDoubleClick = (event) => {
+    event.target.blur();
+    getSelection().empty();
+    setShowDeleteCardMenu(true);
+  };
+
+  const deleteCaseHandler = () => {
+    deleteCase(caseValues.ID);
+    setShowDeleteCardMenu(false);
+  };
 
   return (
-    <div className={styles.card} onBlur={(e) => handleBlur(e)}>
+    <div
+      className={styles.card}
+      onBlur={(e) => handleBlur(e)}
+      onDoubleClick={(e) => onDoubleClick(e)}
+    >
+      {showDeleteCardMenu ? (
+        <div>
+          <div className={styles.deleteCardBackDrop}></div>
+          <div className={styles.deleteCardButtons}>
+            <button onClick={() => deleteCaseHandler()}>Slett</button>
+            <button onClick={() => setShowDeleteCardMenu(false)}>Avbryt</button>
+          </div>
+          <div
+            className={styles.deleteCardMenuDismiss}
+            onClick={() => setShowDeleteCardMenu(false)}
+          />
+        </div>
+      ) : null}
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <div className={styles.ownerAvatar}>{ansvarlig}</div>

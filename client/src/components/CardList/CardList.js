@@ -18,6 +18,11 @@ const CardList = (props) => {
     setCases([null, ...cases]);
   };
 
+  const deleteCase = (caseId) => {
+    const deleteCase = cases.find((caseObject) => caseObject.ID === caseId);
+    CaseService.deleteCase(deleteCase.ID);
+  };
+
   return (
     <div>
       <button onClick={onClick}>
@@ -29,6 +34,7 @@ const CardList = (props) => {
             caseObject={caseObject}
             key={caseObject?.ID || i}
             saveCase={CaseService.createCase}
+            deleteCase={(caseId) => deleteCase(caseId)}
           />
         ))}
       </div>

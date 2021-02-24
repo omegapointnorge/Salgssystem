@@ -11,3 +11,11 @@ export async function createCase(caseObject) {
   });
   return await response.json();
 }
+
+export async function deleteCase(caseId) {
+  const response = await fetch(`/api/case/${caseId}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+  return await response.json();
+}

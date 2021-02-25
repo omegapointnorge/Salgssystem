@@ -4,6 +4,7 @@ AWS.config.update({ region: process.env.AWS_REGION || "eu-central-1" });
 const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();
 
 const TABLE_NAME = `Salgssystem_${process.env.NODE_ENV || "development"}`;
+console.log("TABLE_NAME" + TABLE_NAME);
 
 export const getAllCases = async (_) => {
   var params = {

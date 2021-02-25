@@ -12,10 +12,11 @@ export async function createCase(caseObject) {
   return await response.json();
 }
 
-export async function deleteCase(caseId) {
-  const response = await fetch(`/api/case/${caseId}`, {
+export async function deleteCase(ID, dato) {
+  const response = await fetch(`/api/case`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ID, dato }),
   });
   return await response.json();
 }

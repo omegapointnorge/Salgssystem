@@ -22,8 +22,14 @@ app.get("/api/case", async (_, res) => {
 
 app.post("/api/case", async (req, res) => {
   // console.debug("POST api/case called!");
-  await DataBase.saveCase(req.body);
-  res.json("case added");
+  const ID = await DataBase.saveCase(req.body);
+  res.json({ ID });
+});
+
+app.delete("/api/case", async (req, res) => {
+  // console.debug(`DELETE api/case called!`);
+  await DataBase.deleteCase(req.body);
+  res.json("case deleted");
 });
 
 //SERVER

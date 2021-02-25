@@ -3,23 +3,9 @@ import { useDeepCompareEffect } from "../../hooks";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
 
-const EMPTY_STATE = {
-  ansvarlig: "",
-  caseTags: [],
-  dato: new Date(),
-  frist: null,
-  kontakt: "",
-  kunde: "",
-  profilert: "",
-};
-
 const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
-  const INITIAL_STATE = caseObject
-    ? { ...caseObject, dato: new Date(caseObject?.dato) }
-    : EMPTY_STATE;
-
-  const [caseValues, setCaseValues] = useState(INITIAL_STATE);
-  const [formValues, setFormValues] = useState(INITIAL_STATE);
+  const [caseState, setCaseState] = useState(caseObject);
+  const [formValues, setFormValues] = useState(caseObject);
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
   const {
@@ -33,55 +19,55 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
   } = formValues;
 
   useDeepCompareEffect((_) => {
-    saveCase(caseValues);
-  }, caseValues);
+    saveCase(caseState);
+  }, caseState);
 
-  const handleBlur = (event) => {
+  const handleCardBlur = (event) => {
     const currentTarget = event.currentTarget;
 
     setTimeout(() => {
       if (!currentTarget.contains(document.activeElement)) {
-        setCaseValues(formValues);
+        setCaseState(formValues);
       }
     }, 0);
   };
 
-  const onChange = (event) => {
+  const handleInputChange = (event) => {
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
     });
   };
 
-  const onChangeTags = (caseTags) => {
+  const handleTagsChange = (caseTags) => {
     setFormValues({
       ...formValues,
       caseTags: caseTags,
     });
   };
 
-  const onDoubleClick = (event) => {
+  const handleCardDoubleClick = (event) => {
     event.target.blur();
     getSelection().empty();
     setShowDeleteCardMenu(true);
   };
 
-  const deleteCaseHandler = () => {
-    deleteCase(caseValues.ID);
+  const handleDeleteCaseClick = () => {
+    deleteCase(caseState);
     setShowDeleteCardMenu(false);
   };
 
   return (
     <div
       className={styles.card}
-      onBlur={(e) => handleBlur(e)}
-      onDoubleClick={(e) => onDoubleClick(e)}
+      onBlur={(e) => handleCardBlur(e)}
+      onDoubleClick={(e) => handleCardDoubleClick(e)}
     >
       {showDeleteCardMenu ? (
         <div>
           <div className={styles.deleteCardBackDrop}></div>
           <div className={styles.deleteCardButtons}>
-            <button onClick={() => deleteCaseHandler()}>Slett</button>
+            <button onClick={() => handleDeleteCaseClick()}>Slett</button>
             <button onClick={() => setShowDeleteCardMenu(false)}>Avbryt</button>
           </div>
           <div
@@ -100,9 +86,9 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
           name="kontakt"
           placeholder="Kontakt"
           defaultValue={kontakt}
-          onChange={onChange}
+          onChange={handleInputChange}
         />
-        <TagContainer caseTags={caseTags} onChangeTags={onChangeTags} />
+        <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />
         <textarea name="profilert" placeholder="Profilert" />
       </div>
     </div>

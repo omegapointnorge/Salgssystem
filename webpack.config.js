@@ -1,11 +1,11 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
-// const { NODE_ENV = "production" } = process.env;
+const { NODE_ENV = "production" } = process.env;
 
 module.exports = {
   entry: "./server.js",
-  mode: "production",
+  mode: NODE_ENV,
   node: {
     __dirname: false,
   },
@@ -28,6 +28,6 @@ module.exports = {
   },
   optimization: {
     minimizer: [new TerserPlugin({ extractComments: false })],
-    nodeEnv: false,
+    nodeEnv: false, //Gjør at webpack ikke setter process.env.NODE_ENV til samme verdi som mode. Settes i aws elb
   },
 };

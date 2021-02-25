@@ -1,11 +1,8 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
-// const { NODE_ENV = "production" } = process.env; Settes i beanstalk
-
 module.exports = {
   entry: "./server.js",
-  // mode: NODE_ENV,
   node: {
     __dirname: false,
   },
@@ -14,7 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
     ],
@@ -24,7 +21,7 @@ module.exports = {
     filename: "server.bundle.js",
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: [".tsx", ".ts", ".js"],
   },
   optimization: {
     minimizer: [new TerserPlugin({ extractComments: false })],

@@ -2,9 +2,15 @@
 .header {
   width: 100%;
   padding: 2%;
-  background-color: burlywood;
+  background-color: black;
   color: white;
   text-align: center;
+  height: 20vh;
+}
+
+.logo {
+  width: auto;
+    height: 10vh;
 }
 
 .display-board {

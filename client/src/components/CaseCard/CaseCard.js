@@ -81,7 +81,7 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
         <div className={styles.ownerAvatar}>{ansvarlig}</div>
       </div>
       <div className={styles.details}>
-        <div>{dato.toLocaleDateString()}</div>
+        <div>{dato?.toLocaleDateString()}</div>
         <input
           name="kontakt"
           placeholder="Kontakt"
@@ -92,7 +92,7 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
         <textarea
           name="profilert"
           placeholder="Profilert"
-          defaultValue={profilert.join("\n")}
+          defaultValue={profilert?.join("\n")}
           onChange={handleMultilineInputChange}
         />
       </div>

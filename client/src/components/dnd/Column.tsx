@@ -7,7 +7,7 @@ import { styled } from 'src/stiches.config'
 interface ColumnProps {
   col: {
     id: string
-    list: string[]
+    list: any[]
   }
 }
 
@@ -40,8 +40,8 @@ const Column: React.FC<ColumnProps> = ({ col: { list, id } }) => {
         <StyledColumn>
           <h2>{id}</h2>
           <StyledList {...provided.droppableProps} ref={provided.innerRef}>
-            {list.map((text, index) => (
-              <Item key={text} text={text} index={index} />
+            {list.map((caseObject, index) => (
+              <Item key={caseObject.ID} caseObject={caseObject} index={index} />
             ))}
             {provided.placeholder}
           </StyledList>

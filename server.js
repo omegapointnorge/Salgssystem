@@ -23,7 +23,7 @@ app.get("/api/case", async (_, res) => {
 app.post("/api/case", async (req, res) => {
   // console.debug("POST api/case called!");
   const ID = await DataBase.saveCase(req.body);
-  res.json({ ID });
+  res.json("case added");
 });
 
 app.delete("/api/case", async (req, res) => {

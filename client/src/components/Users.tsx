@@ -1,3 +1,5 @@
+import React from "react";
+
 type Props = {user: any, index: number};
 export const Users = ({users}: {users:any[]}) => {
 

@@ -1,3 +1,5 @@
+import React from 'react'
+
 type Props = {onChangeForm: any, createUser: any};
 const CreateUser = ({onChangeForm, createUser}: Props) => {
 

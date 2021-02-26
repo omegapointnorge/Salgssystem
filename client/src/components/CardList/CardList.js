@@ -12,7 +12,7 @@ const NEW_CASE = () => ({
   frist: null,
   kontakt: "",
   kunde: "",
-  profilert: "",
+  profilert: [],
 });
 
 const CardList = (props) => {

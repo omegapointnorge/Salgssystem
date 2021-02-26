@@ -40,6 +40,13 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
     });
   };
 
+  const handleMultilineInputChange = (event) => {
+    setFormValues({
+      ...formValues,
+      [event.target.name]: event.target.value.split("\n"),
+    });
+  };
+
   const handleTagsChange = (caseTags) => {
     setFormValues({
       ...formValues,
@@ -85,8 +92,8 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
         <textarea
           name="profilert"
           placeholder="Profilert"
-          defaultValue={profilert}
-          onChange={handleInputChange}
+          defaultValue={profilert.join("\n")}
+          onChange={handleMultilineInputChange}
         />
       </div>
     </div>

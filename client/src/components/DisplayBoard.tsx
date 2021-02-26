@@ -11,7 +11,7 @@ export const DisplayBoard = ({numberOfUsers, getAllUsers}: Props) => {
             {numberOfUsers}
             </div>
             <div className="btn">
-                <button type="button" onClick={_ => getAllUsers()} className="btn btn-warning">Get all Users</button>
+                <button type="button" className="btn btn-warning">Get all Users</button>
             </div>
         </div>
     )

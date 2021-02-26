@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { styled } from "../../stiches.config";
 import Column from "./Column";
+import * as CaseService from "../../services/CaseService";
 
 const StyledColumns = styled("div", {
   display: "grid",
@@ -16,7 +17,7 @@ function DndColumns() {
   const initialColumns = {
     Påbegynt: {
       id: "Påbegynt",
-      list: ["Case 1: Eika", "Case 3: DnB", "Case 2: NAV"],
+      list: [],
     },
     Vunnet: {
       id: "Vunnet",
@@ -28,6 +29,21 @@ function DndColumns() {
     },
   };
   const [columns, setColumns] = useState(initialColumns);
+
+  useEffect(() => {
+    fetchCases();
+  }, []);
+
+  const fetchCases = async () => {
+    let result = await CaseService.getCases();
+    let mappedResult = result.map((caseObject: any) => ({
+      ...caseObject,
+      dato: new Date(caseObject.dato),
+    }));
+    let copy = {...columns};
+    copy["Påbegynt"].list = mappedResult;
+    setColumns(copy);
+  };
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (destination === undefined || destination === null) return null;
@@ -73,7 +89,6 @@ function DndColumns() {
       return null;
     }
   };
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <StyledColumns>

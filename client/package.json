@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "lodash": "^4.17.21",
     "immutability-helper": "^3.1.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.2",
+    "typescript": "~3.7.2",
+    "uuid": "^8.3.2",
     "@stitches/react": "^0.0.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -17,8 +20,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "react-beautiful-dnd": "^13.0.0",
-    "typescript": "~3.7.2"
+    "react-beautiful-dnd": "^13.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -14,7 +14,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
     ],
@@ -24,9 +24,10 @@ module.exports = {
     filename: "server.bundle.js",
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: [".tsx", ".ts", ".js"],
   },
   optimization: {
     minimizer: [new TerserPlugin({ extractComments: false })],
+    nodeEnv: false, //Gjør at webpack ikke setter process.env.NODE_ENV til samme verdi som mode. Settes i aws elb
   },
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDeepCompareEffect } from "../../hooks";
+import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
 
@@ -63,19 +64,11 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
       onBlur={(e) => handleCardBlur(e)}
       onDoubleClick={(e) => handleCardDoubleClick(e)}
     >
-      {showDeleteCardMenu ? (
-        <div>
-          <div className={styles.deleteCardBackDrop}></div>
-          <div className={styles.deleteCardButtons}>
-            <button onClick={() => handleDeleteCaseClick()}>Slett</button>
-            <button onClick={() => setShowDeleteCardMenu(false)}>Avbryt</button>
-          </div>
-          <div
-            className={styles.deleteCardMenuDismiss}
-            onClick={() => setShowDeleteCardMenu(false)}
-          />
-        </div>
-      ) : null}
+      <DeleteCardMenu
+        show={showDeleteCardMenu}
+        setShow={setShowDeleteCardMenu}
+        deleteCard={handleDeleteCaseClick}
+      />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <div className={styles.ownerAvatar}>{ansvarlig}</div>
@@ -89,7 +82,12 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
           onChange={handleInputChange}
         />
         <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />
-        <textarea name="profilert" placeholder="Profilert" />
+        <textarea
+          name="profilert"
+          placeholder="Profilert"
+          defaultValue={profilert}
+          onChange={handleInputChange}
+        />
       </div>
     </div>
   );

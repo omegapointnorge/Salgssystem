@@ -1,4 +1,5 @@
 .tag {
+  display: inline-block;
   background: rgb(240, 128, 128);
   box-sizing: border-box;
   margin: 2px;
@@ -6,7 +7,7 @@
   padding: 0.25rem .5rem;
   flex: 1 1 auto;
   text-align: center;
-  word-wrap: break-word;
+  word-break: break-all;
 }
 
 input,
@@ -16,7 +17,6 @@ textarea {
   border: none;
   font: inherit;
   transition: all 0.2s;
-  word-wrap: break-word;
 }
 
 input:focus,

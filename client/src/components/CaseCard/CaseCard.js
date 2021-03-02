@@ -4,7 +4,7 @@ import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
 
-const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
+const CaseCard = ({ caseObject }) => {
   const [caseState, setCaseState] = useState(caseObject);
   const [formValues, setFormValues] = useState(caseObject);
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
@@ -20,7 +20,11 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
   } = formValues;
 
   useDeepCompareEffect((_) => {
-    saveCase(caseState);
+    console.log({caseState});
+    console.log({caseObject});
+
+    caseObject.saveCase(caseState);
+    console.log("Kjører useDeepCompareEffect");
   }, caseState);
 
   const handleCardBlur = (event) => {
@@ -61,7 +65,8 @@ const CaseCard = ({ caseObject, saveCase, deleteCase }) => {
   };
 
   const handleDeleteCaseClick = () => {
-    deleteCase(caseState);
+    console.log({caseObject});
+    caseObject.deleteCase();
     setShowDeleteCardMenu(false);
   };
 

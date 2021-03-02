@@ -42,7 +42,7 @@ const Item: React.FC<ItemProps> = ({ caseObject, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <CaseCard caseObject={caseObject} saveCase={() => {}} deleteCase={() => {}} />
+          <CaseCard caseObject={caseObject}  />
           {/* <StyledItem>{text}</StyledItem> */}
         </div>
       )}

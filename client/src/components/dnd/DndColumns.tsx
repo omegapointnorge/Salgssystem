@@ -3,6 +3,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { styled } from "../../stiches.config";
 import Column from "./Column";
 import * as CaseService from "../../services/CaseService";
+import Case from "../../models/Case";
 
 const StyledColumns = styled("div", {
   display: "grid",
@@ -40,9 +41,12 @@ function DndColumns() {
       ...caseObject,
       dato: new Date(caseObject.dato),
     }));
-    let copy = {...columns};
-    copy["Påbegynt"].list = mappedResult;
-    setColumns(copy);
+    let columnsCopy = { ...columns };
+
+    mappedResult.forEach((caseObject: Case) =>
+      columnsCopy[`${caseObject.status}`].list.push(caseObject)
+    );
+    setColumns(columnsCopy);
   };
 
   const onDragEnd = ({ source, destination }: DropResult) => {

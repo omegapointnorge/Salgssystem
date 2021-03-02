@@ -1,22 +1,11 @@
+import React, { useEffect, useState } from "react";
 import * as CaseService from "../../services/CaseService";
-import { v4 as uuid } from "uuid";
-import { useEffect, useState } from "react";
 import CaseCard from "../CaseCard/CaseCard";
 import styles from "./CardList.module.css";
+import Case from "../../models/Case";
 
-const NEW_CASE = () => ({
-  ID: uuid(),
-  ansvarlig: "",
-  caseTags: [],
-  dato: new Date(),
-  frist: null,
-  kontakt: "",
-  kunde: "",
-  profilert: [],
-});
-
-const CardList = (props) => {
-  const [cases, setCases] = useState([]);
+const CardList = () => {
+  const [cases, setCases] = useState<Case[]>([]);
 
   useEffect(() => {
     fetchCases();
@@ -24,7 +13,7 @@ const CardList = (props) => {
 
   const fetchCases = async () => {
     let result = await CaseService.getCases();
-    let mappedResult = result.map((caseObject) => ({
+    let mappedResult = result.map((caseObject: Case) => ({
       ...caseObject,
       dato: new Date(caseObject.dato),
     }));
@@ -32,11 +21,11 @@ const CardList = (props) => {
   };
 
   const handleAddCaseClick = () => {
-    setCases([NEW_CASE(), ...cases]);
+    setCases([new Case(), ...cases]);
   };
 
-  const deleteCase = async (deleteCase) => {
-    const response = await CaseService.deleteCase(
+  const deleteCase = async (deleteCase: Case) => {
+    await CaseService.deleteCase(
       deleteCase.ID,
       deleteCase.dato
     );
@@ -59,7 +48,7 @@ const CardList = (props) => {
             caseObject={caseObject}
             key={caseObject?.ID || i}
             saveCase={CaseService.createCase}
-            deleteCase={(caseId) => deleteCase(caseId)}
+            deleteCase={(caseObject: Case) => deleteCase(caseObject)}
           />
         ))}
       </div>

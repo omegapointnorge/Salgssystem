@@ -2,13 +2,15 @@ import React from 'react'
 import Item from './Item'
 import { Droppable } from 'react-beautiful-dnd'
 import { styled } from 'src/stiches.config'
+import Status from '../../constants/Status'
 
 
 interface ColumnProps {
   col: {
     id: string
-    list: any[]
-  }
+    list: any[],
+  },
+  slettCase: (kolonneId: Status, kortId:string) => void
 }
 
 const StyledColumn = styled('div', {
@@ -33,7 +35,7 @@ const StyledList = styled('div', {
   marginTop: 8
 })
 
-const Column: React.FC<ColumnProps> = ({ col: { list, id } }) => {
+const Column: React.FC<ColumnProps> = ({ col: { list, id }, slettCase }) => {
   return (
     <Droppable droppableId={id}>
       {provided => (
@@ -41,7 +43,7 @@ const Column: React.FC<ColumnProps> = ({ col: { list, id } }) => {
           <h2>{id}</h2>
           <StyledList {...provided.droppableProps} ref={provided.innerRef}>
             {list.map((caseObject, index) => (
-              <Item key={caseObject.ID} caseObject={caseObject} index={index} />
+              <Item key={caseObject.ID} caseObject={caseObject} index={index}  slettCase={slettCase}/>
             ))}
             {provided.placeholder}
           </StyledList>

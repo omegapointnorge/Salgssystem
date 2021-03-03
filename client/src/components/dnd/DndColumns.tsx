@@ -6,6 +6,7 @@ import * as CaseService from "../../services/CaseService";
 import Case from "../../models/Case";
 import Status from "../../constants/Status";
 import styles from "./DndColumns.module.css";
+import { Card } from "react-bootstrap";
 
 const StyledColumns = styled("div", {
   display: "grid",
@@ -53,6 +54,12 @@ function DndColumns() {
     fetchCases();
   }, []);
 
+  const slettCase = (kolonneId: Status, kortId:string) => {
+    let columnsCopy: IcolumnList = { ...columns };
+    columnsCopy[kolonneId].list =columnsCopy[kolonneId].list.filter((card: Case) => card.ID !== kortId);
+    setColumns(columnsCopy);
+  }
+
   const fetchCases = async () => {
     let result = await CaseService.getCases();
     // let mappedResult = result.map((caseObject: any) => ({
@@ -72,6 +79,14 @@ function DndColumns() {
 
     columnsCopy.Unassigned.list.push(new Case());
     setColumns(columnsCopy);
+  }
+
+  const onDragStart = () => {
+    try {
+      (document.activeElement as HTMLElement).blur();
+    } catch {
+      console.log("Kunne ikke kjøre blur() på gitt element");
+    }
   }
 
   const onDragEnd = ({ source, destination }: DropResult) => {
@@ -131,10 +146,10 @@ function DndColumns() {
       <button onClick={handleAddCaseClick}>
         <span className={styles.addCardButton}>&#43;</span>
       </button>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <StyledColumns>
           {Object.values(columns).map((col) => (
-            <Column col={col} key={col.id} />
+            <Column col={col} key={col.id} slettCase={slettCase} />
           ))}
         </StyledColumns>
       </DragDropContext>

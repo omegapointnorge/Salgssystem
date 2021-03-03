@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDeepCompareEffect } from "../../hooks";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
 
-const CaseCard = ({ caseObject }) => {
+
+const CaseCard = ({ caseObject, slettCase }) => {
   const [caseState, setCaseState] = useState(caseObject);
   const [formValues, setFormValues] = useState(caseObject);
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
@@ -19,22 +20,17 @@ const CaseCard = ({ caseObject }) => {
     profilert,
   } = formValues;
 
-  useDeepCompareEffect((_) => {
-    console.log({caseState});
-    console.log({caseObject});
+  useEffect(()=> { // Lytter til oppdateringer på tags
+    setCaseState(formValues);
+  }, [formValues.caseTags]);
 
+
+  useDeepCompareEffect((_) => {
     caseObject.saveCase(caseState);
-    console.log("Kjører useDeepCompareEffect");
   }, caseState);
 
   const handleCardBlur = (event) => {
-    const currentTarget = event.currentTarget;
-
-    setTimeout(() => {
-      if (!currentTarget.contains(document.activeElement)) {
-        setCaseState(formValues);
-      }
-    }, 0);
+    setCaseState(formValues);
   };
 
   const handleInputChange = (event) => {
@@ -65,8 +61,9 @@ const CaseCard = ({ caseObject }) => {
   };
 
   const handleDeleteCaseClick = () => {
-    console.log({caseObject});
     caseObject.deleteCase();
+    // Oppdater state til DND
+    slettCase(caseObject.status, caseObject.ID);
     setShowDeleteCardMenu(false);
   };
 
@@ -106,3 +103,4 @@ const CaseCard = ({ caseObject }) => {
 };
 
 export default CaseCard;
+

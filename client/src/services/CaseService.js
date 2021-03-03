@@ -3,12 +3,6 @@ import Case from "../models/Case";
 export async function getCases() {
   const response = await fetch("/api/case");
   const casesJson = await response.json();
-
-  // casesJson.map((caseObject) => new Case(caseObject));
-
-  // casesJson;
-  // console.log(casesJson);
-  console.log(casesJson.map((caseObject) => new Case(caseObject)));
   return casesJson.map((caseObject) => new Case(caseObject));
 }
 

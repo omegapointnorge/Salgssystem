@@ -1,6 +1,6 @@
 .tag {
   display: inline-block;
-  background: rgb(240, 128, 128);
+  background: var(--itverket-orange);
   box-sizing: border-box;
   margin: 2px;
   border-radius: 2rem;

@@ -1,9 +1,8 @@
 import React from "react";
-import DndColumns from "./DndColumns";
+import DndColumns from "./DndColumns/DndColumns";
 
-type Props = { props: any };
 
-export default function DndColumnsIndex({ props }: Props) {
+export default function DndColumnsIndex() {
   return (
     <div>
       <DndColumns />

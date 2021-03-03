@@ -4,7 +4,6 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Users } from "./components/Users";
 import DndColumns from "./components/dnd/DndColumns/DndColumns";
-import bg from "./assets/bg.jpg";
 
 // interface user {
 //   firstName: string,

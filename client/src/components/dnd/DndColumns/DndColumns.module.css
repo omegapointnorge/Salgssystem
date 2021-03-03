@@ -19,7 +19,6 @@ button:hover {
   transform: scale(1.05);
 }
 .dndColumns {
-  /* overflow-x: scroll; */
   height: 100%;
 }
 .kolonner {

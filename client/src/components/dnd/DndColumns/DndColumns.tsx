@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { styled } from "../../../stiches.config";
 import Column from "./../Column/Column";
 import * as CaseService from "../../../services/CaseService";
 import Case from "../../../models/Case";
 import Status from "../../../constants/Status";
 import styles from "./DndColumns.module.css";
-import { Card } from "react-bootstrap";
-
-// const StyledColumns = styled("div", {
-//   display: "grid",
-//   gridTemplateColumns: "1fr 1fr 1fr 1fr",
-//   margin: "1vh auto",
-//   width: "100%",
-//   height: "80vh",
-//   gap: "8px",
-// });
 
 interface Icolumn {
   id: string;
@@ -62,10 +51,6 @@ function DndColumns() {
 
   const fetchCases = async () => {
     let result = await CaseService.getCases();
-    // let mappedResult = result.map((caseObject: any) => ({
-    //   ...caseObject,
-    //   dato: new Date(caseObject.dato),
-    // }));
     let columnsCopy: IcolumnList = { ...columns };
 
     result.forEach((caseObject: Case) =>
@@ -73,6 +58,18 @@ function DndColumns() {
     );
     setColumns(columnsCopy);
   };
+
+  
+
+  // const markup = useCallback(
+  //   (count) => {
+  //     const stringCountCorrection = count + 1;
+  //     return (
+  //       // Some markup that references the sections prop
+  //     );
+  //   },
+  //   [count, /* and any other dependencies the react linter suggests */]
+  // );
 
   const handleAddCaseClick = () => {
     const columnsCopy: IcolumnList = {...columns};

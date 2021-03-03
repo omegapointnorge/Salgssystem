@@ -1,9 +1,12 @@
+import Case from "../models/Case";
+
 export async function getCases() {
   const response = await fetch("/api/case");
-  return await response.json();
+  const casesJson = await response.json();
+  return casesJson.map((caseObject) => new Case(caseObject));
 }
 
-export async function createCase(caseObject) {
+export async function saveCase(caseObject) {
   const response = await fetch(`/api/case`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

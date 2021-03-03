@@ -1,11 +1,13 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
+import Status from "../../constants/Status";
 // import { styled } from "src/stiches.config";
 import CaseCard from "../CaseCard/CaseCard";
 
 interface ItemProps {
   caseObject: any;
   index: number;
+  slettCase: (kolonneId: Status, kortId:string) => void
 }
 
 // const StyledItem = styled("div", {
@@ -33,7 +35,7 @@ interface ItemProps {
 //   status: null
 // });
 
-const Item: React.FC<ItemProps> = ({ caseObject, index }) => {
+const Item: React.FC<ItemProps> = ({ caseObject, index, slettCase }) => {
   return (
     <Draggable draggableId={caseObject.ID} index={index}>
       {(provided) => (
@@ -42,7 +44,7 @@ const Item: React.FC<ItemProps> = ({ caseObject, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <CaseCard caseObject={caseObject} saveCase={() => {}} deleteCase={() => {}} />
+          <CaseCard caseObject={caseObject} slettCase={slettCase} />
           {/* <StyledItem>{text}</StyledItem> */}
         </div>
       )}

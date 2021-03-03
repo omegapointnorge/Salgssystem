@@ -3,18 +3,38 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { styled } from "../../stiches.config";
 import Column from "./Column";
 import * as CaseService from "../../services/CaseService";
+import Case from "../../models/Case";
+import Status from "../../constants/Status";
+import styles from "./DndColumns.module.css";
+import { Card } from "react-bootstrap";
 
 const StyledColumns = styled("div", {
   display: "grid",
-  gridTemplateColumns: "1fr 1fr 1fr",
-  margin: "10vh auto",
-  width: "80%",
+  gridTemplateColumns: "1fr 1fr 1fr 1fr",
+  margin: "1vh auto",
+  width: "100%",
   height: "80vh",
   gap: "8px",
 });
 
+interface Icolumn {
+  id: string;
+  list: Case[];
+}
+
+interface IcolumnList {
+  Unassigned: Icolumn;
+  Påbegynt: Icolumn;
+  Vunnet: Icolumn;
+  Tapt: Icolumn;
+}
+
 function DndColumns() {
-  const initialColumns = {
+  const initialColumns: IcolumnList = {
+    Unassigned: {
+      id: "Unassigned",
+      list: [],
+    },
     Påbegynt: {
       id: "Påbegynt",
       list: [],
@@ -28,22 +48,46 @@ function DndColumns() {
       list: [],
     },
   };
-  const [columns, setColumns] = useState(initialColumns);
+  const [columns, setColumns] = useState<IcolumnList>(initialColumns);
 
   useEffect(() => {
     fetchCases();
   }, []);
 
+  const slettCase = (kolonneId: Status, kortId:string) => {
+    let columnsCopy: IcolumnList = { ...columns };
+    columnsCopy[kolonneId].list =columnsCopy[kolonneId].list.filter((card: Case) => card.ID !== kortId);
+    setColumns(columnsCopy);
+  }
+
   const fetchCases = async () => {
     let result = await CaseService.getCases();
-    let mappedResult = result.map((caseObject: any) => ({
-      ...caseObject,
-      dato: new Date(caseObject.dato),
-    }));
-    let copy = {...columns};
-    copy["Påbegynt"].list = mappedResult;
-    setColumns(copy);
+    // let mappedResult = result.map((caseObject: any) => ({
+    //   ...caseObject,
+    //   dato: new Date(caseObject.dato),
+    // }));
+    let columnsCopy: IcolumnList = { ...columns };
+
+    result.forEach((caseObject: Case) =>
+      columnsCopy[caseObject.status].list.push(caseObject)
+    );
+    setColumns(columnsCopy);
   };
+
+  const handleAddCaseClick = () => {
+    const columnsCopy: IcolumnList = {...columns};
+
+    columnsCopy.Unassigned.list.push(new Case());
+    setColumns(columnsCopy);
+  }
+
+  const onDragStart = () => {
+    try {
+      (document.activeElement as HTMLElement).blur();
+    } catch {
+      console.log("Kunne ikke kjøre blur() på gitt element");
+    }
+  }
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (destination === undefined || destination === null) return null;
@@ -68,6 +112,7 @@ function DndColumns() {
       setColumns((state) => ({ ...state, [newCol.id]: newCol }));
       return null;
     } else {
+      // Kjører om caseKort ender opp i en annen kolonne enn opprinnelig:
       const newStartList = start.list.filter(
         (_: any, idx: number) => idx !== source.index
       );
@@ -81,6 +126,11 @@ function DndColumns() {
         id: end.id,
         list: newEndList,
       };
+      // Lagre oppdatert posisjon av caseKort i database:
+      const caseObject: Case = start.list[source.index];
+      caseObject["status"] =
+        Status[end.id.toUpperCase() as keyof typeof Status];
+      CaseService.saveCase(caseObject);
       setColumns((state) => ({
         ...state,
         [newStartCol.id]: newStartCol,
@@ -89,14 +139,21 @@ function DndColumns() {
       return null;
     }
   };
+
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <StyledColumns>
-        {Object.values(columns).map((col) => (
-          <Column col={col} key={col.id} />
-        ))}
-      </StyledColumns>
-    </DragDropContext>
+    <div>
+      <button onClick={handleAddCaseClick}>
+        <span className={styles.addCardButton}>&#43;</span>
+      </button>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+        <StyledColumns>
+          {Object.values(columns).map((col) => (
+            <Column col={col} key={col.id} slettCase={slettCase} />
+          ))}
+        </StyledColumns>
+      </DragDropContext>
+    </div>
   );
 }
 

@@ -4,7 +4,6 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Users } from "./components/Users";
 import DndColumns from "./components/dnd/DndColumns";
-import CardList from "./components/CardList/CardList";
 
 // interface user {
 //   firstName: string,
@@ -22,7 +21,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <CardList />
         <div className="container mrgnbtm">
           <div className="row">
             <div className="col-md-8">

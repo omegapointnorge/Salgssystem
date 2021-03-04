@@ -1,5 +1,4 @@
 import AWS from "aws-sdk";
-import Case from "./client/src/models/Case";
 
 AWS.config.update({ region: process.env.AWS_REGION || "eu-central-1" });
 const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();
@@ -18,7 +17,7 @@ export const getAllCases = async () => {
   }
 };
 
-export const saveCase = async (case_object: Case) => {
+export const saveCase = async (case_object) => {
   var params = {
     TableName: TABLE_NAME,
     Item: case_object,
@@ -31,7 +30,7 @@ export const saveCase = async (case_object: Case) => {
   }
 };
 
-export const deleteCase = async ({ ID, dato }: { ID: String; dato: Date }) => {
+export const deleteCase = async ({ ID, dato }) => {
   var params = {
     TableName: TABLE_NAME,
     Key: {

@@ -14,19 +14,19 @@ app.use(bodyParser.json());
 // Greeter.greet();
 
 //API
-app.get("/api/case", async (_, res) => {
+app.get("/api/case", async (_, res: express.Response) => {
   // console.debug("GET api/case called!");
   let cases = (await DataBase.getAllCases()).Items;
   res.json(cases);
 });
 
-app.post("/api/case", async (req, res) => {
+app.post("/api/case", async (req: express.Request, res: express.Response) => {
   // console.debug("POST api/case called!");
-  const ID = await DataBase.saveCase(req.body);
+  await DataBase.saveCase(req.body);
   res.json("case added");
 });
 
-app.delete("/api/case", async (req, res) => {
+app.delete("/api/case", async (req: express.Request, res: express.Response) => {
   // console.debug(`DELETE api/case called!`);
   await DataBase.deleteCase(req.body);
   res.json("case deleted");

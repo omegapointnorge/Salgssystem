@@ -1,11 +1,12 @@
 import AWS from "aws-sdk";
+import Case from "./client/src/models/Case";
 
 AWS.config.update({ region: process.env.AWS_REGION || "eu-central-1" });
 const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();
 
 const TABLE_NAME = `Salgssystem_${process.env.NODE_ENV || "development"}`;
 
-export const getAllCases = async (_) => {
+export const getAllCases = async () => {
   var params = {
     TableName: TABLE_NAME,
   };
@@ -17,21 +18,20 @@ export const getAllCases = async (_) => {
   }
 };
 
-export const saveCase = async (case_object) => {
+export const saveCase = async (case_object: Case) => {
   var params = {
     TableName: TABLE_NAME,
     Item: case_object,
   };
 
   try {
-    await ddbDocumentClient.put(params).promise();
-    return ID;
+    return await ddbDocumentClient.put(params).promise();
   } catch (error) {
     console.error("Failed to save to database", error.message);
   }
 };
 
-export const deleteCase = async ({ ID, dato }) => {
+export const deleteCase = async ({ ID, dato }: { ID: String; dato: Date }) => {
   var params = {
     TableName: TABLE_NAME,
     Key: {
@@ -41,8 +41,7 @@ export const deleteCase = async ({ ID, dato }) => {
   };
 
   try {
-    await ddbDocumentClient.delete(params).promise();
-    return ID;
+    return await ddbDocumentClient.delete(params).promise();
   } catch (error) {
     console.error("Failed to delete from database", error.message);
   }

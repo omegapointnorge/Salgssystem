@@ -1,6 +1,6 @@
 import styles from "./TagContainer.module.css";
 import CaseTag from "../CaseTag/CaseTag";
-import React from "react";
+import React, { KeyboardEvent } from "react";
 
 interface TagContainerProps {
   caseTags: string[];
@@ -11,15 +11,15 @@ const TagContainer: React.FC<TagContainerProps> = ({
   caseTags = [],
   onChangeTags,
 }) => {
-  const onEnterPressedTags = (event) => {
-    if (event.key === "Enter" && event.target.value?.length > 0) {
-      onChangeTags([...caseTags, event.target.value]);
+  const onEnterPressedTags = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && event.currentTarget.value?.length > 0) {
+      onChangeTags([...caseTags, event.currentTarget.value]);
 
-      event.target.value = "";
+      event.currentTarget.value = "";
     }
   };
 
-  const onClickTag = (index) => {
+  const onClickTag = (index: number) => {
     const newTags = [...caseTags].filter((_, i) => i !== index);
     onChangeTags(newTags);
   };

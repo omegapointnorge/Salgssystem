@@ -4,7 +4,7 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Users } from "./components/Users";
 import DndColumns from "./components/dnd/DndColumns/DndColumns";
-import bg from "./assets/bg.jpg";
+import TrashCan from "./components/TrashCan/TrashCan";
 
 // interface user {
 //   firstName: string,
@@ -21,10 +21,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <img src={bg} alt="Logo" className="bg" /> */}
         <Header></Header>
-              <DndColumns />
-          <Users users={this.state.users}></Users>
+        <TrashCan size="s" />
+        <DndColumns />
+        <Users users={this.state.users}></Users>
       </div>
     );
   }

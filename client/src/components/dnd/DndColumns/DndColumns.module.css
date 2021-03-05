@@ -33,3 +33,8 @@ button:hover {
   padding: 1%;
   background-color: rgba(211, 211, 211, 0.70);
 }
+.dndColumnsLoading{
+  text-align: center;
+  font-size: 5rem;
+  color: white;
+}

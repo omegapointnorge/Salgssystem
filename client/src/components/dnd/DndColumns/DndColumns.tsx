@@ -5,78 +5,51 @@ import * as CaseService from "../../../services/CaseService";
 import Case from "../../../models/Case";
 import Status from "../../../constants/Status";
 import styles from "./DndColumns.module.css";
+import { initialColumns } from "../../../constants/DndColumns";
+import { IcolumnList } from "../../../common/types";
 
-interface Icolumn {
-  id: string;
-  list: Case[];
-}
-
-interface IcolumnList {
-  Unassigned: Icolumn;
-  Påbegynt: Icolumn;
-  Vunnet: Icolumn;
-  Tapt: Icolumn;
-}
 
 function DndColumns() {
-  const initialColumns: IcolumnList = {
-    Unassigned: {
-      id: "Unassigned",
-      list: [],
-    },
-    Påbegynt: {
-      id: "Påbegynt",
-      list: [],
-    },
-    Vunnet: {
-      id: "Vunnet",
-      list: [],
-    },
-    Tapt: {
-      id: "Tapt",
-      list: [],
-    },
-  };
   const [columns, setColumns] = useState<IcolumnList>(initialColumns);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchCases();
-  }, []);
-
-  const slettCase = (kolonneId: Status, kortId:string) => {
+  const slettCase = (kolonneId: Status, kortId: string) => {
     let columnsCopy: IcolumnList = { ...columns };
-    columnsCopy[kolonneId].list =columnsCopy[kolonneId].list.filter((card: Case) => card.ID !== kortId);
-    setColumns(columnsCopy);
-  }
-
-  const fetchCases = async () => {
-    let result = await CaseService.getCases();
-    let columnsCopy: IcolumnList = { ...columns };
-
-    result.forEach((caseObject: Case) =>
-      columnsCopy[caseObject.status].list.push(caseObject)
+    columnsCopy[kolonneId].list = columnsCopy[kolonneId].list.filter(
+      (card: Case) => card.ID !== kortId
     );
     setColumns(columnsCopy);
   };
 
-  
+  useEffect(() => {
+    const fetchCases = async () => {
+      try {
+        setLoading(true);
+        const result = await CaseService.getCases();
+        let columnsCopy: IcolumnList = { ...columns };
 
-  // const markup = useCallback(
-  //   (count) => {
-  //     const stringCountCorrection = count + 1;
-  //     return (
-  //       // Some markup that references the sections prop
-  //     );
-  //   },
-  //   [count, /* and any other dependencies the react linter suggests */]
-  // );
+        result.forEach((caseObject: Case) =>
+          columnsCopy[caseObject.status].list.push(caseObject)
+        );
+        setColumns(columnsCopy);
+      } catch (e) {
+        console.error("Det skjedde en feil i henting av data fra databasen: ", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    console.log({ columns });
+
+    if (!columns || columns === initialColumns) fetchCases();
+  }, [columns]);
+
 
   const handleAddCaseClick = () => {
-    const columnsCopy: IcolumnList = {...columns};
+    const columnsCopy: IcolumnList = { ...columns };
 
     columnsCopy.Unassigned.list.push(new Case());
     setColumns(columnsCopy);
-  }
+  };
 
   const onDragStart = () => {
     try {
@@ -84,9 +57,11 @@ function DndColumns() {
     } catch {
       console.log("Kunne ikke kjøre blur() på gitt element");
     }
-  }
+  };
+
 
   const onDragEnd = ({ source, destination }: DropResult) => {
+    // Sjekk om CaseCard har flyttet seg
     if (destination === undefined || destination === null) return null;
     if (
       source.droppableId === destination.droppableId &&
@@ -94,10 +69,11 @@ function DndColumns() {
     ) {
       return null;
     }
-    const start = columns[source.droppableId];
-    const end = columns[destination.droppableId];
 
-    if (start === end) {
+    const start = columns[source.droppableId as keyof typeof columns]; 
+    const end = columns[destination.droppableId as keyof typeof columns];
+
+    if (start === end) { // Flytt CaseCard radvis
       const newList = start.list.filter(
         (_: any, idx: number) => idx !== source.index
       );
@@ -107,9 +83,7 @@ function DndColumns() {
         list: newList,
       };
       setColumns((state) => ({ ...state, [newCol.id]: newCol }));
-      return null;
-    } else {
-      // Kjører om caseKort ender opp i en annen kolonne enn opprinnelig:
+    } else { // Flytt CaseCard til en annen kolonne
       const newStartList = start.list.filter(
         (_: any, idx: number) => idx !== source.index
       );
@@ -137,21 +111,24 @@ function DndColumns() {
     }
   };
 
-
-  return (
-    <div className={styles.dndColumns}>
-      <button onClick={handleAddCaseClick}>
-        <span className={styles.addCardButton}>&#43;</span>
-      </button>
-      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-        <div className={styles.kolonner}>
-          {Object.values(columns).map((col) => (
-            <Column col={col} key={col.id} slettCase={slettCase} />
-          ))}
-        </div>
-      </DragDropContext>
-    </div>
-  );
+  if (!!!loading) {
+    return (
+      <div className={styles.dndColumns}>
+        <button onClick={handleAddCaseClick}>
+          <span className={styles.addCardButton}>&#43;</span>
+        </button>
+        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+          <div className={styles.kolonner}>
+            {Object.values(columns).map((col) => (
+              <Column col={col} key={col.id} slettCase={slettCase} />
+            ))}
+          </div>
+        </DragDropContext>
+      </div>
+    );
+  } else {
+    return <div className={styles.dndColumnsLoading}>LOADING...</div>;
+  }
 }
 
 export default DndColumns;

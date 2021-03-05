@@ -1,9 +1,7 @@
 import React from "react";
-import Greeter from "./Greeter";
 import logo from "../assets/itverketLogo.jpg";
 
 export const Header = () => {
-  console.log(Greeter({ message: "itverket" }));
   return (
     <div className="header">
       <div className="row">

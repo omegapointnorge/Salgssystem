@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Header } from "./components/Header";
+import { Header } from "./components/Header/Header";
 import { Users } from "./components/Users";
 import DndColumns from "./components/dnd/DndColumns/DndColumns";
 

@@ -1,17 +1,3 @@
-.header {
-  width: 100%;
-  padding: 2%;
-  background-color: black;
-  color: white;
-  text-align: center;
-  height: 20vh;
-  z-index: 1;
-}
-
-.logo {
-  width: auto;
-    height: 10vh;
-}
 
 .display-board {
   width: 100%;

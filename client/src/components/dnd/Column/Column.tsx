@@ -4,8 +4,6 @@ import { Droppable } from 'react-beautiful-dnd'
 import Status from '../../../constants/Status'
 import styles from "./Column.module.css";
 
-
-
 interface ColumnProps {
   col: {
     id: string
@@ -13,28 +11,6 @@ interface ColumnProps {
   },
   slettCase: (kolonneId: Status, kortId:string) => void
 }
-
-// const StyledColumn = styled('div', {
-//   padding: '24px 16px',
-//   display: 'flex',
-//   flexDirection: 'column',
-//   marginTop: 8,
-
-//   h2: {
-//     margin: 0,
-//     padding: '0 16px'
-//   }
-// })
-
-// const StyledList = styled('div', {
-//   backgroundColor: '#ddd',
-//   borderRadius: 8,
-//   padding: 16,
-//   display: 'flex',
-//   flexDirection: 'column',
-//   flexGrow: 1,
-//   marginTop: 8
-// })
 
 const Column: React.FC<ColumnProps> = ({ col: { list, id }, slettCase }) => {
   return (

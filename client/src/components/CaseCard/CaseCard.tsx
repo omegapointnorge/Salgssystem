@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import Status from "../../constants/Status";
 import { useDeepCompareEffect } from "../../hooks";
 import Case from "../../models/Case";
@@ -39,29 +39,33 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
     setCaseState(formValues);
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
-      [event.target.name]: event.target.value,
+      [event.currentTarget.name]: event.currentTarget.value,
     } as Pick<Case, keyof Case>);
   };
 
-  const handleMultilineInputChange = (event) => {
+  const handleMultilineInputChange = (
+    event: ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setFormValues({
       ...formValues,
-      [event.target.name]: event.target.value.split("\n"),
+      [event.currentTarget.name]: event.currentTarget.value.split("\n"),
     } as Pick<Case, keyof Case>);
   };
 
-  const handleTagsChange = (caseTags) => {
+  const handleTagsChange = (caseTags: string[]) => {
     setFormValues({
       ...formValues,
       caseTags: caseTags,
     } as Pick<Case, keyof Case>);
   };
 
-  const handleCardDoubleClick = (event) => {
-    event.target.blur();
+  const handleCardDoubleClick = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     getSelection().empty();
     setShowDeleteCardMenu(true);
   };
@@ -77,7 +81,7 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
     <div
       className={styles.card}
       onBlur={(e) => handleCardBlur(e)}
-      onDoubleClick={(e) => handleCardDoubleClick(e)}
+      onDoubleClick={handleCardDoubleClick}
     >
       <DeleteCardMenu
         show={showDeleteCardMenu}

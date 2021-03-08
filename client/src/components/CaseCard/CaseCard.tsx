@@ -20,9 +20,9 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
     ansvarlig,
     caseTags,
     dato,
-    frist,
+    // frist,
     kontakt,
-    kunde,
+    // kunde,
     profilert,
   } = formValues;
 
@@ -31,11 +31,11 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
     setCaseState(formValues);
   }, [formValues.caseTags]);
 
-  useDeepCompareEffect((_) => {
+  useDeepCompareEffect(() => {
     caseObject.saveCase(caseState);
   }, caseState);
 
-  const handleCardBlur = (event) => {
+  const handleCardBlur = () => {
     setCaseState(formValues);
   };
 
@@ -66,7 +66,8 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    getSelection().empty();
+    const selection = getSelection();
+    selection?.empty();
     setShowDeleteCardMenu(true);
   };
 
@@ -80,7 +81,7 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
   return (
     <div
       className={styles.card}
-      onBlur={(e) => handleCardBlur(e)}
+      onBlur={handleCardBlur}
       onDoubleClick={handleCardDoubleClick}
     >
       <DeleteCardMenu

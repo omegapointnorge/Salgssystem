@@ -22,3 +22,9 @@ export interface IcolumnList {
   Vunnet: Icolumn;
   Tapt: Icolumn;
 }
+
+export interface IcontextMenuItem {
+  id: number;
+  name: string;
+  callback: () => void;
+}

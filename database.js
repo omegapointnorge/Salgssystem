@@ -5,7 +5,7 @@ const ddbDocumentClient = new AWS.DynamoDB.DocumentClient();
 
 const TABLE_NAME = `Salgssystem_${process.env.NODE_ENV || "development"}`;
 
-export const getAllCases = async (_) => {
+export const getAllCases = async () => {
   var params = {
     TableName: TABLE_NAME,
   };
@@ -24,8 +24,7 @@ export const saveCase = async (case_object) => {
   };
 
   try {
-    await ddbDocumentClient.put(params).promise();
-    return ID;
+    return await ddbDocumentClient.put(params).promise();
   } catch (error) {
     console.error("Failed to save to database", error.message);
   }
@@ -41,8 +40,7 @@ export const deleteCase = async ({ ID, dato }) => {
   };
 
   try {
-    await ddbDocumentClient.delete(params).promise();
-    return ID;
+    return await ddbDocumentClient.delete(params).promise();
   } catch (error) {
     console.error("Failed to delete from database", error.message);
   }

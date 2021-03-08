@@ -1,6 +1,17 @@
 import styles from "./DeleteCardMenu.module.css";
+import React from "react";
 
-const DeleteCardMenu = ({ show, setShow, deleteCard }) => {
+interface DeleteCardMenuProps {
+  show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteCard: () => void;
+}
+
+const DeleteCardMenu: React.FC<DeleteCardMenuProps> = ({
+  show,
+  setShow,
+  deleteCard,
+}) => {
   if (!show) {
     return null;
   }

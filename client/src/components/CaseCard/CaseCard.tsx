@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Status from "../../constants/Status";
 import { useDeepCompareEffect } from "../../hooks";
+import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
 
+interface CaseCardProps {
+  caseObject: Case;
+  slettCase: (kolonneId: Status, kortId: string) => void;
+}
 
-const CaseCard = ({ caseObject, slettCase }) => {
-  const [caseState, setCaseState] = useState(caseObject);
-  const [formValues, setFormValues] = useState(caseObject);
+const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
+  const [caseState, setCaseState] = useState<Case>(caseObject);
+  const [formValues, setFormValues] = useState<Case>(caseObject);
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
   const {
@@ -20,10 +26,10 @@ const CaseCard = ({ caseObject, slettCase }) => {
     profilert,
   } = formValues;
 
-  useEffect(()=> { // Lytter til oppdateringer på tags
+  useEffect(() => {
+    // Lytter til oppdateringer på tags
     setCaseState(formValues);
   }, [formValues.caseTags]);
-
 
   useDeepCompareEffect((_) => {
     caseObject.saveCase(caseState);
@@ -37,21 +43,21 @@ const CaseCard = ({ caseObject, slettCase }) => {
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
-    });
+    } as Pick<Case, keyof Case>);
   };
 
   const handleMultilineInputChange = (event) => {
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value.split("\n"),
-    });
+    } as Pick<Case, keyof Case>);
   };
 
   const handleTagsChange = (caseTags) => {
     setFormValues({
       ...formValues,
       caseTags: caseTags,
-    });
+    } as Pick<Case, keyof Case>);
   };
 
   const handleCardDoubleClick = (event) => {
@@ -103,4 +109,3 @@ const CaseCard = ({ caseObject, slettCase }) => {
 };
 
 export default CaseCard;
-

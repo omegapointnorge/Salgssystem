@@ -19,7 +19,6 @@ button:hover {
   transform: scale(1.05);
 }
 .dndColumns {
-  /* overflow-x: scroll; */
   height: 100%;
 }
 .kolonner {
@@ -33,4 +32,9 @@ button:hover {
   margin-right: 5%;
   padding: 1%;
   background-color: rgba(211, 211, 211, 0.70);
+}
+.dndColumnsLoading{
+  text-align: center;
+  font-size: 5rem;
+  color: white;
 }

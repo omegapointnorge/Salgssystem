@@ -1,0 +1,17 @@
+.menuContainer {
+  position:absolute;
+  background-color: violet;
+}
+
+.menuContainer ul {
+  background-color: red;
+}
+
+.menuContainer li {
+  background-color: green;
+}
+
+.menuContainer li:hover {
+  background-color: blue;
+  cursor: pointer;
+}

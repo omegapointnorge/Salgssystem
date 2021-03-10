@@ -1,5 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
-import { useDeepCompareEffect } from "../../hooks";
+import React, { useEffect, useRef, useState, ChangeEvent } from "react";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
@@ -8,10 +7,14 @@ import styles from "./CaseCard.module.css";
 interface CaseCardProps {
   caseObject: Case;
   slettCase: (caseObject: Case) => void;
+  editCase: (caseObject: Case) => void;
 }
 
-const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
-  const [caseState, setCaseState] = useState<Case>(caseObject);
+const CaseCard: React.FC<CaseCardProps> = ({
+  caseObject,
+  slettCase,
+  editCase,
+}) => {
   const [formValues, setFormValues] = useState<Case>(caseObject);
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
@@ -25,17 +28,18 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
     profilert,
   } = formValues;
 
+  const firstUpdate = useRef(true);
   useEffect(() => {
-    // Lytter til oppdateringer på tags
-    setCaseState(formValues);
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    editCase(formValues);
   }, [formValues.caseTags]);
 
-  useDeepCompareEffect(() => {
-    caseObject.saveCase(caseState);
-  }, caseState);
-
   const handleCardBlur = () => {
-    setCaseState(formValues);
+    editCase(formValues);
+    console.log("blur");
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +75,6 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
   };
 
   const handleDeleteCaseClick = () => {
-    caseObject.deleteCase();
     // Oppdater state til DND
     slettCase(caseObject);
     setShowDeleteCardMenu(false);

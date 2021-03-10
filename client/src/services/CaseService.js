@@ -15,7 +15,7 @@ export async function saveCase(caseObject) {
   return await response.json();
 }
 
-export async function deleteCase(ID, dato) {
+export async function deleteCase({ ID, dato }) {
   const response = await fetch(`/api/case`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },

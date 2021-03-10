@@ -3,93 +3,18 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import Column from "./../Column/Column";
 import * as CaseService from "../../../services/CaseService";
 import Case from "../../../models/Case";
-import Status from "../../../constants/Status";
 import styles from "./DndColumns.module.css";
 import { initialColumns } from "../../../constants/DndColumns";
-import { IColumnList } from "../../../common/types";
-
-enum Action {
-  MOVE,
-  ADD,
-  DELETE,
-}
-
-type ColumnsAction = {
-  type: Action;
-  payload?: any;
-};
-
-const columnsReducer: Reducer<IColumnList, ColumnsAction> = (
-  columns,
-  action
-) => {
-  switch (action.type) {
-    case Action.MOVE: {
-      let { from, to } = action.payload;
-
-      if (from.id === to.id) {
-        //Flytt til ny index i samme kolonne
-        let fromList = [...columns[from.id].list];
-        fromList.splice(to.index, 0, fromList.splice(from.index, 1)[0]);
-        return { ...columns, [from.id]: { id: from.id, list: fromList } };
-      } else {
-        //Flytt til ny index i ny kolonne
-        let fromList = [...columns[from.id].list];
-        let toList = [...columns[to.id].list];
-
-        let caseObject = fromList.splice(from.index, 1)[0];
-        toList.splice(to.index, 0, caseObject);
-
-        //Lagre ny status i database
-        caseObject.status = Status[to.id.toUpperCase()];
-        CaseService.saveCase(caseObject);
-
-        return {
-          ...columns,
-          [from.id]: { id: from.id, list: fromList },
-          [to.id]: { id: to.id, list: toList },
-        };
-      }
-    }
-    case Action.ADD: {
-      let { cases } = action.payload;
-
-      let columnsCopy = Object.values(columns)
-        .map((col) => ({ ...col, list: [...col.list] }))
-        .reduce((acc, col) => {
-          acc[col.id] = col;
-          return acc;
-        }, {});
-
-      cases.forEach((caseObject: Case) =>
-        columnsCopy[caseObject.status].list.push(caseObject)
-      );
-
-      return columnsCopy;
-    }
-    case Action.DELETE: {
-      let { from, cases } = action.payload;
-
-      let caseIds = cases.map((caseObject: Case) => caseObject.ID);
-      let newList = columns[from.id].list.filter(
-        (caseObject: Case) => !caseIds.includes(caseObject.ID)
-      );
-
-      return {
-        ...columns,
-        [from.id]: { id: from.id, list: newList },
-      };
-    }
-    default:
-      throw new Error(`Unhandled type: ${action.type}`);
-  }
-};
+import { ColumnsAction, IColumnList, Action } from "../../../common/types";
+import Item from "../Item/Item";
+import CaseCard from "../../CaseCard/CaseCard";
+import dndColumnsReducer from "./DndColumnsReducer";
 
 function DndColumns() {
   const [loading, setLoading] = useState(false);
   const [columns, columnDispatcher] = useReducer<
     Reducer<IColumnList, ColumnsAction>
-  >(columnsReducer, initialColumns);
+  >(dndColumnsReducer, initialColumns);
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -115,9 +40,21 @@ function DndColumns() {
       type: Action.DELETE,
       payload: {
         from: { id: caseObject.status.toString() },
-        cases: [caseObject],
+        caseObject: caseObject,
       },
     });
+    CaseService.deleteCase(caseObject);
+  };
+
+  const editCase = (caseObject: Case) => {
+    columnDispatcher({
+      type: Action.EDIT,
+      payload: {
+        from: { id: caseObject.status.toString() },
+        caseObject: caseObject,
+      },
+    });
+    CaseService.saveCase(caseObject);
   };
 
   const handleAddCaseClick = () => {
@@ -140,6 +77,8 @@ function DndColumns() {
       return null;
     }
 
+    const caseObject = columns[source.droppableId].list[source.index];
+
     columnDispatcher({
       type: Action.MOVE,
       payload: {
@@ -147,6 +86,10 @@ function DndColumns() {
         to: { id: destination.droppableId, index: destination.index },
       },
     });
+
+    if (source.droppableId !== destination.droppableId) {
+      CaseService.saveCase(caseObject);
+    }
   };
 
   if (!!!loading) {
@@ -158,7 +101,21 @@ function DndColumns() {
         <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
           <div className={styles.kolonner}>
             {Object.values(columns).map((col) => (
-              <Column col={col} key={col.id} slettCase={slettCase} />
+              <Column colId={col.id} key={col.id}>
+                {col.list.map((caseObject: Case, index: number) => (
+                  <Item
+                    key={caseObject.ID}
+                    caseObject={caseObject}
+                    index={index}
+                  >
+                    <CaseCard
+                      caseObject={caseObject}
+                      slettCase={slettCase}
+                      editCase={editCase}
+                    />
+                  </Item>
+                ))}
+              </Column>
             ))}
           </div>
         </DragDropContext>

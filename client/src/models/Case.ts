@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import Status from "../constants/Status";
-import * as CaseService from "../services/CaseService"
+import * as CaseService from "../services/CaseService";
 
 class Case {
   ID: string;
@@ -32,22 +32,27 @@ class Case {
     this.kunde = kunde;
     this.profilert = profilert;
     this.status = status;
-  
   }
 
-  async deleteCase () {
-    await CaseService.deleteCase(
-      this.ID,
-      this.dato
-    );
-  };
+  async deleteCase() {
+    await CaseService.deleteCase(this.ID, this.dato);
+  }
 
-  async saveCase (caseObject: Case) {
-    await CaseService.saveCase(
-      caseObject
-    );
+  async saveCase(caseObject: Case) {
+    await CaseService.saveCase(caseObject);
     Object.assign(this, caseObject);
-  };
+  }
+
+  isInvalid(): boolean {
+    return (
+      this.status === Status.UNASSIGNED &&
+      (// this.ansvarlig === "" ||
+      this.kontakt === "" ||
+        // this.kunde === "" ||
+        this.caseTags.length === 0 ||
+        this.profilert.length === 0)
+    );
+  }
 }
 
 export default Case;

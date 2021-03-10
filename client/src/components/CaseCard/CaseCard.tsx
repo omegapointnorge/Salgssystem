@@ -1,5 +1,4 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
-import Status from "../../constants/Status";
 import { useDeepCompareEffect } from "../../hooks";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
@@ -8,7 +7,7 @@ import styles from "./CaseCard.module.css";
 
 interface CaseCardProps {
   caseObject: Case;
-  slettCase: (kolonneId: Status, kortId: string) => void;
+  slettCase: (caseObject: Case) => void;
 }
 
 const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
@@ -74,7 +73,7 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
   const handleDeleteCaseClick = () => {
     caseObject.deleteCase();
     // Oppdater state til DND
-    slettCase(caseObject.status, caseObject.ID);
+    slettCase(caseObject);
     setShowDeleteCardMenu(false);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer, Reducer } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import Column from "./../Column/Column";
 import * as CaseService from "../../../services/CaseService";
@@ -6,59 +6,129 @@ import Case from "../../../models/Case";
 import Status from "../../../constants/Status";
 import styles from "./DndColumns.module.css";
 import { initialColumns } from "../../../constants/DndColumns";
-import { IcolumnList } from "../../../common/types";
+import { IColumnList } from "../../../common/types";
 
+enum Action {
+  MOVE,
+  ADD,
+  DELETE,
+}
+
+type ColumnsAction = {
+  type: Action;
+  payload?: any;
+};
+
+const columnsReducer: Reducer<IColumnList, ColumnsAction> = (
+  columns,
+  action
+) => {
+  switch (action.type) {
+    case Action.MOVE: {
+      let { from, to } = action.payload;
+
+      if (from.id === to.id) {
+        //Flytt til ny index i samme kolonne
+        let fromList = [...columns[from.id].list];
+        fromList.splice(to.index, 0, fromList.splice(from.index, 1)[0]);
+        return { ...columns, [from.id]: { id: from.id, list: fromList } };
+      } else {
+        //Flytt til ny index i ny kolonne
+        let fromList = [...columns[from.id].list];
+        let toList = [...columns[to.id].list];
+
+        let caseObject = fromList.splice(from.index, 1)[0];
+        toList.splice(to.index, 0, caseObject);
+
+        //Lagre ny status i database
+        caseObject.status = Status[to.id.toUpperCase()];
+        CaseService.saveCase(caseObject);
+
+        return {
+          ...columns,
+          [from.id]: { id: from.id, list: fromList },
+          [to.id]: { id: to.id, list: toList },
+        };
+      }
+    }
+    case Action.ADD: {
+      let { cases } = action.payload;
+
+      let columnsCopy = Object.values(columns)
+        .map((col) => ({ ...col, list: [...col.list] }))
+        .reduce((acc, col) => {
+          acc[col.id] = col;
+          return acc;
+        }, {});
+
+      cases.forEach((caseObject: Case) =>
+        columnsCopy[caseObject.status].list.push(caseObject)
+      );
+
+      return columnsCopy;
+    }
+    case Action.DELETE: {
+      let { from, cases } = action.payload;
+
+      let caseIds = cases.map((caseObject: Case) => caseObject.ID);
+      let newList = columns[from.id].list.filter(
+        (caseObject: Case) => !caseIds.includes(caseObject.ID)
+      );
+
+      return {
+        ...columns,
+        [from.id]: { id: from.id, list: newList },
+      };
+    }
+    default:
+      throw new Error(`Unhandled type: ${action.type}`);
+  }
+};
 
 function DndColumns() {
-  const [columns, setColumns] = useState<IcolumnList>(initialColumns);
   const [loading, setLoading] = useState(false);
-
-  const slettCase = (kolonneId: Status, kortId: string) => {
-    let columnsCopy: IcolumnList = { ...columns };
-    columnsCopy[kolonneId].list = columnsCopy[kolonneId].list.filter(
-      (card: Case) => card.ID !== kortId
-    );
-    setColumns(columnsCopy);
-  };
+  const [columns, columnDispatcher] = useReducer<
+    Reducer<IColumnList, ColumnsAction>
+  >(columnsReducer, initialColumns);
 
   useEffect(() => {
     const fetchCases = async () => {
       try {
         setLoading(true);
         const result = await CaseService.getCases();
-        let columnsCopy: IcolumnList = { ...columns };
-
-        result.forEach((caseObject: Case) =>
-          columnsCopy[caseObject.status].list.push(caseObject)
-        );
-        setColumns(columnsCopy);
+        columnDispatcher({ type: Action.ADD, payload: { cases: result } });
       } catch (e) {
-        console.error("Det skjedde en feil i henting av data fra databasen: ", e);
+        console.error(
+          "Det skjedde en feil i henting av data fra databasen: ",
+          e
+        );
       } finally {
         setLoading(false);
       }
     };
-    console.log({ columns });
 
     if (!columns || columns === initialColumns) fetchCases();
   }, [columns]);
 
+  const slettCase = (caseObject: Case) => {
+    columnDispatcher({
+      type: Action.DELETE,
+      payload: {
+        from: { id: caseObject.status.toString() },
+        cases: [caseObject],
+      },
+    });
+  };
 
   const handleAddCaseClick = () => {
-    const columnsCopy: IcolumnList = { ...columns };
-
-    columnsCopy.Unassigned.list.push(new Case());
-    setColumns(columnsCopy);
+    columnDispatcher({ type: Action.ADD, payload: { cases: [new Case()] } });
   };
 
   const onDragStart = () => {
-    try {
-      (document.activeElement as HTMLElement).blur();
-    } catch {
-      console.log("Kunne ikke kjøre blur() på gitt element");
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
     }
   };
-
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     // Sjekk om CaseCard har flyttet seg
@@ -70,45 +140,13 @@ function DndColumns() {
       return null;
     }
 
-    const start = columns[source.droppableId as keyof typeof columns]; 
-    const end = columns[destination.droppableId as keyof typeof columns];
-
-    if (start === end) { // Flytt CaseCard radvis
-      const newList = start.list.filter(
-        (_: any, idx: number) => idx !== source.index
-      );
-      newList.splice(destination.index, 0, start.list[source.index]);
-      const newCol = {
-        id: start.id,
-        list: newList,
-      };
-      setColumns((state) => ({ ...state, [newCol.id]: newCol }));
-    } else { // Flytt CaseCard til en annen kolonne
-      const newStartList = start.list.filter(
-        (_: any, idx: number) => idx !== source.index
-      );
-      const newStartCol = {
-        id: start.id,
-        list: newStartList,
-      };
-      const newEndList = end.list;
-      newEndList.splice(destination.index, 0, start.list[source.index]);
-      const newEndCol = {
-        id: end.id,
-        list: newEndList,
-      };
-      // Lagre oppdatert posisjon av caseKort i database:
-      const caseObject: Case = start.list[source.index];
-      caseObject["status"] =
-        Status[end.id.toUpperCase() as keyof typeof Status];
-      CaseService.saveCase(caseObject);
-      setColumns((state) => ({
-        ...state,
-        [newStartCol.id]: newStartCol,
-        [newEndCol.id]: newEndCol,
-      }));
-      return null;
-    }
+    columnDispatcher({
+      type: Action.MOVE,
+      payload: {
+        from: { id: source.droppableId, index: source.index },
+        to: { id: destination.droppableId, index: destination.index },
+      },
+    });
   };
 
   if (!!!loading) {

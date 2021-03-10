@@ -11,16 +11,16 @@ export const errors = {
 }
 
 
-export interface Icolumn { // export?
+export interface IColumn { // export?
   id: string;
   list: Case[];
 }
 
-export interface IcolumnList {
-  Unassigned: Icolumn;
-  Påbegynt: Icolumn;
-  Vunnet: Icolumn;
-  Tapt: Icolumn;
+export interface IColumnList {
+  Unassigned: IColumn;
+  Påbegynt: IColumn;
+  Vunnet: IColumn;
+  Tapt: IColumn;
 }
 
 export interface IcontextMenuItem {

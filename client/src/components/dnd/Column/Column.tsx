@@ -1,15 +1,15 @@
 import React from 'react'
 import Item from '../Item/Item'
 import { Droppable } from 'react-beautiful-dnd'
-import Status from '../../../constants/Status'
 import styles from "./Column.module.css";
+import Case from '../../../models/Case';
 
 interface ColumnProps {
   col: {
     id: string
     list: any[],
   },
-  slettCase: (kolonneId: Status, kortId:string) => void
+  slettCase: (caseObject: Case) => void
 }
 
 const Column: React.FC<ColumnProps> = ({ col: { list, id }, slettCase }) => {

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import * as _ from "lodash";
+import { isEqual } from "lodash";
 import { usePrevious } from ".";
 
 const useDeepCompareEffect = (callback, obj) => {
   const previousObj = usePrevious(obj);
   useEffect(() => {
-    if (previousObj && !_.isEqual(previousObj, obj)) {
-      callback(obj);
+    if (previousObj && !isEqual(previousObj, obj)) {
+      callback();
     }
   }, [obj, previousObj, callback]);
 };

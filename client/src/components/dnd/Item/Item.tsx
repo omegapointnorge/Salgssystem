@@ -1,20 +1,23 @@
-import React from "react";
+import React/*, { useState }*/ from "react";
 import { Draggable } from "react-beautiful-dnd";
-import Status from "../../../constants/Status";
+import Case from "../../../models/Case";
 import CaseCard from "../../CaseCard/CaseCard";
 import styles from "./Item.module.css";
 
 interface ItemProps {
-  caseObject: any;
+  caseObject: Case;
   index: number;
-  slettCase: (kolonneId: Status, kortId:string) => void
+  slettCase: (caseObject: Case) => void;
 }
 
 const Item: React.FC<ItemProps> = ({ caseObject, index, slettCase }) => {
+  // const [isDragDisabled, setIsDragDisabled] = useState(caseObject.isInvalid());
+
   return (
-    <Draggable draggableId={caseObject.ID} index={index}>
+    <Draggable draggableId={caseObject.ID} index={index} /*isDragDisabled={isDragDisabled}*/>
       {(provided) => (
-        <div className={styles.item}
+        <div
+          className={styles.item}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

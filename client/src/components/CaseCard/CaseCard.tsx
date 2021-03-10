@@ -39,7 +39,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
 
   const handleCardBlur = () => {
     editCase(formValues);
-    console.log("blur");
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

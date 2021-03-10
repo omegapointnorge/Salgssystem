@@ -1,5 +1,6 @@
-import React /*, { useState }*/ from "react";
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
+import Status from "../../../constants/Status";
 import Case from "../../../models/Case";
 import styles from "./Item.module.css";
 
@@ -8,14 +9,26 @@ interface ItemProps {
   index: number;
 }
 
+
+
+const isInvalid = (caseObject: Case): boolean => {
+  return (
+    caseObject.status === Status.UNASSIGNED && // this.ansvarlig === "" ||
+    (caseObject.kontakt === "" ||
+      // this.kunde === "" ||
+      caseObject.caseTags.length === 0 ||
+      caseObject.profilert.length === 0)
+  );
+}
+
 const Item: React.FC<ItemProps> = (props) => {
   const { caseObject, index } = props;
-  // const [isDragDisabled, setIsDragDisabled] = useState(caseObject.isInvalid());
-
+  
   return (
     <Draggable
       draggableId={caseObject.ID}
-      index={index} /*isDragDisabled={isDragDisabled}*/
+      index={index}
+      isDragDisabled={isInvalid(caseObject)}
     >
       {(provided) => (
         <div

@@ -32,17 +32,6 @@ class Case {
     this.profilert = profilert;
     this.status = status;
   }
-
-  isInvalid(): boolean {
-    return (
-      this.status === Status.UNASSIGNED &&
-      (// this.ansvarlig === "" ||
-      this.kontakt === "" ||
-        // this.kunde === "" ||
-        this.caseTags.length === 0 ||
-        this.profilert.length === 0)
-    );
-  }
 }
 
 export default Case;

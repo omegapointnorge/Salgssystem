@@ -1,6 +1,5 @@
 import { v4 as uuid } from "uuid";
 import Status from "../constants/Status";
-import * as CaseService from "../services/CaseService"
 
 class Case {
   ID: string;
@@ -32,22 +31,7 @@ class Case {
     this.kunde = kunde;
     this.profilert = profilert;
     this.status = status;
-  
   }
-
-  async deleteCase () {
-    await CaseService.deleteCase(
-      this.ID,
-      this.dato
-    );
-  };
-
-  async saveCase (caseObject: Case) {
-    await CaseService.saveCase(
-      caseObject
-    );
-    Object.assign(this, caseObject);
-  };
 }
 
 export default Case;

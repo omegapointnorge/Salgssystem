@@ -1,0 +1,7 @@
+.ownerAvatar {
+  background: rgb(121, 102, 102);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  align-self: flex-start;
+}

@@ -24,7 +24,7 @@ export interface IcolumnList {
 }
 
 export interface IcontextMenuItem {
-  id: number;
+  id: number | 0;
   name: string;
   callback: () => void;
 }

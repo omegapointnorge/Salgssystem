@@ -1,6 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Motion, spring } from "react-motion";
+import { IcontextMenuItem } from "src/common/types";
 import styles from "./ContextMenu.module.css";
+
+interface ContextMenuProps {
+  menu: IcontextMenuItem[];
+  // ref: RefObject<unknown>;
+}
 
 const useContextMenu = () => {
   const [xPos, setXPos] = useState("0px");
@@ -9,8 +14,8 @@ const useContextMenu = () => {
 
   const handleContextMenu = useCallback(
     (e) => {
+    console.log({e})
       e.preventDefault();
-
       setXPos(`${e.pageX}px`);
       setYPos(`${e.pageY}px`);
       setShowMenu(true);
@@ -34,37 +39,37 @@ const useContextMenu = () => {
   return { xPos, yPos, showMenu };
 };
 
-export const ContextMenu = ({ menu }) => {
+// Kan utvides til å ta inn ikoner og lignedne, bare legge på en <span> i <li> elementet tenker jeg
+
+// Må ha noe som gjør at normale click også kan brukes?
+export const ContextMenu: React.FC<ContextMenuProps> = ({ menu }) => {
+  // console.log("Kjører ContextMenu");
   const { xPos, yPos, showMenu } = useContextMenu();
-  return (
-    <Motion
-      defaultStyle={{ opacity: 0 }}
-      style={{ opacity: !showMenu ? spring(0) : spring(1) }}
-    >
-      {(interpolatedStyle) => (
-        <>
-          {showMenu ? (
-            <div
-              className={styles.menuContainer}
-              style={{
-                top: yPos,
-                left: xPos,
-                opacity: interpolatedStyle.opacity,
+
+  // console.log({ref});
+
+  if (showMenu) {
+    return (
+      <div
+        className={styles.menuContainer}
+        style={{
+          top: yPos,
+          left: xPos,
+        }}
+      >
+        <ul>
+          {menu.map((menuItem) => (
+            <li
+              key={menuItem.id}
+              onClick={() => {
+                menuItem.callback();
               }}
             >
-              <ul>
-                {menu.map((menuItem, id) => (
-                  <li id={menuItem.id} onClick={() => {menuItem.callback()}}>
-                    {menuItem.name}{" "}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <></>
-          )}
-        </>
-      )}
-    </Motion>
-  );
+              {menuItem.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  } else return null;
 };

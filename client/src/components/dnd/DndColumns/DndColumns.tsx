@@ -38,7 +38,6 @@ function DndColumns() {
         setLoading(false);
       }
     };
-    console.log({ columns });
 
     if (!columns || columns === initialColumns) fetchCases();
   }, [columns]);

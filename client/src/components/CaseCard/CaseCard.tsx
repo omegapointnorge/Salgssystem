@@ -2,6 +2,7 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import Status from "../../constants/Status";
 import { useDeepCompareEffect } from "../../hooks";
 import Case from "../../models/Case";
+import { Ansvarlig } from "../Ansvarlig/Ansvarlig";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
@@ -89,9 +90,11 @@ const CaseCard: React.FC<CaseCardProps> = ({ caseObject, slettCase }) => {
         setShow={setShowDeleteCardMenu}
         deleteCard={handleDeleteCaseClick}
       />
+
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
-        <div className={styles.ownerAvatar}>{ansvarlig}</div>
+        <Ansvarlig ansvarlig={ansvarlig} />
+        {/* <div className={styles.ownerAvatar}>{ansvarlig}</div> */}
       </div>
       <div className={styles.details}>
         <div>{dato?.toLocaleDateString()}</div>

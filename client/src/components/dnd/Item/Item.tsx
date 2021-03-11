@@ -1,25 +1,43 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import Status from "../../../constants/Status";
-import CaseCard from "../../CaseCard/CaseCard";
+import Case from "../../../models/Case";
 import styles from "./Item.module.css";
 
 interface ItemProps {
-  caseObject: any;
+  caseObject: Case;
   index: number;
-  slettCase: (kolonneId: Status, kortId:string) => void
 }
 
-const Item: React.FC<ItemProps> = ({ caseObject, index, slettCase }) => {
+
+
+const isInvalid = (caseObject: Case): boolean => {
   return (
-    <Draggable draggableId={caseObject.ID} index={index}>
+    caseObject.status === Status.UNASSIGNED && // this.ansvarlig === "" ||
+    (caseObject.kontakt === "" ||
+      // this.kunde === "" ||
+      caseObject.caseTags.length === 0 ||
+      caseObject.profilert.length === 0)
+  );
+}
+
+const Item: React.FC<ItemProps> = (props) => {
+  const { caseObject, index } = props;
+  
+  return (
+    <Draggable
+      draggableId={caseObject.ID}
+      index={index}
+      isDragDisabled={isInvalid(caseObject)}
+    >
       {(provided) => (
-        <div className={styles.item}
+        <div
+          className={styles.item}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <CaseCard caseObject={caseObject} slettCase={slettCase} />
+          {props.children}
         </div>
       )}
     </Draggable>

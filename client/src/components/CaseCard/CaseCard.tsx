@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, ChangeEvent } from "react";
 import Case from "../../models/Case";
-import { Ansvarlig } from "../Ansvarlig/Ansvarlig";
+import { Ansvarlig } from "../Ansvarlig/Ansvarlig"
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
@@ -91,7 +91,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
         setShow={setShowDeleteCardMenu}
         deleteCard={handleDeleteCaseClick}
       />
-
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <Ansvarlig ansvarlig={ansvarlig} />

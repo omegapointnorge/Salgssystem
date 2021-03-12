@@ -1,6 +1,7 @@
 .menuContainer {
   position:absolute;
   background-color: violet;
+  z-index: 10;
 }
 
 .menuContainer ul {

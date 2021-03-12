@@ -6,13 +6,15 @@ const initialState: CountState = {
 };
 
 export default function countReducer (state = initialState, action: CountTypes) { 
-  console.log("Kjører countReducer med action: ", action);
-  console.log(state);
   switch (action.type) {
     case INCREMENT:
-      return 2;
+      return Object.assign({}, state, {
+        value: state.value +1
+      })
     case DECREMENT:
-      return +state - 1;
+      return Object.assign({}, state, {
+        value: state.value -1
+      })
     default:
       return state;
   }

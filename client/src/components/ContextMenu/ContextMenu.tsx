@@ -49,12 +49,12 @@ interface ContextMenuProps {
 export const ContextMenu: React.FC<ContextMenuProps> = ({ menu, xPos, yPos, showMenu }) => {
 
 
-  console.log("Kjører ContextMenu");
+  // console.log("Kjører ContextMenu");
   // const { xPos, yPos, showMenu } = useContextMenu();
 
   // console.log({ref});
 
-  console.log({showMenu});
+  // console.log({showMenu});
 
   if (showMenu) {
     return (

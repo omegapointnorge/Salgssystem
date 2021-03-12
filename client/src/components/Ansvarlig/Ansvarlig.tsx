@@ -39,16 +39,16 @@ export const Ansvarlig: React.FC<CaseCardProps> = ({ ansvarlig }) => {
       // setXOffset(`${e.layerX}px`);
       // setYOffset(`${e.offsetY}px`);
 
-      console.log("SETTER TIL TRUE!!");
+      // console.log("SETTER TIL TRUE!!");
       setShowMenu(true);
     },
     [setXPos, setYPos]
   );
 
   const handleClick = React.useCallback(() => {
-    console.log("HANDLE CLICK");
+    // console.log("HANDLE CLICK");
     showMenu && setShowMenu(false);
-    console.log("Blir jeg satt til FALSE?: ", showMenu);
+    // console.log("Blir jeg satt til FALSE?: ", showMenu);
   }, [showMenu]);
 
   React.useEffect(() => {
@@ -89,10 +89,10 @@ export const Ansvarlig: React.FC<CaseCardProps> = ({ ansvarlig }) => {
   React.useEffect(() => {
     // This effect uses the `value` variable,
     // so it "depends on" `value`.
-    console.log({showMenu});
+    // console.log({showMenu});
   }, [showMenu]) 
 
-  console.log("showMenu in Ansvarlig.js: ", showMenu);
+  // console.log("showMenu in Ansvarlig.js: ", showMenu);
 
   return (
     <>

@@ -41,3 +41,7 @@ export type ColumnsAction = {
   type: Action;
   payload?: any;
 };
+
+export interface CountState {
+  value: number;
+}

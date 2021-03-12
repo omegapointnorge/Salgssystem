@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from 'react-redux';
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Header } from "./components/Header/Header";
+import Header from "./components/Header/Header";
 import DndColumns from "./components/dnd/DndColumns/DndColumns";
+import store from "./redux/store";
 
 class App extends Component {
   state = {
@@ -11,13 +13,16 @@ class App extends Component {
     numberOfUsers: 0,
   };
 
+  // store = createStore(store);
 
   render() {
     return (
+      <Provider store={store}>
       <div className="App">
         <Header />
         <DndColumns />
       </div>
+      </Provider>
     );
   }
 }

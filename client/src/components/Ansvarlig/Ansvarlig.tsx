@@ -1,99 +1,84 @@
 import React from "react";
-import { ContextMenu } from "../ContextMenu/ContextMenu";
+import { connect } from "react-redux";
 import { IcontextMenuItem } from "src/common/types";
-// import { ContextMenu } from "../ContextMenu/ContextMenu";
+import { setMenusOpen } from "src/redux/actions";
+import { ContextMenu } from "../ContextMenu/ContextMenu";
 import styles from "./Ansvarlig.module.css";
+import avatar1 from "../../assets/avatar1.png";
+import avatar2 from "../../assets/avatar2.png";
+import avatar3 from "../../assets/avatar3.png";
+import { MenusOpenAction } from "src/redux/reducers/menusOpen";
 
-interface CaseCardProps {
+interface AnsvarligProps {
   ansvarlig: string;
+  onChange: (ansvarlig: string) => void;
+  menusOpen: boolean;
+  setMenusOpen: (menusOpen: boolean) => void;
 }
 
-export const Ansvarlig: React.FC<CaseCardProps> = ({ ansvarlig }) => {
+const Ansvarlig: React.FC<AnsvarligProps> = ({
+  ansvarlig,
+  onChange,
+  menusOpen,
+  setMenusOpen,
+}) => {
   const contextMenuArray: IcontextMenuItem[] = [
-    { id: 0, name: "Slett", callback: () => console.log("Clicked item 1") },
-    { id: 1, name: "Lagre", callback: () => console.log("Clicked item 2") },
-    { id: 2, name: "Rediger", callback: () => console.log("Clicked item 3") },
+    {
+      id: 0,
+      name: "Anniken",
+      callback: (ansvarlig: string) => onChange(ansvarlig),
+      image: avatar1,
+    },
+    {
+      id: 1,
+      name: "Lotte",
+      callback: (ansvarlig: string) => onChange(ansvarlig),
+      image: avatar2,
+    },
+    {
+      id: 2,
+      name: "Frida",
+      callback: (ansvarlig: string) => onChange(ansvarlig),
+      image: avatar3,
+    },
   ];
 
   const [showMenu, setShowMenu] = React.useState(false);
   const [xPos, setXPos] = React.useState("0px");
   const [yPos, setYPos] = React.useState("0px");
 
-  // const [xOffset, setXOffset] = React.useState("0px");
-  // const [yOffset, setYOffset] = React.useState("0px");
-
   const observed = React.useRef<HTMLDivElement>(null);
-  // const currentRef = observed.current!;
 
   const handleContextMenu = React.useCallback(
     (e) => {
-      // console.log({ e });
-      // console.log(xPos + " " + yPos); // Blir allitd det samme?
-      // if (currentRef) {
-      //   console.log(currentRef.getBoundingClientRect());
-      // }
       e.preventDefault();
       setXPos(`${e.layerX}px`);
       setYPos(`${e.offsetY}px`);
-
-      // setXOffset(`${e.layerX}px`);
-      // setYOffset(`${e.offsetY}px`);
-
-      // console.log("SETTER TIL TRUE!!");
       setShowMenu(true);
+      setMenusOpen(true);
     },
-    [setXPos, setYPos]
+    [setMenusOpen]
   );
 
   const handleClick = React.useCallback(() => {
-    // console.log("HANDLE CLICK");
-    showMenu && setShowMenu(false);
-    // console.log("Blir jeg satt til FALSE?: ", showMenu);
-  }, [showMenu]);
-
-  React.useEffect(() => {
-    // console.log(observed.current);
-    const currentRef = observed.current!;
-    // console.log(xPos + " " + yPos);
-    // console.log(currentRef.getBoundingClientRect());
-    currentRef.addEventListener("click", handleClick);
-    currentRef.addEventListener("contextmenu", handleContextMenu);
-    return () => {
-      currentRef.removeEventListener("click", handleClick);
-      currentRef.removeEventListener("contextmenu", handleContextMenu);
-    };
+    setShowMenu(false);
+    setMenusOpen(false);
   }, []);
 
-  // React.useEffect(() => {
-  //   console.log("Update");
-  //   renderContextMenu();
-  // }, [showMenu, contextMenuArray, xPos, yPos]);
-
-  // const renderContextMenu = () => {
-  //   console.log("RENDER");
-  //   return (
-  //     <ContextMenu
-  //       menu={contextMenuArray}
-  //       xPos={xPos}
-  //       yPos={yPos}
-  //       showMenu={showMenu}
-  //     />
-  //   );
-  // };
-
-  // const handleClick = (e: any) => {
-  //   e.preventDefault();
-  //   console.log(e.type);
-  // };
-
   React.useEffect(() => {
-    // This effect uses the `value` variable,
-    // so it "depends on" `value`.
-    // console.log({showMenu});
-  }, [showMenu]) 
+    const currentRef = observed.current!;
+    document.addEventListener("click", handleClick);
+    currentRef.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      document.removeEventListener("click", handleClick);
+      currentRef.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, [handleClick, handleContextMenu]);
 
-  // console.log("showMenu in Ansvarlig.js: ", showMenu);
-
+  const avatarImage = contextMenuArray.find(
+    (element) => element.name === ansvarlig
+  )?.image;
+  
   return (
     <>
       <ContextMenu
@@ -102,13 +87,23 @@ export const Ansvarlig: React.FC<CaseCardProps> = ({ ansvarlig }) => {
         yPos={yPos}
         showMenu={showMenu}
       />
-      <div
-        ref={observed}
-        // onClick={(e) => handleClick(e)}
-        className={styles.ownerAvatar}
-      >
-        {ansvarlig}
+      <div ref={observed} className={styles.ownerAvatar}>
+        {avatarImage && (
+          <img src={avatarImage} alt="avatar" className={styles.ownerAvatar} />
+        )}
       </div>
     </>
   );
 };
+
+const mapStateToProps = ({
+  menusOpenReducer,
+}: {
+  menusOpenReducer: MenusOpenAction;
+}) => {
+  return {
+    menusOpen: menusOpenReducer.payload,
+  };
+};
+
+export default connect(mapStateToProps, { setMenusOpen })(Ansvarlig);

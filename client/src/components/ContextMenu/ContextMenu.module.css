@@ -1,7 +1,39 @@
 .menuContainer {
-  position:absolute;
+  position: absolute;
   background-color: violet;
   z-index: 10;
+  height: 10vh;
+  /* float: left; */
+}
+
+.menuElement {
+  position: relative;
+  background-color: green;
+  display: inline-flex;
+  width: 300%;
+  height: 100%;
+  /* width: 50%; */
+  /* height: 20%; */
+}
+
+.menuElement:hover {
+  background-color: blue;
+  cursor: pointer;
+}
+
+.menuText {
+  text-align: center;
+  /* width: 50%; */
+}
+
+.avatar {
+  color: red;
+  width: 100%;
+  padding: 5%;
+  /* height: auto; */
+  flex: auto;
+  /* left: auto; */
+  /* text-align: right */
 }
 
 .menuContainer ul {

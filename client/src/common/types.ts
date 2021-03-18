@@ -27,7 +27,9 @@ export interface IColumnList {
 export interface IcontextMenuItem {
   id: number | 0;
   name: string;
-  callback: () => void;
+  callback: any;
+  // callback: () => void;
+  image: string;
 }
 
 export enum Action {
@@ -45,3 +47,8 @@ export type ColumnsAction = {
 export interface CountState {
   value: number;
 }
+
+// export interface ContextMenuState {
+//   menusOpen: boolean;
+
+// }

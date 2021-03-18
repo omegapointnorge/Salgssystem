@@ -5,3 +5,7 @@
   border-radius: 50%;
   align-self: flex-start;
 }
+
+.ownerAvatar:hover {
+  background: rgb(221, 183, 183);
+}

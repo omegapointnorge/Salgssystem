@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, ChangeEvent } from "react";
 import Case from "../../models/Case";
-import { Ansvarlig } from "../Ansvarlig/Ansvarlig"
+import Ansvarlig from "../Ansvarlig/Ansvarlig";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import styles from "./CaseCard.module.css";
@@ -65,6 +65,14 @@ const CaseCard: React.FC<CaseCardProps> = ({
     } as Pick<Case, keyof Case>);
   };
 
+  const handleAnsvarligChange = (username: string) => {
+    setFormValues({
+      ...formValues,
+      ansvarlig: username
+    //   []
+    })
+  }
+
   const handleCardDoubleClick = () => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -93,7 +101,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
       />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
-        <Ansvarlig ansvarlig={ansvarlig} />
+        <Ansvarlig ansvarlig={ansvarlig} onChange={handleAnsvarligChange} />
         {/* <div className={styles.ownerAvatar}>{ansvarlig}</div> */}
       </div>
       <div className={styles.details}>

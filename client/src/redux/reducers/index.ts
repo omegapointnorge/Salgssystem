@@ -1,8 +1,7 @@
 import { combineReducers } from "redux";
-import countReducer from "./count"
-import countReducer2 from "./count2";
 import menusOpenReducer from "./menusOpen";
 
-const rootReducer = combineReducers( {countReducer, countReducer2, menusOpenReducer });
+// Legg til flere reducers her ved å separere dem med komma
+const rootReducer = combineReducers({ menusOpenReducer });
 
 export default rootReducer;

@@ -12,7 +12,6 @@ export const errors = {
 };
 
 export interface IColumn {
-  // export?
   id: string;
   list: Case[];
 }
@@ -25,10 +24,9 @@ export interface IColumnList {
 }
 
 export interface IcontextMenuItem {
-  id: number | 0;
+  id: number;
   name: string;
   callback: any;
-  // callback: () => void;
   image: string;
 }
 
@@ -48,7 +46,3 @@ export interface CountState {
   value: number;
 }
 
-// export interface ContextMenuState {
-//   menusOpen: boolean;
-
-// }

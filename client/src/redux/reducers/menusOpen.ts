@@ -16,8 +16,6 @@ export type MenusOpenAction = {
 export default function menusOpenReducer(state = initialState, action: MenusOpenAction) {
   switch (action.type) {
     case SET_MENUS_OPEN:
-      // console.log("Initial state:");
-      // console.log(state);
       return {
         ...state,
         payload: action.payload

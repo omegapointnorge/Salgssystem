@@ -26,6 +26,7 @@
 .menuElement:hover {
   padding-left: 0.5rem;
   border-left: 0.5rem solid var(--itverket-orange);
+  box-shadow: 9px 9px 17px -5px rgba(0, 0, 0, 0.7);
 }
 
 .menuText {

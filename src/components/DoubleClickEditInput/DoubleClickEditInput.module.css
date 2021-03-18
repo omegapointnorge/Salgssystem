@@ -1,0 +1,17 @@
+input.input {
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  font: inherit;
+  transition: all 0.2s;
+}
+
+input.input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+input.input:focus {
+  outline: none;
+  box-shadow: -2px 0px 0px 0px rgba(47, 147, 241, 0.5);
+}

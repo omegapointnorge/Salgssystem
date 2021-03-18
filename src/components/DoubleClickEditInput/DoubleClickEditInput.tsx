@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useRef, useEffect } from "react";
-//TODO: STYLING!
+import styles from "./DoubleClickEditInput.module.css";
 
 interface DoubleClickEditInputProps {
   value: string;
@@ -35,6 +35,7 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
     <div>
       {editMode ? (
         <input
+          className={styles.input}
           ref={inputRef}
           value={state}
           onChange={onChange}

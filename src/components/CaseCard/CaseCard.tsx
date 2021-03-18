@@ -1,10 +1,10 @@
 import styles from "./CaseCard.module.css";
-import React, { useState, ChangeEvent, useCallback } from "react";
+import React, { useState } from "react";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
-import { debounce } from "lodash";
-import DoubleClickEditInput from "./DoubleClickEditInput";
+import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
+import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
 
 interface CaseCardProps {
   caseObject: Case;
@@ -29,37 +29,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
   } = caseObject;
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
-  const debouncedInputChange = useCallback(
-    debounce((event) => {
-      console.log("HELLO");
-
-      editCase({
-        ...caseObject,
-        [event.target.name]: event.target.value,
-      });
-    }, 500),
-    []
-  );
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    debouncedInputChange(event);
-  };
-
-  const debouncedMultilineInputChange = useCallback(
-    (event) =>
-      debounce(() => {
-        editCase({
-          ...caseObject,
-          [event.currentTarget.name]: event.currentTarget.value.split("\n"),
-        });
-      }, 500),
-    [caseObject, editCase]
-  );
-  const handleMultilineInputChange = (
-    event: ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    debouncedMultilineInputChange(event);
-  };
-
   const handleTagsChange = (caseTags: string[]) => {
     editCase({
       ...caseObject,
@@ -82,12 +51,19 @@ const CaseCard: React.FC<CaseCardProps> = ({
     setShowDeleteCardMenu(false);
   };
 
-  const handleEditCase = (key: string, value: string) => {
+  const handleEditCaseInput = (key: string, value: string) => {
     editCase({
       ...caseObject,
-      [key]: value
-    })
-  }
+      [key]: value,
+    });
+  };
+
+  const handleEditCaseTextarea = (key: string, value: string) => {
+    editCase({
+      ...caseObject,
+      [key]: value.split("\n"),
+    });
+  };
 
   return (
     <div className={styles.card} /*onDoubleClick={handleCardDoubleClick}*/>
@@ -104,20 +80,14 @@ const CaseCard: React.FC<CaseCardProps> = ({
         <div>{dato?.toLocaleDateString()}</div>
         <DoubleClickEditInput
           value={kontakt}
-          handleInputChange={(value) => handleEditCase("kontakt", value)}
+          handleInputChange={(value) => handleEditCaseInput("kontakt", value)}
         />
-        {/* <input
-          name="kontakt"
-          placeholder="Kontakt"
-          defaultValue={kontakt}
-          onChange={handleInputChange}
-        /> */}
         <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />
-        <textarea
-          name="profilert"
-          placeholder="Profilert"
-          defaultValue={profilert?.join("\n")}
-          onChange={handleMultilineInputChange}
+        <DoubleClickEditTextarea
+          value={profilert?.join("\n")}
+          handleTextareaChange={(value) =>
+            handleEditCaseTextarea("profilert", value)
+          }
         />
       </div>
     </div>

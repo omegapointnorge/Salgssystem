@@ -36,6 +36,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
       return;
     }
     editCase(formValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues.caseTags]);
 
   const handleCardBlur = () => {
@@ -66,12 +67,17 @@ const CaseCard: React.FC<CaseCardProps> = ({
   };
 
   const handleAnsvarligChange = (username: string) => {
+    console.log("I cahnge");
     setFormValues({
       ...formValues,
       ansvarlig: username
-    //   []
-    })
+    } as Pick<Case, keyof Case>);
   }
+
+  useEffect (() => {
+    editCase(formValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ansvarlig])
 
   const handleCardDoubleClick = () => {
     if (document.activeElement instanceof HTMLElement) {
@@ -102,7 +108,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <Ansvarlig ansvarlig={ansvarlig} onChange={handleAnsvarligChange} />
-        {/* <div className={styles.ownerAvatar}>{ansvarlig}</div> */}
       </div>
       <div className={styles.details}>
         <div>{dato?.toLocaleDateString()}</div>

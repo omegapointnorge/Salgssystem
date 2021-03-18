@@ -56,13 +56,6 @@ Egne feature brances kan brukes for å teste brancher. Dette kan settes opp hos 
 4. Kjør kommando: `aws configure` og følg instruksjonene med å legge inn keys. Bruk `eu-central-1` som region. Velg `JSON` som output.
 5. Ferdig. Test med å starte appen og se om du kan hente fra databasen.
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
 
 ## Bidra
 Pull requests er velkomne.

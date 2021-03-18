@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 // import { getCountState } from "src/redux/selectors";
 
 const Header = ({count, handleIncrementClick}: any) => {
-  console.log(count);
+  // console.log(count);
   return (
     <div className={styles.header}>
       <img src={logo} alt="Logo" className={styles.logo} />

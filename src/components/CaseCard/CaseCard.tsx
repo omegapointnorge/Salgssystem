@@ -1,8 +1,15 @@
 import styles from "./CaseCard.module.css";
-import React, { useEffect, useRef, useState, ChangeEvent } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  ChangeEvent,
+  useCallback,
+} from "react";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
+import { debounce } from "lodash";
 
 interface CaseCardProps {
   caseObject: Case;
@@ -17,6 +24,11 @@ const CaseCard: React.FC<CaseCardProps> = ({
 }) => {
   const [formValues, setFormValues] = useState<Case>(caseObject);
   const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
+
+  const test = useCallback(
+    debounce((value) => console.log(value), 500),
+    []
+  );
 
   const {
     ansvarlig,

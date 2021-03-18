@@ -2,7 +2,7 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateSalgssystemDevelopmentInput = {
+export type SaveSalgssystemDevelopmentInput = {
   ID: string,
   dato: string,
   ansvarlig?: string | null,
@@ -18,18 +18,6 @@ export type SalgssystemDevelopment = {
   __typename: "SalgssystemDevelopment",
   ID?: string,
   dato?: string,
-  ansvarlig?: string | null,
-  caseTags?: Array< string | null > | null,
-  frist?: string | null,
-  kontakt?: string | null,
-  kunde?: string | null,
-  profilert?: Array< string | null > | null,
-  status?: string | null,
-};
-
-export type UpdateSalgssystemDevelopmentInput = {
-  ID: string,
-  dato: string,
   ansvarlig?: string | null,
   caseTags?: Array< string | null > | null,
   frist?: string | null,
@@ -75,31 +63,12 @@ export type SalgssystemDevelopmentConnection = {
   nextToken?: string | null,
 };
 
-export type CreateSalgssystemDevelopmentMutationVariables = {
-  input?: CreateSalgssystemDevelopmentInput,
+export type SaveSalgssystemDevelopmentMutationVariables = {
+  input?: SaveSalgssystemDevelopmentInput,
 };
 
-export type CreateSalgssystemDevelopmentMutation = {
-  createSalgssystemDevelopment?:  {
-    __typename: "SalgssystemDevelopment",
-    ID: string,
-    dato: string,
-    ansvarlig?: string | null,
-    caseTags?: Array< string | null > | null,
-    frist?: string | null,
-    kontakt?: string | null,
-    kunde?: string | null,
-    profilert?: Array< string | null > | null,
-    status?: string | null,
-  } | null,
-};
-
-export type UpdateSalgssystemDevelopmentMutationVariables = {
-  input?: UpdateSalgssystemDevelopmentInput,
-};
-
-export type UpdateSalgssystemDevelopmentMutation = {
-  updateSalgssystemDevelopment?:  {
+export type SaveSalgssystemDevelopmentMutation = {
+  saveSalgssystemDevelopment?:  {
     __typename: "SalgssystemDevelopment",
     ID: string,
     dato: string,
@@ -177,39 +146,8 @@ export type ListSalgssystemDevelopmentsQuery = {
   } | null,
 };
 
-export type OnCreateSalgssystemDevelopmentSubscriptionVariables = {
-  ID?: string | null,
-  dato?: string | null,
-  ansvarlig?: string | null,
-  caseTags?: Array< string | null > | null,
-  frist?: string | null,
-};
-
-export type OnCreateSalgssystemDevelopmentSubscription = {
-  onCreateSalgssystemDevelopment?:  {
-    __typename: "SalgssystemDevelopment",
-    ID: string,
-    dato: string,
-    ansvarlig?: string | null,
-    caseTags?: Array< string | null > | null,
-    frist?: string | null,
-    kontakt?: string | null,
-    kunde?: string | null,
-    profilert?: Array< string | null > | null,
-    status?: string | null,
-  } | null,
-};
-
-export type OnUpdateSalgssystemDevelopmentSubscriptionVariables = {
-  ID?: string | null,
-  dato?: string | null,
-  ansvarlig?: string | null,
-  caseTags?: Array< string | null > | null,
-  frist?: string | null,
-};
-
-export type OnUpdateSalgssystemDevelopmentSubscription = {
-  onUpdateSalgssystemDevelopment?:  {
+export type OnSaveSalgssystemDevelopmentSubscription = {
+  onSaveSalgssystemDevelopment?:  {
     __typename: "SalgssystemDevelopment",
     ID: string,
     dato: string,

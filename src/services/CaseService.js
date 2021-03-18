@@ -2,7 +2,7 @@ import Case from "../models/Case";
 import { API, graphqlOperation } from "aws-amplify";
 import {
   listSalgssystemDevelopments,
-  createSalgssystemDevelopment,
+  saveSalgssystemDevelopment,
   deleteSalgssystemDevelopment,
 } from "../graphql";
 
@@ -20,9 +20,10 @@ export async function getCases() {
 export async function saveCase(caseObject) {
   try {
     const result = await API.graphql(
-      graphqlOperation(createSalgssystemDevelopment, { input: caseObject })
+      graphqlOperation(saveSalgssystemDevelopment, {
+        input: caseObject,
+      })
     );
-    console.log(result);
     return result;
   } catch (error) {
     console.error(`Failed to save case: ${caseObject.ID} in database`, error);

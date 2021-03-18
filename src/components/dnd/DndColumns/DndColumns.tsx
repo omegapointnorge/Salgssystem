@@ -1,5 +1,5 @@
 import styles from "./DndColumns.module.css";
-import React, { useState, useEffect, useReducer, Reducer } from "react";
+import { useState, useEffect, useReducer, Reducer } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import Column from "./../Column/Column";
 import * as CaseService from "../../../services/CaseService";
@@ -9,6 +9,10 @@ import { ColumnsAction, IColumnList, Action } from "../../../common/types";
 import Item from "../Item/Item";
 import CaseCard from "../../CaseCard/CaseCard";
 import dndColumnsReducer from "./DndColumnsReducer";
+// import { useSaveCaseSubscription } from "../../../hooks";
+import { Observable } from "zen-observable-ts";
+import { API, graphqlOperation } from "aws-amplify";
+import { onSaveSalgssystemDevelopment } from "../../../graphql";
 
 function DndColumns() {
   const [loading, setLoading] = useState(false);
@@ -16,6 +20,36 @@ function DndColumns() {
     dndColumnsReducer,
     initialColumns
   );
+  
+  // useSaveCaseSubscription((caseObject: Case) => {
+  // columnDispatcher({
+  //   type: ColumnsAction.EDIT,
+  //   payload: {
+  //     caseObject: caseObject,
+  //   },
+  // });
+  // });
+
+  useEffect(() => {
+    const onSaveSubscription = (API.graphql(
+      graphqlOperation(onSaveSalgssystemDevelopment)
+    ) as Observable<object>).subscribe({
+      next: (data: any) => {
+        const caseObject = new Case(
+          data.value.data.onSaveSalgssystemDevelopment
+        );
+        columnDispatcher({
+          type: ColumnsAction.EDIT,
+          payload: {
+            caseObject: caseObject,
+          },
+        });
+      },
+    });
+    return () => {
+      onSaveSubscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -23,21 +57,19 @@ function DndColumns() {
         setLoading(true);
         const result = await CaseService.getCases();
         columnDispatcher({
-          type: ColumnsAction.ADD,
+          type: ColumnsAction.LOAD,
           payload: { cases: result },
         });
       } catch (e) {
         console.error(
-          "Det skjedde en feil i henting av data fra databasen: ",
-          e
+          "Det skjedde en feil i henting av data fra databasen: ", e
         );
       } finally {
         setLoading(false);
       }
     };
-
-    if (!columns || columns === initialColumns) fetchCases();
-  }, [columns]);
+    fetchCases();
+  }, []);
 
   const slettCase = (caseObject: Case) => {
     columnDispatcher({
@@ -53,7 +85,7 @@ function DndColumns() {
     columnDispatcher({
       type: ColumnsAction.EDIT,
       payload: {
-        caseObject: caseObject,
+        caseObject: {...caseObject},
       },
     });
     CaseService.saveCase(caseObject);

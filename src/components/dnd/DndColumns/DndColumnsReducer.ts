@@ -3,10 +3,7 @@ import { IColumnList, Action, ColumnsAction } from "../../../common/types";
 import Status from "../../../constants/Status";
 import Case from "../../../models/Case";
 
-const dndColumnsReducer: Reducer<IColumnList, Action> = (
-  columns,
-  action
-) => {
+const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
   switch (action.type) {
     case ColumnsAction.MOVE: {
       let { from, to } = action.payload;
@@ -24,7 +21,7 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (
         let caseObject = fromList.splice(from.index, 1)[0];
         toList.splice(to.index, 0, caseObject);
 
-        //Lagre ny status i database
+        //Sett ny status på case
         caseObject.status = Status[to.id.toUpperCase() as keyof typeof Status];
 
         return {
@@ -72,6 +69,23 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (
         ...columns,
         [caseObject.status]: { id: caseObject.status, list: newList },
       };
+    }
+    case ColumnsAction.LOAD: {
+      let { cases } = action.payload;
+
+      let columnsCopy = Object.values(columns)
+        .map((col) => ({ ...col, list: [...col.list] }))
+        .reduce((acc, col) => {
+          col.list = [];
+          acc[col.id] = col;
+          return acc;
+        }, {});
+
+      cases.forEach((caseObject: Case) =>
+        columnsCopy[caseObject.status].list.push(caseObject)
+      );
+
+      return columnsCopy;
     }
     default:
       throw new Error(`Unhandled action: ${action}`);

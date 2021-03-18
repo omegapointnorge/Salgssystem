@@ -38,6 +38,7 @@ export enum ColumnsAction {
   ADD,
   DELETE,
   EDIT,
+  LOAD,
 }
 interface MoveAction {
   type: ColumnsAction.MOVE;
@@ -64,4 +65,10 @@ interface EditAction {
     caseObject: Case;
   };
 }
-export type Action = MoveAction | AddAction | DeleteAction | EditAction;
+interface LoadAction {
+  type: ColumnsAction.LOAD;
+  payload: {
+    cases: Case[];
+  };
+}
+export type Action = MoveAction | AddAction | DeleteAction | EditAction | LoadAction;

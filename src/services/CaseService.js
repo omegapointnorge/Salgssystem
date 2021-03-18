@@ -24,6 +24,7 @@ export async function saveCase(caseObject) {
         input: caseObject,
       })
     );
+    console.log("SAVED CASE");
     return result;
   } catch (error) {
     console.error(`Failed to save case: ${caseObject.ID} in database`, error);

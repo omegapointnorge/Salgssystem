@@ -1,15 +1,10 @@
 import styles from "./CaseCard.module.css";
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  ChangeEvent,
-  useCallback,
-} from "react";
+import React, { useState, ChangeEvent, useCallback } from "react";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
 import { debounce } from "lodash";
+import DoubleClickEditInput from "./DoubleClickEditInput";
 
 interface CaseCardProps {
   caseObject: Case;
@@ -18,19 +13,11 @@ interface CaseCardProps {
 }
 
 const CaseCard: React.FC<CaseCardProps> = ({
-  caseObject,
+  caseObject = new Case(),
   slettCase,
   editCase,
 }) => {
-  const [formValues, setFormValues] = useState<Case>(caseObject);
-  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
-
-  const test = useCallback(
-    debounce((value) => console.log(value), 500),
-    []
-  );
-
-  const {
+  let {
     ansvarlig,
     caseTags,
     dato,
@@ -38,42 +25,46 @@ const CaseCard: React.FC<CaseCardProps> = ({
     kontakt,
     // kunde,
     profilert,
-  } = formValues;
+    // status,
+  } = caseObject;
+  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
-  const firstUpdate = useRef(true);
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-    editCase(formValues);
-  }, [formValues.caseTags]);
+  const debouncedInputChange = useCallback(
+    debounce((event) => {
+      console.log("HELLO");
 
-  const handleCardBlur = () => {
-    editCase(formValues);
-  };
-
+      editCase({
+        ...caseObject,
+        [event.target.name]: event.target.value,
+      });
+    }, 500),
+    []
+  );
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
-      [event.currentTarget.name]: event.currentTarget.value,
-    } as Pick<Case, keyof Case>);
+    debouncedInputChange(event);
   };
 
+  const debouncedMultilineInputChange = useCallback(
+    (event) =>
+      debounce(() => {
+        editCase({
+          ...caseObject,
+          [event.currentTarget.name]: event.currentTarget.value.split("\n"),
+        });
+      }, 500),
+    [caseObject, editCase]
+  );
   const handleMultilineInputChange = (
     event: ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setFormValues({
-      ...formValues,
-      [event.currentTarget.name]: event.currentTarget.value.split("\n"),
-    } as Pick<Case, keyof Case>);
+    debouncedMultilineInputChange(event);
   };
 
   const handleTagsChange = (caseTags: string[]) => {
-    setFormValues({
-      ...formValues,
+    editCase({
+      ...caseObject,
       caseTags: caseTags,
-    } as Pick<Case, keyof Case>);
+    });
   };
 
   const handleCardDoubleClick = () => {
@@ -91,12 +82,15 @@ const CaseCard: React.FC<CaseCardProps> = ({
     setShowDeleteCardMenu(false);
   };
 
+  const handleEditCase = (key: string, value: string) => {
+    editCase({
+      ...caseObject,
+      [key]: value
+    })
+  }
+
   return (
-    <div
-      className={styles.card}
-      onBlur={handleCardBlur}
-      onDoubleClick={handleCardDoubleClick}
-    >
+    <div className={styles.card} /*onDoubleClick={handleCardDoubleClick}*/>
       <DeleteCardMenu
         show={showDeleteCardMenu}
         setShow={setShowDeleteCardMenu}
@@ -108,12 +102,16 @@ const CaseCard: React.FC<CaseCardProps> = ({
       </div>
       <div className={styles.details}>
         <div>{dato?.toLocaleDateString()}</div>
-        <input
+        <DoubleClickEditInput
+          value={kontakt}
+          handleInputChange={(value) => handleEditCase("kontakt", value)}
+        />
+        {/* <input
           name="kontakt"
           placeholder="Kontakt"
           defaultValue={kontakt}
           onChange={handleInputChange}
-        />
+        /> */}
         <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />
         <textarea
           name="profilert"

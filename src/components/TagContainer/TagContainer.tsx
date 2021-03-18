@@ -29,6 +29,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
         name="case"
         placeholder="Case tags"
         onKeyDown={(e) => onEnterPressedTags(e)}
+        autoComplete="off"
       />
       <div className={styles.tags}>
         {caseTags.map((tag, i) => (

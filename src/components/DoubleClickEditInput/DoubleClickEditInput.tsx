@@ -43,6 +43,7 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
             if (event.key === "Enter") handleEdit();
           }}
           onBlur={handleEdit}
+          autoComplete="off"
         />
       ) : (
         <div onDoubleClick={() => setEditMode(true)}>{value}</div>

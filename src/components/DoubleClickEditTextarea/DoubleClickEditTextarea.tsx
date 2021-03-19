@@ -46,8 +46,8 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
         />
       ) : (
         <ul className={styles.display} onDoubleClick={() => setEditMode(true)}>
-          {value.split("\n").map((line) => (
-            <li>{line}</li>
+          {value.split("\n").map((line, i) => (
+            <li key={i}>{line}</li>
           ))}
         </ul>
       )}

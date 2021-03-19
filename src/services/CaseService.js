@@ -2,11 +2,13 @@ import Case from "../models/Case";
 import { API, graphqlOperation } from "aws-amplify";
 import {
   listSalgssystemDevelopments,
-  saveSalgssystemDevelopment,
+  createSalgssystemDevelopment,
+  updateSalgssystemDevelopment,
+  moveSalgssystemDevelopment,
   deleteSalgssystemDevelopment,
 } from "../graphql";
 
-export async function getCases() {
+export async function listCases() {
   try {
     const cases = (
       await API.graphql(graphqlOperation(listSalgssystemDevelopments))
@@ -17,17 +19,42 @@ export async function getCases() {
   }
 }
 
-export async function saveCase(caseObject) {
+export async function createCase(caseObject) {
   try {
     const result = await API.graphql(
-      graphqlOperation(saveSalgssystemDevelopment, {
+      graphqlOperation(createSalgssystemDevelopment, {
         input: caseObject,
       })
     );
-    console.log("SAVED CASE");
     return result;
   } catch (error) {
-    console.error(`Failed to save case: ${caseObject.ID} in database`, error);
+    console.error(`Failed to create case: ${caseObject.ID} in database`, error);
+  }
+}
+
+export async function updateCase(caseObject) {
+  try {
+    const result = await API.graphql(
+      graphqlOperation(updateSalgssystemDevelopment, {
+        input: caseObject,
+      })
+    );
+    return result;
+  } catch (error) {
+    console.error(`Failed to update case: ${caseObject.ID} in database`, error);
+  }
+}
+
+export async function moveCase(caseObject) {
+  try {
+    const result = await API.graphql(
+      graphqlOperation(moveSalgssystemDevelopment, {
+        input: caseObject,
+      })
+    );
+    return result;
+  } catch (error) {
+    console.error(`Failed to move case: ${caseObject.ID} in database`, error);
   }
 }
 

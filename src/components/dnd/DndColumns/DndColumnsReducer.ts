@@ -42,7 +42,7 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
         }, {});
 
       cases.forEach((caseObject: Case) =>
-        columnsCopy[caseObject.status].list.push(caseObject)
+        columnsCopy[caseObject.status].list.unshift(caseObject)
       );
 
       return columnsCopy;

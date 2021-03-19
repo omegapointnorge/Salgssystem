@@ -2,11 +2,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const saveSalgssystemDevelopment = /* GraphQL */ `
-  mutation SaveSalgssystemDevelopment(
-    $input: SaveSalgssystemDevelopmentInput!
+export const createSalgssystemDevelopment = /* GraphQL */ `
+  mutation CreateSalgssystemDevelopment(
+    $input: CreateSalgssystemDevelopmentInput!
   ) {
-    saveSalgssystemDevelopment(input: $input) {
+    createSalgssystemDevelopment(input: $input) {
+      ID
+      dato
+      ansvarlig
+      caseTags
+      frist
+      kontakt
+      kunde
+      profilert
+      status
+    }
+  }
+`;
+export const updateSalgssystemDevelopment = /* GraphQL */ `
+  mutation UpdateSalgssystemDevelopment(
+    $input: UpdateSalgssystemDevelopmentInput!
+  ) {
+    updateSalgssystemDevelopment(input: $input) {
+      ID
+      dato
+      ansvarlig
+      caseTags
+      frist
+      kontakt
+      kunde
+      profilert
+      status
+    }
+  }
+`;
+export const moveSalgssystemDevelopment = /* GraphQL */ `
+  mutation MoveSalgssystemDevelopment(
+    $input: MoveSalgssystemDevelopmentInput!
+  ) {
+    moveSalgssystemDevelopment(input: $input) {
       ID
       dato
       ansvarlig

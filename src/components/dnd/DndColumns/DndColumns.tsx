@@ -5,11 +5,21 @@ import Column from "./../Column/Column";
 import * as CaseService from "../../../services/CaseService";
 import Case from "../../../models/Case";
 import { initialColumns } from "../../../constants/DndColumns";
-import { ColumnsAction, IColumnList, Action } from "../../../common/types";
+import {
+  ColumnsAction,
+  IColumnList,
+  Action,
+  IColumn,
+} from "../../../common/types";
 import Item from "../Item/Item";
 import CaseCard from "../../CaseCard/CaseCard";
 import dndColumnsReducer from "./DndColumnsReducer";
-import { useSaveCaseSubscription } from "../../../hooks";
+import {
+  useCreateCaseSubscription,
+  useUpdateCaseSubscription,
+  useMoveCaseSubscription,
+  useDeleteCaseSubscription,
+} from "../../../hooks/CaseSubscription";
 
 function DndColumns() {
   const [loading, setLoading] = useState(false);
@@ -18,9 +28,63 @@ function DndColumns() {
     initialColumns
   );
 
-  useSaveCaseSubscription((caseObject: Case) => {
+  useCreateCaseSubscription((caseObject: Case) => {
+    const canCreateCaseCard = !Object.keys(columns).some((key) => {
+      const column: IColumn = columns[key];
+      return column.list.some((co) => co.ID === caseObject.ID);
+    });
+
+    if (canCreateCaseCard) {
+      columnDispatcher({
+        type: ColumnsAction.ADD,
+        payload: {
+          cases: [caseObject],
+        },
+      });
+    }
+  });
+
+  useUpdateCaseSubscription((caseObject: Case) => {
     columnDispatcher({
       type: ColumnsAction.EDIT,
+      payload: {
+        caseObject: caseObject,
+      },
+    });
+  });
+
+  useMoveCaseSubscription((caseObject: Case) => {
+    let fromId: string = "";
+    let fromIndex: number = -1;
+    let noChange = false;
+
+    Object.keys(columns).forEach((key) => {
+      const column: IColumn = columns[key];
+      column.list.forEach((co, i) => {
+        if (co.ID === caseObject.ID) {
+          fromId = key;
+          fromIndex = i;
+          noChange = co.status === caseObject.status;
+        }
+      });
+    });
+
+    const canMoveCaseCard =
+      !noChange && !(fromId === "") && !(fromIndex === -1);
+    if (canMoveCaseCard) {
+      columnDispatcher({
+        type: ColumnsAction.MOVE,
+        payload: {
+          from: { id: fromId, index: fromIndex },
+          to: { id: caseObject.status, index: 0 },
+        },
+      });
+    }
+  });
+
+  useDeleteCaseSubscription((caseObject: Case) => {
+    columnDispatcher({
+      type: ColumnsAction.DELETE,
       payload: {
         caseObject: caseObject,
       },
@@ -31,7 +95,7 @@ function DndColumns() {
     const fetchCases = async () => {
       try {
         setLoading(true);
-        const result = await CaseService.getCases();
+        const result = await CaseService.listCases();
         columnDispatcher({
           type: ColumnsAction.LOAD,
           payload: { cases: result },
@@ -65,14 +129,16 @@ function DndColumns() {
         caseObject: { ...caseObject },
       },
     });
-    CaseService.saveCase(caseObject);
+    CaseService.updateCase(caseObject);
   };
 
   const handleAddCaseClick = () => {
+    const newCaseObject = new Case();
     columnDispatcher({
       type: ColumnsAction.ADD,
-      payload: { cases: [new Case()] },
+      payload: { cases: [newCaseObject] },
     });
+    CaseService.createCase(newCaseObject);
   };
 
   const onDragStart = () => {
@@ -102,7 +168,7 @@ function DndColumns() {
     });
 
     if (source.droppableId !== destination.droppableId) {
-      CaseService.saveCase(caseObject);
+      CaseService.moveCase(caseObject);
     }
   };
 

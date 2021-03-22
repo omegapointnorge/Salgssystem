@@ -27,9 +27,12 @@ const TagContainer: React.FC<TagContainerProps> = ({
   }, [editMode]);
 
   const onEnterPressedTags = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && event.currentTarget.value?.length > 0) {
-      onChangeTags([...caseTags, event.currentTarget.value]);
-
+    if (event.key === "Enter") {
+      if(event.currentTarget.value?.length > 0) {
+        onChangeTags([...caseTags, event.currentTarget.value]);
+      } else {
+        setEditMode(false);
+      }
       event.currentTarget.value = "";
     }
   };

@@ -20,6 +20,7 @@ const useOutsideAlerter = (
 
 interface ClickOutsideWrapperProps {
   onClickOutside: () => void;
+  fullSize?: boolean;
 }
 
 const ClickOutsideWrapper: React.FC<ClickOutsideWrapperProps> = (props) => {
@@ -27,7 +28,10 @@ const ClickOutsideWrapper: React.FC<ClickOutsideWrapperProps> = (props) => {
   useOutsideAlerter(wrapperRef, props.onClickOutside);
 
   return (
-    <div style={{ width: "100%", height: "100%" }} ref={wrapperRef}>
+    <div
+      style={props.fullSize ? { width: "100%", height: "100%" } : {}}
+      ref={wrapperRef}
+    >
       {props.children}
     </div>
   );

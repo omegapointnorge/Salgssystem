@@ -35,7 +35,7 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
   return (
     <div>
       {editMode ? (
-        <ClickOutsideWrapper onClickOutside={() => setEditMode(false)}>
+        <ClickOutsideWrapper onClickOutside={() => setEditMode(false)} fullSize>
           <textarea
             className={styles.textarea}
             ref={inputRef}

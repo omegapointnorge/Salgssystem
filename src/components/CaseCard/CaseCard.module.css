@@ -9,6 +9,7 @@
   font-size: 0.9rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 6px rgba(0, 0, 0, 0.23);
   border-radius: 5px;
+  z-index: 0;
 }
 .header {
   display: flex;

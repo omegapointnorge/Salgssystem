@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, useRef, useEffect } from "react";
+import ClickOutsideWrapper from "../ClickOutsideWrapper/ClickOutsideWrapper";
 import styles from "./DoubleClickEditInput.module.css";
 
 interface DoubleClickEditInputProps {
@@ -34,17 +35,19 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
   return (
     <div>
       {editMode ? (
-        <input
-          className={styles.input}
-          ref={inputRef}
-          value={state}
-          onChange={onChange}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") handleEdit();
-          }}
-          onBlur={handleEdit}
-          autoComplete="off"
-        />
+        <ClickOutsideWrapper onClickOutside={() => setEditMode(false)}>
+          <input
+            className={styles.input}
+            ref={inputRef}
+            value={state}
+            onChange={onChange}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") handleEdit();
+            }}
+            onBlur={handleEdit}
+            autoComplete="off"
+          />
+        </ClickOutsideWrapper>
       ) : (
         <div onDoubleClick={() => setEditMode(true)}>{value}</div>
       )}

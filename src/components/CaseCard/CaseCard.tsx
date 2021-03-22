@@ -1,5 +1,5 @@
 import styles from "./CaseCard.module.css";
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
@@ -36,13 +36,16 @@ const CaseCard: React.FC<CaseCardProps> = ({
     });
   };
 
-  const handleCardDoubleClick = () => {
+  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
+    console.log(event.target);
+    console.log(event.currentTarget);
+    
+
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
     const selection = getSelection();
     selection?.empty();
-    setShowDeleteCardMenu(true);
   };
 
   const handleDeleteCaseClick = () => {
@@ -66,7 +69,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
   };
 
   return (
-    <div className={styles.card} /*onDoubleClick={handleCardDoubleClick}*/>
+    <div className={styles.card}>
       <DeleteCardMenu
         show={showDeleteCardMenu}
         setShow={setShowDeleteCardMenu}

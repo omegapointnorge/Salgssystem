@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import styles from "./ClickOutsideWrapper.module.css";
 
 const useOutsideAlerter = (
   ref: React.MutableRefObject<HTMLDivElement | null>,
@@ -29,6 +30,7 @@ const ClickOutsideWrapper: React.FC<ClickOutsideWrapperProps> = (props) => {
 
   return (
     <div
+      className={styles.wrapper}
       style={props.fullSize ? { width: "100%", height: "100%" } : {}}
       ref={wrapperRef}
     >

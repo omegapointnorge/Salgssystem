@@ -5,7 +5,6 @@ import React, {
   useState,
   useRef,
   useEffect,
-  MouseEvent,
 } from "react";
 import ClickOutsideWrapper from "../ClickOutsideWrapper/ClickOutsideWrapper";
 
@@ -44,7 +43,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
       className={styles.tagContainer}
       onDoubleClick={() => setEditMode(true)}
     >
-      <ClickOutsideWrapper onClickOutside={() => setEditMode(false)}>
+      <ClickOutsideWrapper onClickOutside={() => setEditMode(false)} fullSize>
         {editMode ? (
           <input
             ref={inputRef}

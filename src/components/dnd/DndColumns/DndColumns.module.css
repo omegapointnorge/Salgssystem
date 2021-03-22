@@ -25,12 +25,9 @@ button:hover {
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 5%;
-  width: 90%;
-  height: 100%;
-  margin-left: 5%;
-  margin-right: 5%;
-  padding: 1%;
+  grid-gap: 1rem;
+  padding: 1rem;
+  margin: 0 2rem;
   background-color: rgba(211, 211, 211, 0.70);
 }
 .dndColumnsLoading{

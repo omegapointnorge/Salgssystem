@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Case from "../../models/Case";
 import Ansvarlig from "../Ansvarlig/Ansvarlig";
-import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
 import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
 import TagContainer from "../TagContainer/TagContainer";
@@ -28,7 +27,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
     profilert,
     // status,
   } = caseObject;
-  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
+  // const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
   const handleTagsChange = (caseTags: string[]) => {
     editCase({
@@ -37,11 +36,11 @@ const CaseCard: React.FC<CaseCardProps> = ({
     });
   };
 
-  const handleDeleteCaseClick = () => {
-    // Oppdater state til DND
-    slettCase(caseObject);
-    setShowDeleteCardMenu(false);
-  };
+  // const handleDeleteCaseClick = () => {
+  //   // Oppdater state til DND
+  //   slettCase(caseObject);
+  //   setShowDeleteCardMenu(false);
+  // };
 
   const handleEditCaseInput = (key: string, value: string) => {
     editCase({
@@ -66,11 +65,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
 
   return (
     <div className={styles.card}>
-      <DeleteCardMenu
-        show={showDeleteCardMenu}
-        setShow={setShowDeleteCardMenu}
-        deleteCard={handleDeleteCaseClick}
-      />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <Ansvarlig ansvarlig={ansvarlig} onChange={handleAnsvarligChange} />

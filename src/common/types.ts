@@ -28,12 +28,6 @@ export interface IColumnList extends IObjectStringKeys {
   Tapt: IColumn;
 }
 
-// export interface IcontextMenuItem {
-//   id: number;
-//   name: string;
-//   callback: () => void;
-// }
-
 export enum ColumnsAction {
   MOVE,
   ADD,
@@ -74,22 +68,10 @@ interface LoadAction {
 }
 export type Action = MoveAction | AddAction | DeleteAction | EditAction | LoadAction;
 
-// export interface IColumn {
-//   id: string;
-//   list: Case[];
-// }
-
-// export interface IColumnList {
-//   Unassigned: IColumn;
-//   Påbegynt: IColumn;
-//   Vunnet: IColumn;
-//   Tapt: IColumn;
-// }
-
 export interface IcontextMenuItem {
   id: number;
   name: string;
-  callback: (arg0: any) => (any); // todo: sette rett type på denne
+  callback: (arg0: string) => (void);
   image: string;
 }
 

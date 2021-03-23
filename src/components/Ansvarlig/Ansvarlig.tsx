@@ -8,6 +8,7 @@ import avatar3 from "../../assets/avatar3.png";
 import { IcontextMenuItem } from "../../common/types";
 import { MenusOpenAction } from "../../redux/reducers/menusOpen";
 import { setMenusOpen } from "../../redux/actions";
+import useContextMenu from "../../hooks/CaseSubscription/useContextMenu";
 
 interface AnsvarligProps {
   ansvarlig: string;
@@ -50,7 +51,9 @@ const Ansvarlig: React.FC<AnsvarligProps> = ({
   const observed = React.useRef<HTMLDivElement>(null);
 
   const handleContextMenu = React.useCallback(
-    (e) => {
+    (e: any) => {
+      console.log(e);
+      console.log(typeof e);
       e.preventDefault();
       setXPos(`${e.layerX}px`);
       setYPos(`${e.offsetY}px`);
@@ -65,15 +68,8 @@ const Ansvarlig: React.FC<AnsvarligProps> = ({
     setMenusOpen(false);
   }, []);
 
-  React.useEffect(() => {
-    const currentRef = observed.current!;
-    document.addEventListener("click", handleClick);
-    currentRef.addEventListener("contextmenu", handleContextMenu);
-    return () => {
-      document.removeEventListener("click", handleClick);
-      currentRef.removeEventListener("contextmenu", handleContextMenu);
-    };
-  }, [handleClick, handleContextMenu]);
+
+  useContextMenu(observed, handleClick, handleContextMenu);
 
   const avatarImage = contextMenuArray.find(
     (element) => element.name === ansvarlig

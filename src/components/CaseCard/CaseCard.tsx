@@ -1,10 +1,10 @@
-import styles from "./CaseCard.module.css";
-import React, { useState, MouseEvent } from "react";
+import React from "react";
 import Case from "../../models/Case";
-import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
-import TagContainer from "../TagContainer/TagContainer";
+import Ansvarlig from "../Ansvarlig/Ansvarlig";
 import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
 import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
+import TagContainer from "../TagContainer/TagContainer";
+import styles from "./CaseCard.module.css";
 
 interface CaseCardProps {
   caseObject: Case;
@@ -27,7 +27,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
     profilert,
     // status,
   } = caseObject;
-  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
+  // const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
   const handleTagsChange = (caseTags: string[]) => {
     editCase({
@@ -36,23 +36,11 @@ const CaseCard: React.FC<CaseCardProps> = ({
     });
   };
 
-  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
-    console.log(event.target);
-    console.log(event.currentTarget);
-    
-
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-    const selection = getSelection();
-    selection?.empty();
-  };
-
-  const handleDeleteCaseClick = () => {
-    // Oppdater state til DND
-    slettCase(caseObject);
-    setShowDeleteCardMenu(false);
-  };
+  // const handleDeleteCaseClick = () => {
+  //   // Oppdater state til DND
+  //   slettCase(caseObject);
+  //   setShowDeleteCardMenu(false);
+  // };
 
   const handleEditCaseInput = (key: string, value: string) => {
     editCase({
@@ -60,6 +48,13 @@ const CaseCard: React.FC<CaseCardProps> = ({
       [key]: value,
     });
   };
+
+  const handleAnsvarligChange = (username: string) => {
+    editCase({
+      ...caseObject,
+      ansvarlig: username
+    } as Pick<Case, keyof Case>);
+  }
 
   const handleEditCaseTextarea = (key: string, value: string) => {
     editCase({
@@ -70,14 +65,9 @@ const CaseCard: React.FC<CaseCardProps> = ({
 
   return (
     <div className={styles.card}>
-      <DeleteCardMenu
-        show={showDeleteCardMenu}
-        setShow={setShowDeleteCardMenu}
-        deleteCard={handleDeleteCaseClick}
-      />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
-        <div className={styles.ownerAvatar}>{ansvarlig}</div>
+        <Ansvarlig ansvarlig={ansvarlig} onChange={handleAnsvarligChange} />
       </div>
       <div className={styles.details}>
         <div>{dato?.toLocaleDateString()}</div>

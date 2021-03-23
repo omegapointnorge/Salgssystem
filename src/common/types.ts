@@ -11,6 +11,7 @@ export const errors = {
     "A query *that needs an active project* was made when there is no active project",
 };
 
+
 export interface IColumn {
   id: string;
   list: Case[];
@@ -25,12 +26,6 @@ export interface IColumnList extends IObjectStringKeys {
   Påbegynt: IColumn;
   Vunnet: IColumn;
   Tapt: IColumn;
-}
-
-export interface IcontextMenuItem {
-  id: number;
-  name: string;
-  callback: () => void;
 }
 
 export enum ColumnsAction {
@@ -72,3 +67,12 @@ interface LoadAction {
   };
 }
 export type Action = MoveAction | AddAction | DeleteAction | EditAction | LoadAction;
+
+export interface IcontextMenuItem {
+  id: number;
+  name: string;
+  callback: (arg0: string) => (void);
+  image: string;
+}
+
+

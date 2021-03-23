@@ -66,7 +66,7 @@ const Ansvarlig: React.FC<AnsvarligProps> = ({
   const handleClick = React.useCallback(() => {
     setShowMenu(false);
     setMenusOpen(false);
-  }, []);
+  }, [setMenusOpen]);
 
 
   useContextMenu(observed, handleClick, handleContextMenu);

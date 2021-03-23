@@ -14,6 +14,7 @@ button {
   height: 50px;
   text-align: center;
   transition: transform 0.1s;
+  cursor: pointer;
 }
 button:hover {
   transform: scale(1.05);
@@ -26,7 +27,7 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
-  padding: 1rem;
+  padding: 2rem;
   margin: 0 2rem;
   background-color: rgba(211, 211, 211, 0.70);
 }

@@ -1,3 +1,7 @@
+.display {
+  cursor: pointer;
+}
+
 input.input {
   width: 100%;
   box-sizing: border-box;

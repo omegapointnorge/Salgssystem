@@ -49,7 +49,7 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
           />
         </ClickOutsideWrapper>
       ) : (
-        <div onDoubleClick={() => setEditMode(true)}>{value}</div>
+        <div className={styles.display} onDoubleClick={() => setEditMode(true)}>{value}</div>
       )}
     </div>
   );

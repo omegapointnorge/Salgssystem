@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# -- Salgssystem --
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Et visuelt verktøy for utviklet for salgsavdelingen i ITverket for at de skal letter holde oversikt over pågående og utførte caser.
 
-## Available Scripts
+Denne README-en er ment som en støtte til nåværende og fremtidige utviklere av systemet.
 
-In the project directory, you can run:
+## Nyttige lenker
+[Slack kanal](https://app.slack.com/client/T043H77SE/G01MY9WP57Z)
 
-### `npm start`
+[GitHub](https://github.com/itverket/Salgssystem)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Når du har tilgang fra ITverket admin vil du kunne se prosjektet hos:
+[AWS](https://eu-central-1.console.aws.amazon.com/codesuite/codepipeline/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Teknologi
+### AWS
+- DynamoDB -> No SQL database basert på JSON input
+- Code Pipeline -> Bygger og deployer prosjektet for oss
+- Elastic Beanstalk -> Holder på servermiljøet
 
-### `npm test`
+### NodeJS - AWS oppsett
+Filen `buildspec.yaml` benyttes av `Code Pipeline` til å bygge prosjektet. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Filen `Procfile` forteller `Elastic Beanstalk` hvilken fil den skal starte på.
 
-### `npm run build`
+### ReactJS
+Vi bruker React for å bygge brukergrensesnittet.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### NodeJS
+NodeJs benyttes som api/backend og håndterer server kommunikasjonene med AWS.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Lokal innstallasjon og kjøring
+For å kjøre prosjektet lokalt må både server og clinet kjøres opp.
+Fra root kjør:
+```bash
+npm install
+```
+Deretter kjør:
+```bash
+npm start
+```
+Gjør det samme for `./client`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Deploy til AWS
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Push til git [Salgssystem](https://github.com/itverket/Salgssystem)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+AWS pipeline vil automatisk fange opp ny merge til f.eks. master og develop branch.
+Egne feature brances kan brukes for å teste brancher. Dette kan settes opp hos [AWS - Pipelines](https://eu-central-1.console.aws.amazon.com/codesuite/codepipeline/pipelines?region=eu-central-1)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Første oppsett av AWS
+1. Få bruker i AWS - hør med ansvarlig hos ITverket (per mars 2021: Salah Waisi).
+2. Med adminrettigheter kan du opprette egne secret key og access key, hvis ikke må en med adminrettigheter opprette dette og dele det med deg. Dette bør sendes kryptert. IAM -> Users -> din bruker -> Security Credentials -> Create Access Key. Husk å lagre filen, du får bare sett denne en gang.
+3. Last ned [AWS CLI](https://aws.amazon.com/cli/)
+4. Kjør kommando: `aws configure` og følg instruksjonene med å legge inn keys. Bruk `eu-central-1` som region. Velg `JSON` som output.
+5. Ferdig. Test med å starte appen og se om du kan hente fra databasen.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Bidra
+Pull requests er velkomne.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
+[ITverket](https://www.itverket.no/)

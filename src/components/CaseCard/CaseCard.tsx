@@ -1,10 +1,9 @@
-import styles from "./CaseCard.module.css";
-import React, { useState, MouseEvent } from "react";
+import React, { useEffect, useRef, useState, ChangeEvent } from "react";
 import Case from "../../models/Case";
+import Ansvarlig from "../Ansvarlig/Ansvarlig";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
-import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
-import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
+import styles from "./CaseCard.module.css";
 
 interface CaseCardProps {
   caseObject: Case;
@@ -13,11 +12,14 @@ interface CaseCardProps {
 }
 
 const CaseCard: React.FC<CaseCardProps> = ({
-  caseObject = new Case(),
+  caseObject,
   slettCase,
   editCase,
 }) => {
-  let {
+  const [formValues, setFormValues] = useState<Case>(caseObject);
+  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
+
+  const {
     ansvarlig,
     caseTags,
     dato,
@@ -25,27 +27,65 @@ const CaseCard: React.FC<CaseCardProps> = ({
     kontakt,
     // kunde,
     profilert,
-    // status,
-  } = caseObject;
-  const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
+  } = formValues;
 
-  const handleTagsChange = (caseTags: string[]) => {
-    editCase({
-      ...caseObject,
-      caseTags: caseTags,
-    });
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    editCase(formValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formValues.caseTags]);
+
+  const handleCardBlur = () => {
+    editCase(formValues);
   };
 
-  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
-    console.log(event.target);
-    console.log(event.currentTarget);
-    
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormValues({
+      ...formValues,
+      [event.currentTarget.name]: event.currentTarget.value,
+    } as Pick<Case, keyof Case>);
+  };
 
+  const handleMultilineInputChange = (
+    event: ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setFormValues({
+      ...formValues,
+      [event.currentTarget.name]: event.currentTarget.value.split("\n"),
+    } as Pick<Case, keyof Case>);
+  };
+
+  const handleTagsChange = (caseTags: string[]) => {
+    setFormValues({
+      ...formValues,
+      caseTags: caseTags,
+    } as Pick<Case, keyof Case>);
+  };
+
+  const handleAnsvarligChange = (username: string) => {
+    console.log("I cahnge");
+    setFormValues({
+      ...formValues,
+      ansvarlig: username
+    } as Pick<Case, keyof Case>);
+  }
+
+  useEffect (() => {
+    editCase(formValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ansvarlig])
+
+  const handleCardDoubleClick = () => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
     const selection = getSelection();
     selection?.empty();
+    setShowDeleteCardMenu(true);
   };
 
   const handleDeleteCaseClick = () => {
@@ -54,22 +94,12 @@ const CaseCard: React.FC<CaseCardProps> = ({
     setShowDeleteCardMenu(false);
   };
 
-  const handleEditCaseInput = (key: string, value: string) => {
-    editCase({
-      ...caseObject,
-      [key]: value,
-    });
-  };
-
-  const handleEditCaseTextarea = (key: string, value: string) => {
-    editCase({
-      ...caseObject,
-      [key]: value.split("\n"),
-    });
-  };
-
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      onBlur={handleCardBlur}
+      onDoubleClick={handleCardDoubleClick}
+    >
       <DeleteCardMenu
         show={showDeleteCardMenu}
         setShow={setShowDeleteCardMenu}
@@ -77,20 +107,22 @@ const CaseCard: React.FC<CaseCardProps> = ({
       />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
-        <div className={styles.ownerAvatar}>{ansvarlig}</div>
+        <Ansvarlig ansvarlig={ansvarlig} onChange={handleAnsvarligChange} />
       </div>
       <div className={styles.details}>
         <div>{dato?.toLocaleDateString()}</div>
-        <DoubleClickEditInput
-          value={kontakt}
-          handleInputChange={(value) => handleEditCaseInput("kontakt", value)}
+        <input
+          name="kontakt"
+          placeholder="Kontakt"
+          defaultValue={kontakt}
+          onChange={handleInputChange}
         />
         <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />
-        <DoubleClickEditTextarea
-          value={profilert?.join("\n")}
-          handleTextareaChange={(value) =>
-            handleEditCaseTextarea("profilert", value)
-          }
+        <textarea
+          name="profilert"
+          placeholder="Profilert"
+          defaultValue={profilert?.join("\n")}
+          onChange={handleMultilineInputChange}
         />
       </div>
     </div>

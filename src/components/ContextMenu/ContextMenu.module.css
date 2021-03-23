@@ -1,0 +1,42 @@
+.menuContainer {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  width: 20vw;
+  border-radius: 0.5rem;
+  box-shadow: 9px 9px 17px -5px rgba(0, 0, 0, 0.7);
+}
+
+.menuElement {
+  font-size: 1.5em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  position: relative;
+  display: inline-flex;
+  width: 85%;
+  height: 3vh;
+  padding: 5%;
+  margin: 1%;
+  margin-bottom: 1%;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  border-left: 0 solid var(--itverket-orange);
+  transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+}
+
+.menuElement:hover {
+  padding-left: 0.5rem;
+  border-left: 0.5rem solid var(--itverket-orange);
+  box-shadow: 9px 9px 17px -5px rgba(0, 0, 0, 0.7);
+}
+
+.menuText {
+  text-align: center;
+}
+
+.avatar {
+  height: 100%;
+  flex: auto;
+  object-fit: contain;
+  object-position: right;
+  margin-right: 10%;
+}

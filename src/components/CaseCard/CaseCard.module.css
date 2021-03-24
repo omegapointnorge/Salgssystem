@@ -9,7 +9,6 @@
   font-size: 0.9rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 6px rgba(0, 0, 0, 0.23);
   border-radius: 5px;
-  z-index: 0;
 }
 .header {
   display: flex;
@@ -22,13 +21,6 @@
   width: 50px;
   height: 50px;
 }
-.ownerAvatar {
-  background: rgb(121, 102, 102);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  align-self: flex-start;
-}
 .details {
   display: grid;
   flex-grow: 1;
@@ -37,33 +29,3 @@
   min-height: 0;
 }
 
-.deleteCardBackDrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.deleteCardButtons {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 11;
-}
-.deleteCardButtons > button {
-  border: none;
-  outline: none;
-}
-
-.deleteCardMenuDismiss {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 10;
-}

@@ -6,20 +6,19 @@ import {
   onUpdateSalgsCase,
   onMoveSalgsCase,
   onDeleteSalgsCase,
+  SalgsCase,
 } from "../../graphql";
 import Case from "../../models/Case";
 
 export const useCreateCaseSubscription = (
-  handler: (caseObject: Case) => void
+  handler: (caseObject: SalgsCase) => void
 ) => {
   useEffect(() => {
     const subscription = (API.graphql(
       graphqlOperation(onCreateSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
-        const caseObject = new Case(
-          data.value.data.onCreateSalgsCase
-        );
+        const caseObject = data.value.data.onCreateSalgsCase;
         handler(caseObject);
       },
     });
@@ -35,9 +34,7 @@ export const useUpdateCaseSubscription = (
       graphqlOperation(onUpdateSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
-        const caseObject = new Case(
-          data.value.data.onUpdateSalgsCase
-        );
+        const caseObject = new Case(data.value.data.onUpdateSalgsCase);
         handler(caseObject);
       },
     });
@@ -53,9 +50,7 @@ export const useMoveCaseSubscription = (
       graphqlOperation(onMoveSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
-        const caseObject = new Case(
-          data.value.data.onMoveSalgsCase
-        );
+        const caseObject = new Case(data.value.data.onMoveSalgsCase);
         handler(caseObject);
       },
     });
@@ -71,9 +66,7 @@ export const useDeleteCaseSubscription = (
       graphqlOperation(onDeleteSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
-        const caseObject = new Case(
-          data.value.data.onDeleteSalgsCase
-        );
+        const caseObject = new Case(data.value.data.onDeleteSalgsCase);
         handler(caseObject);
       },
     });

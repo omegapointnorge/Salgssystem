@@ -1,6 +1,6 @@
 import React from "react";
 import Case from "../../models/Case";
-import Ansvarlig from "../Ansvarlig/Ansvarlig";
+import {Ansvarlig} from "../Ansvarlig/Ansvarlig";
 import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
 import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
 import TagContainer from "../TagContainer/TagContainer";
@@ -62,6 +62,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
       [key]: value.split("\n"),
     });
   };
+
 
   return (
     <div className={styles.card}>

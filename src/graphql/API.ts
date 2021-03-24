@@ -3,14 +3,23 @@
 //  This file was automatically generated and should not be edited.
 
 export type MoveSalgsCaseInput = {
+  id: string,
   ansvarlig?: string | null,
   caseTags?: Array< string > | null,
   frist?: string | null,
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
-  status?: string | null,
+  status: Status,
 };
+
+export enum Status {
+  UNASSIGNED = "UNASSIGNED",
+  PABEGYNT = "PABEGYNT",
+  VUNNET = "VUNNET",
+  TAPT = "TAPT",
+}
+
 
 export type SalgsCase = {
   __typename: "SalgsCase",
@@ -21,7 +30,7 @@ export type SalgsCase = {
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
-  status?: string | null,
+  status?: Status,
   createdAt?: string,
   updatedAt?: string,
 };
@@ -34,7 +43,7 @@ export type CreateSalgsCaseInput = {
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
-  status?: string | null,
+  status: Status,
 };
 
 export type ModelSalgsCaseConditionInput = {
@@ -44,7 +53,7 @@ export type ModelSalgsCaseConditionInput = {
   kontakt?: ModelStringInput | null,
   kunde?: ModelStringInput | null,
   profilert?: ModelStringInput | null,
-  status?: ModelStringInput | null,
+  status?: ModelStatusInput | null,
   and?: Array< ModelSalgsCaseConditionInput | null > | null,
   or?: Array< ModelSalgsCaseConditionInput | null > | null,
   not?: ModelSalgsCaseConditionInput | null,
@@ -90,14 +99,20 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelStatusInput = {
+  eq?: Status | null,
+  ne?: Status | null,
+};
+
 export type UpdateSalgsCaseInput = {
+  id: string,
   ansvarlig?: string | null,
   caseTags?: Array< string > | null,
   frist?: string | null,
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
-  status?: string | null,
+  status?: Status | null,
 };
 
 export type DeleteSalgsCaseInput = {
@@ -105,16 +120,33 @@ export type DeleteSalgsCaseInput = {
 };
 
 export type ModelSalgsCaseFilterInput = {
+  id?: ModelIDInput | null,
   ansvarlig?: ModelStringInput | null,
   caseTags?: ModelStringInput | null,
   frist?: ModelStringInput | null,
   kontakt?: ModelStringInput | null,
   kunde?: ModelStringInput | null,
   profilert?: ModelStringInput | null,
-  status?: ModelStringInput | null,
+  status?: ModelStatusInput | null,
   and?: Array< ModelSalgsCaseFilterInput | null > | null,
   or?: Array< ModelSalgsCaseFilterInput | null > | null,
   not?: ModelSalgsCaseFilterInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type ModelSalgsCaseConnection = {
@@ -137,7 +169,7 @@ export type MoveSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -158,7 +190,7 @@ export type CreateSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -179,7 +211,7 @@ export type UpdateSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -200,7 +232,7 @@ export type DeleteSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -220,7 +252,7 @@ export type GetSalgsCaseQuery = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -244,7 +276,7 @@ export type ListSalgsCasesQuery = {
       kontakt?: string | null,
       kunde?: string | null,
       profilert?: Array< string > | null,
-      status?: string | null,
+      status: Status,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -262,7 +294,7 @@ export type OnMoveSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -278,7 +310,7 @@ export type OnCreateSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -294,7 +326,7 @@ export type OnUpdateSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -310,7 +342,7 @@ export type OnDeleteSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
-    status?: string | null,
+    status: Status,
     createdAt: string,
     updatedAt: string,
   } | null,

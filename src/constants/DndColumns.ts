@@ -1,20 +1,21 @@
 import { IColumnList } from "../common/types";
+import { Status } from "../graphql/API";
 
 export const initialColumns: IColumnList = {
   Unassigned: {
-    id: "Unassigned",
+    id: Status.UNASSIGNED,
     list: [],
   },
   Påbegynt: {
-    id: "Påbegynt",
+    id: Status.PABEGYNT,
     list: [],
   },
   Vunnet: {
-    id: "Vunnet",
+    id: Status.VUNNET,
     list: [],
   },
   Tapt: {
-    id: "Tapt",
+    id: Status.TAPT,
     list: [],
   },
 };

@@ -1,21 +1,23 @@
 type SalgsCase @model {
+  id: ID!
   ansvarlig: String
   caseTags: [String!]
   frist: String
   kontakt: String
   kunde: String
   profilert: [String!]
-  status: String
+  status: Status!
 }
 
 input MoveSalgsCaseInput {
+  id: ID!
   ansvarlig: String
   caseTags: [String!]
   frist: String
   kontakt: String
   kunde: String
   profilert: [String!]
-  status: String
+  status: Status!
 }
 
 type Mutation {
@@ -24,4 +26,11 @@ type Mutation {
 
 type Subscription {
   onMoveSalgsCase: SalgsCase @aws_subscribe(mutations: ["moveSalgsCase"])
+}
+
+enum Status {
+  UNASSIGNED,
+  PABEGYNT,
+  VUNNET,
+  TAPT,
 }

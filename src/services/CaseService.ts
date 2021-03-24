@@ -1,59 +1,65 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
+import { listSalgsCases } from "../graphql/queries";
 import {
-  listSalgsCases,
   createSalgsCase,
   updateSalgsCase,
   moveSalgsCase,
   deleteSalgsCase,
-} from "../graphql";
+} from "../graphql/mutations";
 import * as GqlTypes from "../graphql/API";
 
-export async function listCases(): Promise<
-  Array<GqlTypes.SalgsCase | null> | null | undefined
-> {
+export async function listCases() {
   try {
     const result = (await API.graphql(
       graphqlOperation(listSalgsCases)
     )) as GraphQLResult;
-    const data = result.data as GqlTypes.ListSalgsCasesQuery;
-    return await data.listSalgsCases?.items;
+    const data = (await result.data) as GqlTypes.ListSalgsCasesQuery;
+    return (await data.listSalgsCases?.items) as GqlTypes.SalgsCase[];
   } catch (error) {
     console.error("Failed to get cases from database", error);
   }
 }
 
-export async function createCase(caseObject: GqlTypes.SalgsCase) {
+export async function createCase() {
   try {
-    const result = await API.graphql(
+    const result = (await API.graphql(
       graphqlOperation(createSalgsCase, {
-        input: caseObject,
+        input: {
+          status: GqlTypes.Status.UNASSIGNED,
+        },
       })
-    );
-    return result;
+    )) as GraphQLResult;
+    const data = (await result.data) as GqlTypes.CreateSalgsCaseMutation;
+    const caseObject = await data.createSalgsCase;
+    return caseObject;
   } catch (error) {
-    console.error(`Failed to create case: ${caseObject.id} in database`, error);
+    console.error("Failed to create case in database", error);
   }
 }
 
 export async function updateCase(caseObject: GqlTypes.SalgsCase) {
+  const { createdAt, updatedAt, ...updateInput } = caseObject;
+
   try {
     const result = await API.graphql(
       graphqlOperation(updateSalgsCase, {
-        input: caseObject,
+        input: updateInput,
       })
     );
     return result;
   } catch (error) {
-    console.error(`Failed to update case: ${caseObject.id} in database`, error);
+    console.error(`Failed to update case: ${updateInput.id} in database`, error);
   }
 }
 
 export async function moveCase(caseObject: GqlTypes.SalgsCase) {
+  const { createdAt, updatedAt, ...updateInput } = caseObject;
+
   try {
     const result = await API.graphql(
       graphqlOperation(moveSalgsCase, {
-        input: caseObject,
+        input: updateInput,
       })
     );
     return result;

@@ -2,30 +2,30 @@ import { v4 as uuid } from "uuid";
 import Status from "../constants/Status";
 
 class Case {
-  ID: string;
+  id: string;
   ansvarlig: string;
   caseTags: string[];
-  dato: Date;
+  createdAt: Date;
   frist: Date | null;
   kontakt: string;
   kunde: string;
   profilert: string[];
   status: Status;
   constructor({
-    ID = uuid(),
+    id = uuid(),
     ansvarlig = "",
-    caseTags = [],
-    dato = new Date(),
+    caseTags = [] as string[],
+    createdAt = new Date(),
     frist = null,
     kontakt = "",
     kunde = "",
     profilert = [],
     status = Status.UNASSIGNED,
   } = {}) {
-    this.ID = ID;
+    this.id = id;
     this.ansvarlig = ansvarlig;
     this.caseTags = caseTags;
-    this.dato = new Date(dato);
+    this.createdAt = new Date(createdAt);
     this.frist = frist;
     this.kontakt = kontakt;
     this.kunde = kunde;

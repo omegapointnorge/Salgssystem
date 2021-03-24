@@ -31,7 +31,7 @@ function DndColumns() {
   useCreateCaseSubscription((caseObject: Case) => {
     const canCreateCaseCard = !Object.keys(columns).some((key) => {
       const column: IColumn = columns[key];
-      return column.list.some((co) => co.ID === caseObject.ID);
+      return column.list.some((co) => co.id === caseObject.id);
     });
 
     if (canCreateCaseCard) {
@@ -61,7 +61,7 @@ function DndColumns() {
     Object.keys(columns).forEach((key) => {
       const column: IColumn = columns[key];
       column.list.forEach((co, i) => {
-        if (co.ID === caseObject.ID) {
+        if (co.id === caseObject.id) {
           fromId = key;
           fromIndex = i;
           noChange = co.status === caseObject.status;
@@ -184,7 +184,7 @@ function DndColumns() {
               <Column colId={col.id} key={col.id}>
                 {col.list.map((caseObject: Case, index: number) => (
                   <Item
-                    key={caseObject.ID}
+                    key={caseObject.id}
                     caseObject={caseObject}
                     index={index}
                   >

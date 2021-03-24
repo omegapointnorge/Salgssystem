@@ -4,11 +4,13 @@ import styles from "./DoubleClickEditInput.module.css";
 
 interface DoubleClickEditInputProps {
   value: string;
+  placeholder?: string;
   handleInputChange: (value: string) => void;
 }
 
 const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
   value,
+  placeholder = "",
   handleInputChange,
 }) => {
   const [state, setState] = useState(value);
@@ -40,6 +42,7 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
             className={styles.input}
             ref={inputRef}
             value={state}
+            placeholder={placeholder}
             onChange={onChange}
             onKeyDown={(event) => {
               if (event.key === "Enter") handleEdit();
@@ -49,7 +52,7 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
           />
         </ClickOutsideWrapper>
       ) : (
-        <div className={styles.display} onDoubleClick={() => setEditMode(true)}>{value}</div>
+        <div className={value ? styles.display : [styles.display, styles.placeholder].join(" ")} onDoubleClick={() => setEditMode(true)}>{value || placeholder}</div>
       )}
     </div>
   );

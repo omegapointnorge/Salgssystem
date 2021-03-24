@@ -26,7 +26,7 @@ const Item: React.FC<ItemProps> = (props) => {
   
   return (
     <Draggable
-      draggableId={caseObject.ID}
+      draggableId={caseObject.id}
       index={index}
       isDragDisabled={isInvalid(caseObject)}
     >

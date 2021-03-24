@@ -1,5 +1,5 @@
 import styles from "./CaseCard.module.css";
-import React, { useState, MouseEvent } from "react";
+import React, { useState } from "react";
 import Case from "../../models/Case";
 import DeleteCardMenu from "../DeleteCardMenu/DeleteCardMenu";
 import TagContainer from "../TagContainer/TagContainer";
@@ -20,7 +20,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
   let {
     ansvarlig,
     caseTags,
-    dato,
+    createdAt,
     // frist,
     kontakt,
     // kunde,
@@ -34,18 +34,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
       ...caseObject,
       caseTags: caseTags,
     });
-  };
-
-  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
-    console.log(event.target);
-    console.log(event.currentTarget);
-    
-
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-    const selection = getSelection();
-    selection?.empty();
   };
 
   const handleDeleteCaseClick = () => {
@@ -80,9 +68,10 @@ const CaseCard: React.FC<CaseCardProps> = ({
         <div className={styles.ownerAvatar}>{ansvarlig}</div>
       </div>
       <div className={styles.details}>
-        <div>{dato?.toLocaleDateString()}</div>
+        <div>{createdAt?.toLocaleDateString()}</div>
         <DoubleClickEditInput
           value={kontakt}
+          placeholder={"Kontakt"}
           handleInputChange={(value) => handleEditCaseInput("kontakt", value)}
         />
         <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />

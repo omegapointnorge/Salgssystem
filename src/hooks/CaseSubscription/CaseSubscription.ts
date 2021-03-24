@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { Observable } from "zen-observable-ts";
 import { API, graphqlOperation } from "aws-amplify";
 import {
-  onCreateSalgssystemDevelopment,
-  onUpdateSalgssystemDevelopment,
-  onMoveSalgssystemDevelopment,
-  onDeleteSalgssystemDevelopment,
+  onCreateSalgsCase,
+  onUpdateSalgsCase,
+  onMoveSalgsCase,
+  onDeleteSalgsCase,
 } from "../../graphql";
 import Case from "../../models/Case";
 
@@ -14,11 +14,11 @@ export const useCreateCaseSubscription = (
 ) => {
   useEffect(() => {
     const subscription = (API.graphql(
-      graphqlOperation(onCreateSalgssystemDevelopment)
+      graphqlOperation(onCreateSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
         const caseObject = new Case(
-          data.value.data.onCreateSalgssystemDevelopment
+          data.value.data.onCreateSalgsCase
         );
         handler(caseObject);
       },
@@ -32,11 +32,11 @@ export const useUpdateCaseSubscription = (
 ) => {
   useEffect(() => {
     const subscription = (API.graphql(
-      graphqlOperation(onUpdateSalgssystemDevelopment)
+      graphqlOperation(onUpdateSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
         const caseObject = new Case(
-          data.value.data.onUpdateSalgssystemDevelopment
+          data.value.data.onUpdateSalgsCase
         );
         handler(caseObject);
       },
@@ -50,11 +50,11 @@ export const useMoveCaseSubscription = (
 ) => {
   useEffect(() => {
     const subscription = (API.graphql(
-      graphqlOperation(onMoveSalgssystemDevelopment)
+      graphqlOperation(onMoveSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
         const caseObject = new Case(
-          data.value.data.onMoveSalgssystemDevelopment
+          data.value.data.onMoveSalgsCase
         );
         handler(caseObject);
       },
@@ -68,11 +68,11 @@ export const useDeleteCaseSubscription = (
 ) => {
   useEffect(() => {
     const subscription = (API.graphql(
-      graphqlOperation(onDeleteSalgssystemDevelopment)
+      graphqlOperation(onDeleteSalgsCase)
     ) as Observable<object>).subscribe({
       next: (data: any) => {
         const caseObject = new Case(
-          data.value.data.onDeleteSalgssystemDevelopment
+          data.value.data.onDeleteSalgsCase
         );
         handler(caseObject);
       },

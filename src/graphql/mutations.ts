@@ -2,13 +2,10 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createSalgssystemDevelopment = /* GraphQL */ `
-  mutation CreateSalgssystemDevelopment(
-    $input: CreateSalgssystemDevelopmentInput!
-  ) {
-    createSalgssystemDevelopment(input: $input) {
-      ID
-      dato
+export const moveSalgsCase = /* GraphQL */ `
+  mutation MoveSalgsCase($input: MoveSalgsCaseInput!) {
+    moveSalgsCase(input: $input) {
+      id
       ansvarlig
       caseTags
       frist
@@ -16,16 +13,18 @@ export const createSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const updateSalgssystemDevelopment = /* GraphQL */ `
-  mutation UpdateSalgssystemDevelopment(
-    $input: UpdateSalgssystemDevelopmentInput!
+export const createSalgsCase = /* GraphQL */ `
+  mutation CreateSalgsCase(
+    $input: CreateSalgsCaseInput!
+    $condition: ModelSalgsCaseConditionInput
   ) {
-    updateSalgssystemDevelopment(input: $input) {
-      ID
-      dato
+    createSalgsCase(input: $input, condition: $condition) {
+      id
       ansvarlig
       caseTags
       frist
@@ -33,16 +32,18 @@ export const updateSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const moveSalgssystemDevelopment = /* GraphQL */ `
-  mutation MoveSalgssystemDevelopment(
-    $input: MoveSalgssystemDevelopmentInput!
+export const updateSalgsCase = /* GraphQL */ `
+  mutation UpdateSalgsCase(
+    $input: UpdateSalgsCaseInput!
+    $condition: ModelSalgsCaseConditionInput
   ) {
-    moveSalgssystemDevelopment(input: $input) {
-      ID
-      dato
+    updateSalgsCase(input: $input, condition: $condition) {
+      id
       ansvarlig
       caseTags
       frist
@@ -50,16 +51,18 @@ export const moveSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const deleteSalgssystemDevelopment = /* GraphQL */ `
-  mutation DeleteSalgssystemDevelopment(
-    $input: DeleteSalgssystemDevelopmentInput!
+export const deleteSalgsCase = /* GraphQL */ `
+  mutation DeleteSalgsCase(
+    $input: DeleteSalgsCaseInput!
+    $condition: ModelSalgsCaseConditionInput
   ) {
-    deleteSalgssystemDevelopment(input: $input) {
-      ID
-      dato
+    deleteSalgsCase(input: $input, condition: $condition) {
+      id
       ansvarlig
       caseTags
       frist
@@ -67,6 +70,8 @@ export const deleteSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;

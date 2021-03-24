@@ -50,7 +50,7 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
     case ColumnsAction.DELETE: {
       let { caseObject } = action.payload;
       let newList = columns[caseObject.status].list.filter(
-        (co: Case) => co.ID !== caseObject.ID
+        (co: Case) => co.id !== caseObject.id
       );
 
       return {
@@ -62,7 +62,7 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
       let { caseObject } = action.payload;
 
       let newList = columns[caseObject.status].list.map((co: Case) =>
-        co.ID === caseObject.ID ? caseObject : co
+        co.id === caseObject.id ? caseObject : co
       );
 
       return {

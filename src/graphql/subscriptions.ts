@@ -2,11 +2,10 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateSalgssystemDevelopment = /* GraphQL */ `
-  subscription OnCreateSalgssystemDevelopment {
-    onCreateSalgssystemDevelopment {
-      ID
-      dato
+export const onMoveSalgsCase = /* GraphQL */ `
+  subscription OnMoveSalgsCase {
+    onMoveSalgsCase {
+      id
       ansvarlig
       caseTags
       frist
@@ -14,14 +13,15 @@ export const onCreateSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const onUpdateSalgssystemDevelopment = /* GraphQL */ `
-  subscription OnUpdateSalgssystemDevelopment {
-    onUpdateSalgssystemDevelopment {
-      ID
-      dato
+export const onCreateSalgsCase = /* GraphQL */ `
+  subscription OnCreateSalgsCase {
+    onCreateSalgsCase {
+      id
       ansvarlig
       caseTags
       frist
@@ -29,14 +29,15 @@ export const onUpdateSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const onMoveSalgssystemDevelopment = /* GraphQL */ `
-  subscription OnMoveSalgssystemDevelopment {
-    onMoveSalgssystemDevelopment {
-      ID
-      dato
+export const onUpdateSalgsCase = /* GraphQL */ `
+  subscription OnUpdateSalgsCase {
+    onUpdateSalgsCase {
+      id
       ansvarlig
       caseTags
       frist
@@ -44,14 +45,15 @@ export const onMoveSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const onDeleteSalgssystemDevelopment = /* GraphQL */ `
-  subscription OnDeleteSalgssystemDevelopment {
-    onDeleteSalgssystemDevelopment {
-      ID
-      dato
+export const onDeleteSalgsCase = /* GraphQL */ `
+  subscription OnDeleteSalgsCase {
+    onDeleteSalgsCase {
+      id
       ansvarlig
       caseTags
       frist
@@ -59,6 +61,8 @@ export const onDeleteSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;

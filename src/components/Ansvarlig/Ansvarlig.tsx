@@ -21,18 +21,21 @@ export const Ansvarlig: React.FC<AnsvarligProps> = ({
       name: "Anniken",
       callback: (ansvarlig: string) => onChange(ansvarlig),
       image: avatar1,
+      htmlElement: null
     },
     {
       id: 1,
       name: "Lotte",
       callback: (ansvarlig: string) => onChange(ansvarlig),
       image: avatar2,
+      htmlElement: null
     },
     {
       id: 2,
       name: "Frida",
       callback: (ansvarlig: string) => onChange(ansvarlig),
       image: avatar3,
+      htmlElement: null
     },
   ];
 

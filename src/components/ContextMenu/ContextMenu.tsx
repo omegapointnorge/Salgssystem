@@ -52,8 +52,10 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
               menuItem.callback(menuItem.name);
             }}
           >
+            {menuItem.htmlElement && <span className={styles.htmlElement}>{menuItem.htmlElement}</span>}
+
             <span className={styles.menuText}>{menuItem.name}</span>
-            <img src={menuItem.image} alt="avatar" className={styles.avatar} />
+            {menuItem.image && <img src={menuItem.image} alt="avatar" className={styles.avatar} />}
           </div>
         ))}
       </div>

@@ -73,6 +73,7 @@ export interface IcontextMenuItem {
   name: string;
   callback: (arg0: string) => (void);
   image: string;
+  htmlElement: any
 }
 
 

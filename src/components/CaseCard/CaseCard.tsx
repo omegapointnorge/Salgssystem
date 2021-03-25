@@ -67,7 +67,10 @@ const CaseCard: React.FC<CaseCardProps> = ({
     <div className={styles.card}>
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
-        <Ansvarlig ansvarlig={ansvarlig || ""} onChange={handleAnsvarligChange} />
+        <Ansvarlig
+          ansvarlig={ansvarlig || ""}
+          onChange={handleAnsvarligChange}
+        />
       </div>
       <div className={styles.details}>
         <div>{new Date(createdAt!).toLocaleDateString()}</div>
@@ -76,9 +79,14 @@ const CaseCard: React.FC<CaseCardProps> = ({
           placeholder={"Kontakt"}
           handleInputChange={(value) => handleEditCaseInput("kontakt", value)}
         />
-        <TagContainer caseTags={caseTags || []} onChangeTags={handleTagsChange} />
+        <TagContainer
+          caseTags={caseTags || []}
+          placeholder="Case tags"
+          onChangeTags={handleTagsChange}
+        />
         <DoubleClickEditTextarea
           value={profilert?.join("\n") || ""}
+          placeholder="Profilert"
           handleTextareaChange={(value) =>
             handleEditCaseTextarea("profilert", value)
           }

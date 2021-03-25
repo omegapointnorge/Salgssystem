@@ -21,11 +21,11 @@ input MoveSalgsCaseInput {
 }
 
 type Mutation {
-  moveSalgsCase(input: MoveSalgsCaseInput!): SalgsCase
+  moveSalgsCase(input: MoveSalgsCaseInput!): SalgsCase @aws_api_key
 }
 
 type Subscription {
-  onMoveSalgsCase: SalgsCase @aws_subscribe(mutations: ["moveSalgsCase"])
+  onMoveSalgsCase: SalgsCase @aws_subscribe(mutations: ["moveSalgsCase"]) @aws_api_key
 }
 
 enum Status {

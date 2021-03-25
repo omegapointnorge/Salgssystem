@@ -72,7 +72,7 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
     case ColumnsAction.LOAD: {
       let { cases } = action.payload;
 
-      if(!cases) return;
+      if (!cases) return;
 
       let columnsCopy = Object.values(columns)
         .map((col) => ({ ...col, list: [...col.list] }))
@@ -82,9 +82,11 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
           return acc;
         }, {});
 
-      cases!.forEach((caseObject: SalgsCase | null) =>
-        columnsCopy[caseObject!.status!].list.push(caseObject)
-      );
+      console.log(cases);
+
+      cases!.forEach((caseObject: SalgsCase | null) => {
+        columnsCopy[caseObject!.status!].list.push(caseObject);
+      });
 
       return columnsCopy;
     }

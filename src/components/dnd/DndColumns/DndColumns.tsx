@@ -180,7 +180,7 @@ function DndColumns() {
         </button>
         <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
           <div className={styles.kolonner}>
-            {Object.values(columns).map((col) => (
+            {Object.values(columns).map((col: IColumn) => (
               <Column colId={col.id} key={col.id}>
                 {col.list.map((caseObject: SalgsCase, index: number) => (
                   <Item

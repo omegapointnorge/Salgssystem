@@ -15,7 +15,7 @@ export type MoveSalgsCaseInput = {
 
 export enum Status {
   UNASSIGNED = "UNASSIGNED",
-  PABEGYNT = "PÅBEGYNT",
+  PABEGYNT = "PABEGYNT",
   VUNNET = "VUNNET",
   TAPT = "TAPT",
 }

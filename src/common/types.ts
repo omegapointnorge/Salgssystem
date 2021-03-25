@@ -21,10 +21,10 @@ interface IObjectStringKeys {
 }
 
 export interface IColumnList extends IObjectStringKeys {
-  Unassigned: IColumn;
-  Påbegynt: IColumn;
-  Vunnet: IColumn;
-  Tapt: IColumn;
+  UNASSIGNED: IColumn;
+  PABEGYNT: IColumn;
+  VUNNET: IColumn;
+  TAPT: IColumn;
 }
 
 export enum ColumnsAction {

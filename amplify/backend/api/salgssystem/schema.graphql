@@ -1,4 +1,4 @@
-type SalgsCase @model {
+type SalgsCase @model @aws_api_key {
   id: ID!
   ansvarlig: String
   caseTags: [String!]

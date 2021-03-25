@@ -69,22 +69,17 @@ const CaseCard: React.FC<CaseCardProps> = ({
       id: 0,
       name: "Slett case",
       callback: () => handleDeleteCaseClick(),
-      image: "",
-      htmlElement: <TrashCan size="s"/>
+      htmlElementID: "TrashCan"
     },
     {
       id: 1,
       name: "Lås case",
-      callback: () => console.log("Låser"),
-      image: "",
-      htmlElement: null
+      callback: () => console.log("Låser")
     },
     {
       id: 2,
       name: "Lås opp case",
-      callback: () => console.log("Låser opp"),
-      image: "",
-      htmlElement: null
+      callback: () => console.log("Låser opp")
     },
   ];
 

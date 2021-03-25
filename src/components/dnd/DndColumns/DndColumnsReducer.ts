@@ -82,8 +82,6 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
           return acc;
         }, {});
 
-      console.log(cases);
-
       cases!.forEach((caseObject: SalgsCase | null) => {
         columnsCopy[caseObject!.status!].list.push(caseObject);
       });

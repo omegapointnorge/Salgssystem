@@ -1,5 +1,6 @@
 .display {
   cursor: pointer;
+  height: 100%;
 }
 
 input.input {
@@ -11,6 +12,7 @@ input.input {
   transition: all 0.2s;
 }
 
+.placeholder,
 input.input::placeholder {
   color: rgba(0, 0, 0, 0.3);
 }

@@ -1,0 +1,36 @@
+type SalgsCase @model @aws_api_key {
+  id: ID!
+  ansvarlig: String
+  caseTags: [String!]
+  frist: String
+  kontakt: String
+  kunde: String
+  profilert: [String!]
+  status: Status!
+}
+
+input MoveSalgsCaseInput {
+  id: ID!
+  ansvarlig: String
+  caseTags: [String!]
+  frist: String
+  kontakt: String
+  kunde: String
+  profilert: [String!]
+  status: Status!
+}
+
+type Mutation {
+  moveSalgsCase(input: MoveSalgsCaseInput!): SalgsCase @aws_api_key
+}
+
+type Subscription {
+  onMoveSalgsCase: SalgsCase @aws_subscribe(mutations: ["moveSalgsCase"]) @aws_api_key
+}
+
+enum Status {
+  UNASSIGNED,
+  PABEGYNT,
+  VUNNET,
+  TAPT,
+}

@@ -4,11 +4,13 @@ import styles from "./DoubleClickEditTextarea.module.css";
 
 interface DoubleClickEditTextareaProps {
   value: string;
+  placeholder?: string;
   handleTextareaChange: (value: string) => void;
 }
 
 const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
   value,
+  placeholder = "",
   handleTextareaChange,
 }) => {
   const [state, setState] = useState(value);
@@ -48,10 +50,10 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
           />
         </ClickOutsideWrapper>
       ) : (
-        <ul className={styles.display} onDoubleClick={() => setEditMode(true)}>
-          {value.split("\n").map((line, i) => (
+        <ul className={value ? styles.display : [styles.display, styles.placeholder].join(" ")} onDoubleClick={() => setEditMode(true)}>
+          {value ? value.split("\n").map((line, i) => (
             <li key={i}>{line}</li>
-          ))}
+          )) : placeholder}
         </ul>
       )}
     </div>

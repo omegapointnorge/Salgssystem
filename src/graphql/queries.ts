@@ -2,11 +2,10 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getSalgssystemDevelopment = /* GraphQL */ `
-  query GetSalgssystemDevelopment($ID: String!, $dato: String!) {
-    getSalgssystemDevelopment(ID: $ID, dato: $dato) {
-      ID
-      dato
+export const getSalgsCase = /* GraphQL */ `
+  query GetSalgsCase($id: ID!) {
+    getSalgsCase(id: $id) {
+      id
       ansvarlig
       caseTags
       frist
@@ -14,23 +13,20 @@ export const getSalgssystemDevelopment = /* GraphQL */ `
       kunde
       profilert
       status
+      createdAt
+      updatedAt
     }
   }
 `;
-export const listSalgssystemDevelopments = /* GraphQL */ `
-  query ListSalgssystemDevelopments(
-    $filter: TableSalgssystemDevelopmentFilterInput
+export const listSalgsCases = /* GraphQL */ `
+  query ListSalgsCases(
+    $filter: ModelSalgsCaseFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSalgssystemDevelopments(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listSalgsCases(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        ID
-        dato
+        id
         ansvarlig
         caseTags
         frist
@@ -38,6 +34,8 @@ export const listSalgssystemDevelopments = /* GraphQL */ `
         kunde
         profilert
         status
+        createdAt
+        updatedAt
       }
       nextToken
     }

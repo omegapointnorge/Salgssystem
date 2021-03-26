@@ -1,7 +1,6 @@
 import { Reducer } from "react";
 import { IColumnList, Action, ColumnsAction } from "../../../common/types";
-import Status from "../../../constants/Status";
-import Case from "../../../models/Case";
+import { SalgsCase, Status } from "../../../graphql/API";
 
 const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
   switch (action.type) {
@@ -41,37 +40,39 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
           return acc;
         }, {});
 
-      cases.forEach((caseObject: Case) =>
-        columnsCopy[caseObject.status].list.unshift(caseObject)
+      cases.forEach((caseObject: SalgsCase) =>
+        columnsCopy[caseObject.status!].list.unshift(caseObject)
       );
 
       return columnsCopy;
     }
     case ColumnsAction.DELETE: {
       let { caseObject } = action.payload;
-      let newList = columns[caseObject.status].list.filter(
-        (co: Case) => co.ID !== caseObject.ID
+      let newList = columns[caseObject.status!].list.filter(
+        (co: SalgsCase) => co.id !== caseObject.id
       );
 
       return {
         ...columns,
-        [caseObject.status]: { id: caseObject.status, list: newList },
+        [caseObject.status!]: { id: caseObject.status, list: newList },
       };
     }
     case ColumnsAction.EDIT: {
       let { caseObject } = action.payload;
 
-      let newList = columns[caseObject.status].list.map((co: Case) =>
-        co.ID === caseObject.ID ? caseObject : co
+      let newList = columns[caseObject.status!].list.map((co: SalgsCase) =>
+        co.id === caseObject.id ? caseObject : co
       );
 
       return {
         ...columns,
-        [caseObject.status]: { id: caseObject.status, list: newList },
+        [caseObject.status!]: { id: caseObject.status, list: newList },
       };
     }
     case ColumnsAction.LOAD: {
       let { cases } = action.payload;
+
+      if (!cases) return;
 
       let columnsCopy = Object.values(columns)
         .map((col) => ({ ...col, list: [...col.list] }))
@@ -81,9 +82,9 @@ const dndColumnsReducer: Reducer<IColumnList, Action> = (columns, action) => {
           return acc;
         }, {});
 
-      cases.forEach((caseObject: Case) =>
-        columnsCopy[caseObject.status].list.push(caseObject)
-      );
+      cases!.forEach((caseObject: SalgsCase | null) => {
+        columnsCopy[caseObject!.status!].list.push(caseObject);
+      });
 
       return columnsCopy;
     }

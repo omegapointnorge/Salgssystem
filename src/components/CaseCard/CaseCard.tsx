@@ -1,29 +1,28 @@
 import React from "react";
 import { IcontextMenuItem } from "../../common/types";
-import Case from "../../models/Case";
+import { SalgsCase } from "../../graphql/API";
 import { Ansvarlig } from "../Ansvarlig/Ansvarlig";
 import { ContextMenu } from "../ContextMenu/ContextMenu";
 import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
 import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
 import TagContainer from "../TagContainer/TagContainer";
-import TrashCan from "../TrashCan/TrashCan";
 import styles from "./CaseCard.module.css";
 
 interface CaseCardProps {
-  caseObject: Case;
-  slettCase: (caseObject: Case) => void;
-  editCase: (caseObject: Case) => void;
+  caseObject: SalgsCase;
+  slettCase: (caseObject: SalgsCase) => void;
+  editCase: (caseObject: SalgsCase) => void;
 }
 
 const CaseCard: React.FC<CaseCardProps> = ({
-  caseObject = new Case(),
+  caseObject,
   slettCase,
   editCase,
 }) => {
   let {
     ansvarlig,
     caseTags,
-    dato,
+    createdAt,
     // frist,
     kontakt,
     // kunde,
@@ -53,9 +52,9 @@ const CaseCard: React.FC<CaseCardProps> = ({
   const handleAnsvarligChange = (username: string) => {
     editCase({
       ...caseObject,
-      ansvarlig: username
-    } as Pick<Case, keyof Case>);
-  }
+      ansvarlig: username,
+    });
+  };
 
   const handleEditCaseTextarea = (key: string, value: string) => {
     editCase({
@@ -90,17 +89,26 @@ const CaseCard: React.FC<CaseCardProps> = ({
       <ContextMenu menu={contextMenuArray} node={caseCardRef} />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
-        <Ansvarlig ansvarlig={ansvarlig} onChange={handleAnsvarligChange} />
+        <Ansvarlig
+          ansvarlig={ansvarlig || ""}
+          onChange={handleAnsvarligChange}
+        />
       </div>
       <div className={styles.details}>
-        <div>{dato?.toLocaleDateString()}</div>
+        <div>{new Date(createdAt!).toLocaleDateString()}</div>
         <DoubleClickEditInput
-          value={kontakt}
+          value={kontakt || ""}
+          placeholder={"Kontakt"}
           handleInputChange={(value) => handleEditCaseInput("kontakt", value)}
         />
-        <TagContainer caseTags={caseTags} onChangeTags={handleTagsChange} />
+        <TagContainer
+          caseTags={caseTags || []}
+          placeholder="Case tags"
+          onChangeTags={handleTagsChange}
+        />
         <DoubleClickEditTextarea
-          value={profilert?.join("\n")}
+          value={profilert?.join("\n") || ""}
+          placeholder="Profilert"
           handleTextareaChange={(value) =>
             handleEditCaseTextarea("profilert", value)
           }

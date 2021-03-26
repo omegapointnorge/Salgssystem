@@ -2,7 +2,7 @@
  * Types (e.g. enums) & constants :)
  */
 
-import Case from "../models/Case";
+import { SalgsCase, Status } from "../graphql/API";
 
 export const errors = {
   CALLED_WHEN_NO_ACTIVE_PROJECT_FOR_FILE_PATH:
@@ -11,10 +11,9 @@ export const errors = {
     "A query *that needs an active project* was made when there is no active project",
 };
 
-
 export interface IColumn {
-  id: string;
-  list: Case[];
+  id: Status;
+  list: SalgsCase[];
 }
 
 interface IObjectStringKeys {
@@ -22,10 +21,10 @@ interface IObjectStringKeys {
 }
 
 export interface IColumnList extends IObjectStringKeys {
-  Unassigned: IColumn;
-  Påbegynt: IColumn;
-  Vunnet: IColumn;
-  Tapt: IColumn;
+  UNASSIGNED: IColumn;
+  PABEGYNT: IColumn;
+  VUNNET: IColumn;
+  TAPT: IColumn;
 }
 
 export enum ColumnsAction {
@@ -45,28 +44,33 @@ interface MoveAction {
 interface AddAction {
   type: ColumnsAction.ADD;
   payload: {
-    cases: Case[];
+    cases: SalgsCase[];
   };
 }
 interface DeleteAction {
   type: ColumnsAction.DELETE;
   payload: {
-    caseObject: Case;
+    caseObject: SalgsCase;
   };
 }
 interface EditAction {
   type: ColumnsAction.EDIT;
   payload: {
-    caseObject: Case;
+    caseObject: SalgsCase;
   };
 }
 interface LoadAction {
   type: ColumnsAction.LOAD;
   payload: {
-    cases: Case[];
+    cases: SalgsCase[];
   };
 }
-export type Action = MoveAction | AddAction | DeleteAction | EditAction | LoadAction;
+export type Action =
+  | MoveAction
+  | AddAction
+  | DeleteAction
+  | EditAction
+  | LoadAction;
 
 export interface IcontextMenuItem {
   id: number;
@@ -75,5 +79,3 @@ export interface IcontextMenuItem {
   image?: string;
   htmlElementID?: string
 }
-
-

@@ -1,20 +1,17 @@
 import styles from "./TagContainer.module.css";
 import CaseTag from "../CaseTag/CaseTag";
-import React, {
-  KeyboardEvent,
-  useState,
-  useRef,
-  useEffect,
-} from "react";
+import React, { KeyboardEvent, useState, useRef, useEffect } from "react";
 import ClickOutsideWrapper from "../ClickOutsideWrapper/ClickOutsideWrapper";
 
 interface TagContainerProps {
   caseTags: string[];
+  placeholder?: string;
   onChangeTags: (caseTags: string[]) => void;
 }
 
 const TagContainer: React.FC<TagContainerProps> = ({
   caseTags = [],
+  placeholder = "",
   onChangeTags,
 }) => {
   const [editMode, setEditMode] = useState(false);
@@ -28,7 +25,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
 
   const onEnterPressedTags = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if(event.currentTarget.value?.length > 0) {
+      if (event.currentTarget.value?.length > 0) {
         onChangeTags([...caseTags, event.currentTarget.value]);
       } else {
         setEditMode(false);
@@ -58,15 +55,19 @@ const TagContainer: React.FC<TagContainerProps> = ({
           />
         ) : null}
         <div className={styles.tags}>
-          {caseTags.map((tag, i) => (
-            <CaseTag
-              key={i}
-              onClickHandler={() => {
-                if (editMode) onClickTag(i);
-              }}
-              tag={tag}
-            />
-          ))}
+          {caseTags.length !== 0 ? (
+            caseTags.map((tag, i) => (
+              <CaseTag
+                key={i}
+                onClickHandler={() => {
+                  if (editMode) onClickTag(i);
+                }}
+                tag={tag}
+              />
+            ))
+          ) : editMode ? null : (
+            <div className={styles.placeholder}>{placeholder}</div>
+          )}
         </div>
       </ClickOutsideWrapper>
     </div>

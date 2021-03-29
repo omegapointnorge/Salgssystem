@@ -8,7 +8,7 @@ import avatar3 from "../../assets/avatar3.png";
 import { IcontextMenuItem } from "../../common/types";
 import { MenusOpenAction } from "../../redux/reducers/menusOpen";
 import { setMenusOpen } from "../../redux/actions";
-import useContextMenu from "../../hooks/CaseSubscription/useContextMenu";
+import useContextMenu from "../../hooks/useContextMenu";
 
 interface AnsvarligProps {
   ansvarlig: string;

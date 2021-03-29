@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent, useRef, useEffect } from "react";
-import ClickOutsideWrapper from "../ClickOutsideWrapper/ClickOutsideWrapper";
 import styles from "./DoubleClickEditTextarea.module.css";
 
 interface DoubleClickEditTextareaProps {
@@ -19,7 +18,12 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
 
   useEffect(() => {
     if (editMode) {
-      inputRef.current?.focus();
+      var inputElement = inputRef.current;
+      inputElement?.focus();
+      inputElement?.setSelectionRange(
+        inputElement.value.length,
+        inputElement.value.length
+      );
     }
   }, [editMode]);
 
@@ -35,28 +39,18 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
   };
 
   return (
-    <div>
-      {editMode ? (
-        <ClickOutsideWrapper onClickOutside={() => setEditMode(false)} fullSize>
-          <textarea
-            className={styles.textarea}
-            ref={inputRef}
-            value={state}
-            onChange={onChange}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.shiftKey) handleEdit();
-            }}
-            onBlur={handleEdit}
-          />
-        </ClickOutsideWrapper>
-      ) : (
-        <ul className={value ? styles.display : [styles.display, styles.placeholder].join(" ")} onDoubleClick={() => setEditMode(true)}>
-          {value ? value.split("\n").map((line, i) => (
-            <li key={i}>{line}</li>
-          )) : placeholder}
-        </ul>
-      )}
-    </div>
+    <textarea
+      readOnly={!editMode}
+      onDoubleClick={() => setEditMode(true)}
+      className={styles.textarea}
+      ref={inputRef}
+      value={state}
+      onChange={onChange}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" && !event.shiftKey) handleEdit();
+      }}
+      onBlur={handleEdit}
+    />
   );
 };
 

@@ -57,14 +57,17 @@ const CaseCard: React.FC<CaseCardProps> = ({
   };
 
   const handleEditCaseTextarea = (key: string, value: string) => {
+    let lineList = value.split("\n");
+    let noEmptyLines = lineList.filter((line) => !!line);
+    
     editCase({
       ...caseObject,
-      [key]: value.split("\n"),
+      [key]: noEmptyLines,
     });
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => {}}>
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <Ansvarlig

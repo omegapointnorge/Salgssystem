@@ -90,7 +90,7 @@ function DndColumns() {
       }
     };
     fetchCases();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSlettSalgsCase = (caseObject: SalgsCase) => {
@@ -106,6 +106,8 @@ function DndColumns() {
   const handleAddSalgsCase = async () => {
     try {
       const newCaseObject = await CaseService.createCase();
+      console.log(newCaseObject);
+      
       addSalgsCase(newCaseObject!);
     } catch (error) {
       console.error("Noe gikk galt ved oppretting av et ny SalgsCase", error);

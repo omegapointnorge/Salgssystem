@@ -25,7 +25,8 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
         inputElement.value.length
       );
     }
-  }, [editMode]);
+    setState(value);
+  }, [editMode, value]);
 
   const handleEdit = () => {
     if (value !== state) {
@@ -41,6 +42,7 @@ const DoubleClickEditTextarea: React.FC<DoubleClickEditTextareaProps> = ({
   return (
     <textarea
       readOnly={!editMode}
+      placeholder={placeholder}
       onDoubleClick={() => setEditMode(true)}
       className={styles.textarea}
       ref={inputRef}

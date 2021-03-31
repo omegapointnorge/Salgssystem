@@ -26,14 +26,20 @@
   background-color: rgb(183, 190, 197);
   border-radius: 3px;
 }
-input {
+.input {
+  padding: 0;
   width: 100%;
   box-sizing: border-box;
   background: transparent;
   border: none;
   font: inherit;
-  transition: all 0.2s;
+  outline: none;
+}
+.input:focus:not(:read-only) {
+  outline: none;
+  box-shadow: -2px 0px 0px 0px rgba(47, 147, 241, 0.5);
 }
 .placeholder {
+  user-select: none;
   color: rgba(0, 0, 0, 0.3);
 }

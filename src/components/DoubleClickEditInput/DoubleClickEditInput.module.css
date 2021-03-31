@@ -1,23 +1,21 @@
-.display {
-  cursor: pointer;
-  height: 100%;
-}
-
-input.input {
+.input {
+  padding: 0;
+  height: 1.2rem;
   width: 100%;
   box-sizing: border-box;
   background: transparent;
   border: none;
   font: inherit;
-  transition: all 0.2s;
+  outline: none;
 }
-
-.placeholder,
-input.input::placeholder {
+.input:read-only {
+  cursor: pointer;
+}
+.input::placeholder {
   color: rgba(0, 0, 0, 0.3);
+  user-select: none;
 }
-
-input.input:focus {
+.input:focus:not(:read-only) {
   outline: none;
   box-shadow: -2px 0px 0px 0px rgba(47, 147, 241, 0.5);
 }

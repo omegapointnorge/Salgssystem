@@ -7,7 +7,7 @@ interface CaseTagProps {
 }
 
 const CaseTag: React.FC<CaseTagProps> = ({ tag, onClickHandler }) => (
-  <div className={styles.tag} onClick={() => onClickHandler()}>
+  <div className={styles.tag} onClick={(e) => onClickHandler()}>
     {tag}
   </div>
 );

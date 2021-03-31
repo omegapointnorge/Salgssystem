@@ -1,7 +1,6 @@
 import React from "react";
 import { IcontextMenuItem } from "../../common/types";
-import useContextMenu from "../../hooks/CaseSubscription/useContextMenu";
-import TrashCan from "../TrashCan/TrashCan";
+import useContextMenu from "../../hooks/useContextMenu";
 import styles from "./ContextMenu.module.css";
 import { ContextMenuElement } from "./ContextMenuElement";
 

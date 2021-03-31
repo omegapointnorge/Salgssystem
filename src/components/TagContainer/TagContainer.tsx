@@ -1,7 +1,6 @@
 import styles from "./TagContainer.module.css";
 import CaseTag from "../CaseTag/CaseTag";
 import React, { KeyboardEvent, useState, useRef, useEffect } from "react";
-import ClickOutsideWrapper from "../ClickOutsideWrapper/ClickOutsideWrapper";
 
 interface TagContainerProps {
   caseTags: string[];
@@ -16,6 +15,8 @@ const TagContainer: React.FC<TagContainerProps> = ({
 }) => {
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     if (editMode) {
@@ -23,14 +24,30 @@ const TagContainer: React.FC<TagContainerProps> = ({
     }
   }, [editMode]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!editMode) return;
+
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setInputValue("");
+        setEditMode(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [containerRef, editMode]);
+
   const onEnterPressedTags = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if (event.currentTarget.value?.length > 0) {
-        onChangeTags([...caseTags, event.currentTarget.value]);
+      if (inputValue.length > 0) {
+        onChangeTags([...caseTags, inputValue]);
       } else {
         setEditMode(false);
       }
-      event.currentTarget.value = "";
+      setInputValue("");
     }
   };
 
@@ -42,34 +59,37 @@ const TagContainer: React.FC<TagContainerProps> = ({
     <div
       className={styles.tagContainer}
       onDoubleClick={() => setEditMode(true)}
+      ref={containerRef}
     >
-      <ClickOutsideWrapper onClickOutside={() => setEditMode(false)} fullSize>
-        {editMode ? (
-          <input
-            ref={inputRef}
-            name="case"
-            placeholder="Case tags"
-            onKeyDown={(e) => onEnterPressedTags(e)}
-            autoComplete="off"
-            onBlur={() => setEditMode(false)}
-          />
-        ) : null}
-        <div className={styles.tags}>
-          {caseTags.length !== 0 ? (
-            caseTags.map((tag, i) => (
-              <CaseTag
-                key={i}
-                onClickHandler={() => {
-                  if (editMode) onClickTag(i);
-                }}
-                tag={tag}
-              />
-            ))
-          ) : editMode ? null : (
-            <div className={styles.placeholder}>{placeholder}</div>
-          )}
-        </div>
-      </ClickOutsideWrapper>
+      {editMode ? (
+        <input
+          className={styles.input}
+          ref={inputRef}
+          name="case"
+          placeholder="Case tags"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.currentTarget.value)}
+          onKeyDown={(e) => onEnterPressedTags(e)}
+          autoComplete="off"
+        />
+      ) : null}
+      <div className={styles.tags}>
+        {caseTags.length !== 0 ? (
+          caseTags.map((tag, i) => (
+            <CaseTag
+              key={i}
+              onClickHandler={() => {
+                if (editMode) {
+                  onClickTag(i);
+                }
+              }}
+              tag={tag}
+            />
+          ))
+        ) : editMode ? null : (
+          <div className={styles.placeholder}>{placeholder}</div>
+        )}
+      </div>
     </div>
   );
 };

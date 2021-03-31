@@ -6,14 +6,14 @@ import {
   onUpdateSalgsCase,
   onMoveSalgsCase,
   onDeleteSalgsCase,
-} from "../../graphql/subscriptions";
+} from "../graphql/subscriptions";
 import {
   SalgsCase,
   OnCreateSalgsCaseSubscription,
   OnUpdateSalgsCaseSubscription,
   OnMoveSalgsCaseSubscription,
   OnDeleteSalgsCaseSubscription,
-} from "../../graphql/API";
+} from "../graphql/API";
 
 export const useCreateCaseSubscription = (
   handler: (caseObject: SalgsCase) => void

@@ -57,9 +57,12 @@ const CaseCard: React.FC<CaseCardProps> = ({
   };
 
   const handleEditCaseTextarea = (key: string, value: string) => {
+    let lineList = value.split("\n");
+    let noEmptyLines = lineList.filter((line) => !!line);
+    
     editCase({
       ...caseObject,
-      [key]: value.split("\n"),
+      [key]: noEmptyLines,
     });
   };
 

@@ -1,32 +1,33 @@
 import styles from "./DndColumns.module.css";
-import { useState, useEffect, useReducer, Reducer } from "react";
+import { useState, useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import Column from "./../Column/Column";
 import * as CaseService from "../../../services/CaseService";
 import { SalgsCase } from "../../../graphql/API";
 import { initialColumns } from "../../../constants/DndColumns";
-import {
-  ColumnsAction,
-  IColumnList,
-  Action,
-  IColumn,
-} from "../../../common/types";
+import { IColumn } from "../../../common/types";
 import Item from "../Item/Item";
 import CaseCard from "../../CaseCard/CaseCard";
-import dndColumnsReducer from "./DndColumnsReducer";
 import {
   useCreateCaseSubscription,
   useUpdateCaseSubscription,
   useMoveCaseSubscription,
   useDeleteCaseSubscription,
 } from "../../../hooks/CaseSubscription";
+import useColumnReducer from "../../../hooks/useColumnReducer";
 
 function DndColumns() {
   const [loading, setLoading] = useState(false);
-  const [columns, columnDispatcher] = useReducer<Reducer<IColumnList, Action>>(
-    dndColumnsReducer,
-    initialColumns
-  );
+  const [
+    columns,
+    {
+      addSalgsCase,
+      updateSalgsCase,
+      moveSalgsCase,
+      deleteSalgsCase,
+      loadSalgsCases,
+    },
+  ] = useColumnReducer(initialColumns);
 
   useCreateCaseSubscription((caseObject: SalgsCase) => {
     const canCreateCaseCard = !Object.keys(columns).some((key) => {
@@ -35,22 +36,12 @@ function DndColumns() {
     });
 
     if (canCreateCaseCard) {
-      columnDispatcher({
-        type: ColumnsAction.ADD,
-        payload: {
-          cases: [caseObject],
-        },
-      });
+      addSalgsCase(caseObject);
     }
   });
 
   useUpdateCaseSubscription((caseObject: SalgsCase) => {
-    columnDispatcher({
-      type: ColumnsAction.EDIT,
-      payload: {
-        caseObject: caseObject,
-      },
-    });
+    updateSalgsCase(caseObject);
   });
 
   useMoveCaseSubscription((caseObject: SalgsCase) => {
@@ -72,23 +63,15 @@ function DndColumns() {
     const canMoveCaseCard =
       !noChange && !(fromId === "") && !(fromIndex === -1);
     if (canMoveCaseCard) {
-      columnDispatcher({
-        type: ColumnsAction.MOVE,
-        payload: {
-          from: { id: fromId, index: fromIndex },
-          to: { id: caseObject.status!, index: 0 },
-        },
+      moveSalgsCase({
+        from: { id: fromId, index: fromIndex },
+        to: { id: caseObject.status!, index: 0 },
       });
     }
   });
 
   useDeleteCaseSubscription((caseObject: SalgsCase) => {
-    columnDispatcher({
-      type: ColumnsAction.DELETE,
-      payload: {
-        caseObject: caseObject,
-      },
-    });
+    deleteSalgsCase(caseObject);
   });
 
   useEffect(() => {
@@ -96,10 +79,7 @@ function DndColumns() {
       try {
         setLoading(true);
         const result = await CaseService.listCases();
-        columnDispatcher({
-          type: ColumnsAction.LOAD,
-          payload: { cases: result || [] },
-        });
+        loadSalgsCases(result || []);
       } catch (e) {
         console.error(
           "Det skjedde en feil i henting av data fra databasen: ",
@@ -110,35 +90,28 @@ function DndColumns() {
       }
     };
     fetchCases();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const slettCase = (caseObject: SalgsCase) => {
-    columnDispatcher({
-      type: ColumnsAction.DELETE,
-      payload: {
-        caseObject: caseObject,
-      },
-    });
+  const handleSlettSalgsCase = (caseObject: SalgsCase) => {
+    deleteSalgsCase(caseObject);
     CaseService.deleteCase(caseObject);
   };
 
-  const editCase = (caseObject: SalgsCase) => {
-    columnDispatcher({
-      type: ColumnsAction.EDIT,
-      payload: {
-        caseObject: { ...caseObject },
-      },
-    });
+  const handleEditSalgsCase = (caseObject: SalgsCase) => {
+    updateSalgsCase(caseObject);
     CaseService.updateCase(caseObject);
   };
 
-  const addCase = async () => {
-    const newCaseObject = await CaseService.createCase();
-
-    columnDispatcher({
-      type: ColumnsAction.ADD,
-      payload: { cases: [newCaseObject!] },
-    });
+  const handleAddSalgsCase = async () => {
+    try {
+      const newCaseObject = await CaseService.createCase();
+      console.log(newCaseObject);
+      
+      addSalgsCase(newCaseObject!);
+    } catch (error) {
+      console.error("Noe gikk galt ved oppretting av et ny SalgsCase", error);
+    }
   };
 
   const onDragStart = () => {
@@ -159,12 +132,9 @@ function DndColumns() {
 
     const caseObject = columns[source.droppableId].list[source.index];
 
-    columnDispatcher({
-      type: ColumnsAction.MOVE,
-      payload: {
-        from: { id: source.droppableId, index: source.index },
-        to: { id: destination.droppableId, index: destination.index },
-      },
+    moveSalgsCase({
+      from: { id: source.droppableId, index: source.index },
+      to: { id: destination.droppableId, index: destination.index },
     });
 
     if (source.droppableId !== destination.droppableId) {
@@ -175,7 +145,7 @@ function DndColumns() {
   if (!!!loading) {
     return (
       <div className={styles.dndColumns}>
-        <button onClick={addCase}>
+        <button onClick={handleAddSalgsCase}>
           <span className={styles.addCardButton}>&#43;</span>
         </button>
         <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -190,8 +160,8 @@ function DndColumns() {
                   >
                     <CaseCard
                       caseObject={caseObject}
-                      slettCase={slettCase}
-                      editCase={editCase}
+                      slettCase={handleSlettSalgsCase}
+                      editCase={handleEditSalgsCase}
                     />
                   </Item>
                 ))}

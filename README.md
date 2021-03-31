@@ -46,6 +46,11 @@ amplify pull
 ```
 Velg alle standardinstillinger.
 
+Kjør følgende kommando for å se om det funker:
+```
+amplify status
+```
+
 Nå skal alt være klart for å kjøre prosjetket lokalt. 
 For å kjøre prosjektet lokalt må client kjøres opp.
 Fra root kjør:

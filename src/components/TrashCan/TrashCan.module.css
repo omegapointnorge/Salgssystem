@@ -1,12 +1,20 @@
-.container {
+:root {
   --black: rgba(0, 0, 0, 0.8);
-  --stripes: lightgrey;
+  --stripes: #fff;
+}
 
+.masterContainer {
+  font-size: 0.3rem; /* This can be used for scaling */
+  z-index: inherit;
+}
+
+.container {
   display: inline-flex;
   align-items: flex-end;
   justify-content: center;
-  width: 5.5rem;
-  height: 6.5rem;
+  width: 5.5em;
+  height: 6.5em;
+  /* transform: scale(1); */
 }
 
 .bucket {
@@ -15,8 +23,8 @@
   height: 80%;
 
   position: relative;
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
 }
 .bucket .lid {
   position: absolute;
@@ -25,23 +33,23 @@
   top: -20%;
   left: -15%;
   right: -15%;
-  border-radius: 1rem 1rem 0.5rem 0.5rem;
+  border-radius: 1em 1em 0.5em 0.5em;
   transition: transform 250ms;
-  transform-origin: 0.5rem 1rem;
+  transform-origin: 0.5em 1em;
 }
 .bucket .lid:after {
   content: "";
   position: absolute;
-  width: 27px;
-  height: 7px;
-  border-top: 4px solid var(--black);
-  border-right: 4px solid var(--black);
-  border-left: 4px solid var(--black);
+  width: 1.8em;
+  height: 0.5em;
+  border-top: 0.25em solid var(--black);
+  border-right: 0.25em solid var(--black);
+  border-left: 0.25em solid var(--black);
   box-sizing: border-box;
-  top: -10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  left: 27px;
+  top: -0.625em;
+  border-top-left-radius: 0.625em;
+  border-top-right-radius: 0.625em;
+  left: 1.8em;
 }
 
 .bucket .stripes {
@@ -51,8 +59,9 @@
   background: var(--stripes);
   display: block;
   margin: 25% auto;
-  border-radius: 5px;
+  border-radius: 0.3em;
 }
+
 .bucket .stripes:after {
   content: "";
   width: 100%;
@@ -60,7 +69,7 @@
   background: var(--stripes);
   position: absolute;
   right: 250%;
-  border-radius: 5px;
+  border-radius: 0.3em;
 }
 .bucket .stripes:before {
   content: "";
@@ -69,10 +78,16 @@
   background: var(--stripes);
   position: absolute;
   left: 250%;
-  border-radius: 5px;
+   border-radius: 0.3em;
 }
 
 .container:hover .bucket .lid {
   transform: rotate(-45deg);
-  transition: transform 250ms;
 }
+
+
+.animateLid {
+  transform: rotate(-45deg);
+}
+
+

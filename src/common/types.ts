@@ -75,6 +75,7 @@ export type Action =
 export interface IcontextMenuItem {
   id: number;
   name: string;
-  callback: (arg0: string) => void;
-  image: string;
+  callback: (arg0: string) => (void);
+  image?: string;
+  htmlElementID?: string
 }

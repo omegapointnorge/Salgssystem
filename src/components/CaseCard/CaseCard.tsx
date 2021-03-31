@@ -1,6 +1,8 @@
 import React from "react";
+import { IcontextMenuItem } from "../../common/types";
 import { SalgsCase } from "../../graphql/API";
-import Ansvarlig from "../Ansvarlig/Ansvarlig";
+import { Ansvarlig } from "../Ansvarlig/Ansvarlig";
+import { ContextMenu } from "../ContextMenu/ContextMenu";
 import DoubleClickEditInput from "../DoubleClickEditInput/DoubleClickEditInput";
 import DoubleClickEditTextarea from "../DoubleClickEditTextarea/DoubleClickEditTextarea";
 import TagContainer from "../TagContainer/TagContainer";
@@ -27,7 +29,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
     profilert,
     // status,
   } = caseObject;
-  // const [showDeleteCardMenu, setShowDeleteCardMenu] = useState(false);
 
   const handleTagsChange = (caseTags: string[]) => {
     editCase({
@@ -36,11 +37,10 @@ const CaseCard: React.FC<CaseCardProps> = ({
     });
   };
 
-  // const handleDeleteCaseClick = () => {
-  //   // Oppdater state til DND
-  //   slettCase(caseObject);
-  //   setShowDeleteCardMenu(false);
-  // };
+  const handleDeleteCaseClick = () => {
+    // Oppdater state til DND
+    slettCase(caseObject);
+  };
 
   const handleEditCaseInput = (key: string, value: string) => {
     editCase({
@@ -66,8 +66,30 @@ const CaseCard: React.FC<CaseCardProps> = ({
     });
   };
 
+  const contextMenuArray: IcontextMenuItem[] = [
+    {
+      id: 0,
+      name: "Slett case",
+      callback: () => handleDeleteCaseClick(),
+      htmlElementID: "TrashCan"
+    },
+    {
+      id: 1,
+      name: "Lås case",
+      callback: () => console.log("Låser")
+    },
+    {
+      id: 2,
+      name: "Lås opp case",
+      callback: () => console.log("Låser opp")
+    },
+  ];
+
+  const caseCardRef = React.useRef<HTMLDivElement>(null);
+
   return (
-    <div className={styles.card} onClick={() => {}}>
+    <div ref={caseCardRef} className={styles.card}>
+      <ContextMenu menu={contextMenuArray} node={caseCardRef} />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
         <Ansvarlig

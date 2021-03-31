@@ -1,39 +1,31 @@
-.display,
-textarea.textarea {
+.textarea {
+  padding: 0;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   background: transparent;
   border: none;
   font: inherit;
-  transition: all 0.2s;
+  outline: none;
   resize: none;
 }
-ul.display {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-}
-textarea.textarea::-webkit-scrollbar {
+.textarea::-webkit-scrollbar {
   width: 3px;
 }
-
-textarea.textarea::-webkit-scrollbar-track {
+.textarea::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-
-textarea.textarea::-webkit-scrollbar-thumb {
+.textarea::-webkit-scrollbar-thumb {
   background-color: rgb(183, 190, 197);
   border-radius: 3px;
 }
-
-.placeholder,
-textarea.textarea::placeholder {
+.textarea::placeholder {
   color: rgba(0, 0, 0, 0.3);
 }
-
-textarea.textarea:focus {
+.textarea:read-only {
+  cursor: pointer;
+}
+.textarea:focus:not(:read-only) {
   outline: none;
   box-shadow: -2px 0px 0px 0px rgba(47, 147, 241, 0.5);
 }

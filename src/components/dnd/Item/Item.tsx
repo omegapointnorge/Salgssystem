@@ -9,12 +9,18 @@ interface ItemProps {
 }
 
 const isInvalid = (caseObject: SalgsCase): boolean => {
+  const isStatusUnassigned = caseObject.status === Status.UNASSIGNED;
+  const isKontaktInvalid = !!!caseObject.kontakt;
+  // const isAnsvarligInvalid = !!!caseObject.ansvarlig;
+  // const isKundeInvalid = !!!caseObject.kunde;
+  const isCaseTagsInvalid =
+    !caseObject.caseTags || caseObject.caseTags!.length === 0;
+  const isProfilertInvalid =
+    !caseObject.profilert || caseObject.profilert!.length === 0;
+
   return (
-    caseObject.status === Status.UNASSIGNED && // this.ansvarlig === "" ||
-    (caseObject.kontakt === "" ||
-      // this.kunde === "" ||
-      caseObject.caseTags?.length === 0 ||
-      caseObject.profilert?.length === 0)
+    isStatusUnassigned &&
+    (isKontaktInvalid || isCaseTagsInvalid || isProfilertInvalid)
   );
 };
 

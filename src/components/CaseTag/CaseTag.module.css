@@ -1,0 +1,11 @@
+.tag {
+  display: inline-block;
+  background: var(--itverket-orange);
+  box-sizing: border-box;
+  margin: 2px;
+  border-radius: 2rem;
+  padding: 0.25rem .5rem;
+  flex: 1 1 auto;
+  text-align: center;
+  word-break: break-all;
+}

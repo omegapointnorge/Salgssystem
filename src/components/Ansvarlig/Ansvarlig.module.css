@@ -1,0 +1,13 @@
+.ownerAvatar {
+  background: rgb(121, 102, 102);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  align-self: flex-start;
+}
+
+.ownerAvatar:hover {
+  background: rgb(221, 183, 183);
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2); 
+  box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);
+}

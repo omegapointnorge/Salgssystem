@@ -1,0 +1,93 @@
+:root {
+  --black: rgba(0, 0, 0, 0.8);
+  --stripes: #fff;
+}
+
+.masterContainer {
+  font-size: 0.3rem; /* This can be used for scaling */
+  z-index: inherit;
+}
+
+.container {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 5.5em;
+  height: 6.5em;
+  /* transform: scale(1); */
+}
+
+.bucket {
+  background: var(--black);
+  width: 75%;
+  height: 80%;
+
+  position: relative;
+  border-bottom-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+}
+.bucket .lid {
+  position: absolute;
+  height: 15%;
+  background: var(--black);
+  top: -20%;
+  left: -15%;
+  right: -15%;
+  border-radius: 1em 1em 0.5em 0.5em;
+  transition: transform 250ms;
+  transform-origin: 0.5em 1em;
+}
+.bucket .lid:after {
+  content: "";
+  position: absolute;
+  width: 1.8em;
+  height: 0.5em;
+  border-top: 0.25em solid var(--black);
+  border-right: 0.25em solid var(--black);
+  border-left: 0.25em solid var(--black);
+  box-sizing: border-box;
+  top: -0.625em;
+  border-top-left-radius: 0.625em;
+  border-top-right-radius: 0.625em;
+  left: 1.8em;
+}
+
+.bucket .stripes {
+  position: relative;
+  width: 10%;
+  height: 60%;
+  background: var(--stripes);
+  display: block;
+  margin: 25% auto;
+  border-radius: 0.3em;
+}
+
+.bucket .stripes:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--stripes);
+  position: absolute;
+  right: 250%;
+  border-radius: 0.3em;
+}
+.bucket .stripes:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--stripes);
+  position: absolute;
+  left: 250%;
+   border-radius: 0.3em;
+}
+
+.container:hover .bucket .lid {
+  transform: rotate(-45deg);
+}
+
+
+.animateLid {
+  transform: rotate(-45deg);
+}
+
+

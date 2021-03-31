@@ -1,0 +1,5 @@
+{
+  "AppSyncApiName": "salgssystem",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false
+}

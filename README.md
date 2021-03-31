@@ -40,6 +40,11 @@ For å benytte CLI må AWS admin tildele et access og secret key. Kjør følgend
 amplify configure
 ```
 Fyll inn `access key` og region `eu-central-1`.
+Etter dette kjør:
+```bash
+amplify pull
+```
+Velg alle standardinstillinger.
 
 Nå skal alt være klart for å kjøre prosjetket lokalt. 
 For å kjøre prosjektet lokalt må client kjøres opp.

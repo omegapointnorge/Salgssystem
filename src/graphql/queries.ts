@@ -12,6 +12,7 @@ export const getSalgsCase = /* GraphQL */ `
       kontakt
       kunde
       profilert
+      laast
       status
       createdAt
       updatedAt
@@ -33,6 +34,7 @@ export const listSalgsCases = /* GraphQL */ `
         kontakt
         kunde
         profilert
+        laast
         status
         createdAt
         updatedAt

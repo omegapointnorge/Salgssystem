@@ -28,6 +28,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
     // kunde,
     profilert,
     // status,
+    laast,
   } = caseObject;
 
   const handleTagsChange = (caseTags: string[]) => {
@@ -66,23 +67,31 @@ const CaseCard: React.FC<CaseCardProps> = ({
     });
   };
 
+  const handleLockCase = () => {
+    editCase({
+      ...caseObject,
+      laast: !laast,
+    });
+  }
+
   const contextMenuArray: IcontextMenuItem[] = [
     {
       id: 0,
       name: "Slett case",
       callback: () => handleDeleteCaseClick(),
       htmlElementID: "TrashCan"
-    },
+    }, /*
     {
       id: 1,
-      name: "Lås case",
-      callback: () => console.log("Låser")
+      name: "🔐Lås case",
+      callback: () =>  {console.log("Låser")}
     },
     {
       id: 2,
-      name: "Lås opp case",
+      name: "🔓Lås opp case",
       callback: () => console.log("Låser opp")
     },
+    */
   ];
 
   const caseCardRef = React.useRef<HTMLDivElement>(null);
@@ -115,6 +124,13 @@ const CaseCard: React.FC<CaseCardProps> = ({
           handleTextareaChange={(value) =>
             handleEditCaseTextarea("profilert", value)
           }
+        />
+      </div>
+      <div>
+        <button 
+          className={laast ? styles.locked : styles.unlocked} 
+          onClick={handleLockCase} 
+          title={laast ? "Case er låst" : "Case er ikke låst"}
         />
       </div>
     </div>

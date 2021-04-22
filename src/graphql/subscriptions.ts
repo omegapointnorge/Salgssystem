@@ -12,6 +12,7 @@ export const onMoveSalgsCase = /* GraphQL */ `
       kontakt
       kunde
       profilert
+      laast
       status
       createdAt
       updatedAt
@@ -28,6 +29,7 @@ export const onCreateSalgsCase = /* GraphQL */ `
       kontakt
       kunde
       profilert
+      laast
       status
       createdAt
       updatedAt
@@ -44,6 +46,7 @@ export const onUpdateSalgsCase = /* GraphQL */ `
       kontakt
       kunde
       profilert
+      laast
       status
       createdAt
       updatedAt
@@ -60,6 +63,7 @@ export const onDeleteSalgsCase = /* GraphQL */ `
       kontakt
       kunde
       profilert
+      laast
       status
       createdAt
       updatedAt

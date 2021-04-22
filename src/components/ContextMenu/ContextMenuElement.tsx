@@ -20,7 +20,6 @@ export const ContextMenuElement: React.FC<ContextMenuElementProps> = ({ menuItem
   ];
 
   const findHtmlElement = (menuItem: any) => {
-    console.log(typeof menuItem);
     const foundElement = htmlElements.find(
       (element) => element.id === menuItem.htmlElementID
     );

@@ -14,19 +14,6 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ menu, node }) => {
   const [xPos, setXPos] = React.useState("0px");
   const [yPos, setYPos] = React.useState("0px");
 
-  // const [hover, setHover] = React.useState(false);
-
-  // const htmlElements = [
-  //   {
-  //     id: "TrashCan",
-  //     htmlElement: <TrashCan size="s" hover={hover} />,
-  //   },
-  // ];
-
-  // const selectedHtmlElement = htmlElements.find(
-  //   (element) => element.name === ansvarlig
-  // )?.image;
-
   const handleContextMenu = React.useCallback(
     (e: any) => {
       e.preventDefault();
@@ -48,21 +35,6 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ menu, node }) => {
 
   useContextMenu(node, handleClick, handleContextMenu);
 
-  let test = null;
-
-  // const findHtmlElement = (menuItem: any) => {
-  //   console.log(typeof menuItem);
-  //   const foundElement = htmlElements.find(
-  //     (element) => element.id === menuItem.htmlElementID
-  //   );
-
-  //   console.log(foundElement);
-  //   console.log(foundElement?.htmlElement);
-  //   console.log(foundElement?.id);
-
-  //   return foundElement?.htmlElement;
-  // };
-
   if (showMenu) {
     return (
       <div
@@ -73,33 +45,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ menu, node }) => {
         }}
       >
         {menu.map((menuItem) => (
-          // <div
-          //   onMouseEnter={() => setHover(true)}
-          //   onMouseLeave={() => setHover(false)}
-          //   className={styles.menuElement}
-          //   key={menuItem.id}
-          //   onClick={() => {
-          //     menuItem.callback(menuItem.name);
-          //   }}
-          // >
-          //   {findHtmlElement(menuItem)}
-          //   {/* {test = htmlElements.find(
-          //     (element) => (element.id === menuItem.htmlElementID)
-          //   )} */}
-          //   {/* {test && console.log(test)} */}
-
-          //   {/* {htmlElements[0].htmlElement} */}
-
-          //   <span className={styles.menuText}>{menuItem.name}</span>
-          //   {menuItem.image && (
-          //     <img
-          //       src={menuItem.image}
-          //       alt="avatar"
-          //       className={styles.avatar}
-          //     />
-          //   )}
-          // </div>
-          <ContextMenuElement menuItem={menuItem} />
+          <ContextMenuElement menuItem={menuItem} key={menuItem.id} />
         ))}
       </div>
     );

@@ -10,7 +10,11 @@ export type MoveSalgsCaseInput = {
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
+<<<<<<< HEAD
   laast?: boolean | null,
+=======
+  laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
   status: Status,
 };
 
@@ -31,7 +35,11 @@ export type SalgsCase = {
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
+<<<<<<< HEAD
   laast?: boolean | null,
+=======
+  laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
   status?: Status,
   createdAt?: string,
   updatedAt?: string,
@@ -45,7 +53,11 @@ export type CreateSalgsCaseInput = {
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
+<<<<<<< HEAD
   laast?: boolean | null,
+=======
+  laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
   status: Status,
 };
 
@@ -56,7 +68,11 @@ export type ModelSalgsCaseConditionInput = {
   kontakt?: ModelStringInput | null,
   kunde?: ModelStringInput | null,
   profilert?: ModelStringInput | null,
+<<<<<<< HEAD
   laast?: ModelBooleanInput | null,
+=======
+  laast?: ModelStringInput | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
   status?: ModelStatusInput | null,
   and?: Array< ModelSalgsCaseConditionInput | null > | null,
   or?: Array< ModelSalgsCaseConditionInput | null > | null,
@@ -123,7 +139,11 @@ export type UpdateSalgsCaseInput = {
   kontakt?: string | null,
   kunde?: string | null,
   profilert?: Array< string > | null,
+<<<<<<< HEAD
   laast?: boolean | null,
+=======
+  laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
   status?: Status | null,
 };
 
@@ -139,7 +159,11 @@ export type ModelSalgsCaseFilterInput = {
   kontakt?: ModelStringInput | null,
   kunde?: ModelStringInput | null,
   profilert?: ModelStringInput | null,
+<<<<<<< HEAD
   laast?: ModelBooleanInput | null,
+=======
+  laast?: ModelStringInput | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
   status?: ModelStatusInput | null,
   and?: Array< ModelSalgsCaseFilterInput | null > | null,
   or?: Array< ModelSalgsCaseFilterInput | null > | null,
@@ -182,7 +206,11 @@ export type MoveSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -204,7 +232,11 @@ export type CreateSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -226,7 +258,11 @@ export type UpdateSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -248,7 +284,11 @@ export type DeleteSalgsCaseMutation = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -269,7 +309,11 @@ export type GetSalgsCaseQuery = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -294,7 +338,11 @@ export type ListSalgsCasesQuery = {
       kontakt?: string | null,
       kunde?: string | null,
       profilert?: Array< string > | null,
+<<<<<<< HEAD
       laast?: boolean | null,
+=======
+      laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
       status: Status,
       createdAt: string,
       updatedAt: string,
@@ -313,7 +361,11 @@ export type OnMoveSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -330,7 +382,11 @@ export type OnCreateSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -347,7 +403,11 @@ export type OnUpdateSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,
@@ -364,7 +424,11 @@ export type OnDeleteSalgsCaseSubscription = {
     kontakt?: string | null,
     kunde?: string | null,
     profilert?: Array< string > | null,
+<<<<<<< HEAD
     laast?: boolean | null,
+=======
+    laast?: string | null,
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
     status: Status,
     createdAt: string,
     updatedAt: string,

@@ -188,7 +188,11 @@
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
+<<<<<<< HEAD
             "name" : "Boolean",
+=======
+            "name" : "String",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -416,7 +420,11 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
+<<<<<<< HEAD
             "name" : "ModelBooleanInput",
+=======
+            "name" : "ModelStringInput",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
             "ofType" : null
           },
           "defaultValue" : null
@@ -1169,7 +1177,11 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
+<<<<<<< HEAD
             "name" : "Boolean",
+=======
+            "name" : "String",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
             "ofType" : null
           },
           "defaultValue" : null
@@ -1279,7 +1291,11 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
+<<<<<<< HEAD
             "name" : "Boolean",
+=======
+            "name" : "String",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
             "ofType" : null
           },
           "defaultValue" : null
@@ -1364,7 +1380,11 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
+<<<<<<< HEAD
             "name" : "ModelBooleanInput",
+=======
+            "name" : "ModelStringInput",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
             "ofType" : null
           },
           "defaultValue" : null
@@ -1509,7 +1529,11 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
+<<<<<<< HEAD
             "name" : "Boolean",
+=======
+            "name" : "String",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
             "ofType" : null
           },
           "defaultValue" : null
@@ -2613,6 +2637,23 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_auth",
         "description" : "Directs the schema to enforce authorization on a field",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -2665,28 +2706,44 @@
       }, {
         "name" : "aws_api_key",
         "description" : "Tells the service this field/object has access authorized by an API key.",
+<<<<<<< HEAD
+=======
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "name" : "aws_cognito_user_pools",
+        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_subscribe",
+        "description" : "Tells the service which mutation triggers this subscription.",
+        "locations" : [ "FIELD_DEFINITION" ],
         "args" : [ {
-          "name" : "reason",
-          "description" : null,
+          "name" : "mutations",
+          "description" : "List of mutations which will trigger this subscription when they are called.",
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
           },
-          "defaultValue" : "\"No longer supported\""
+          "defaultValue" : null
         } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
+<<<<<<< HEAD
       }, {
         "name" : "aws_cognito_user_pools",
         "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
@@ -2729,6 +2786,8 @@
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
+=======
+>>>>>>> 58b743ed772fe4a9a46da6b55caa456a8a46cdb2
       } ]
     }
   }

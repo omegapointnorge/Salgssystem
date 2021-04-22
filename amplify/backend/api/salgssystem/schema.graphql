@@ -6,6 +6,7 @@ type SalgsCase @model @aws_api_key {
   kontakt: String
   kunde: String
   profilert: [String!]
+  laast: Boolean
   status: Status!
 }
 
@@ -17,6 +18,7 @@ input MoveSalgsCaseInput {
   kontakt: String
   kunde: String
   profilert: [String!]
+  laast: Boolean
   status: Status!
 }
 

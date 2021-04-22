@@ -80,7 +80,8 @@ Egne feature brances kan brukes for å teste brancher. Dette kan settes opp hos 
 Gjøres i `schema.graphql`.
 ### Eksempel 1: Nytt modellobjekt:
 - Opprett en ny type i `schema.graphql`, annoter den med `@model` om man ønser å autogenerere `CRUD-operasjoner` og tilhørende resolvers. Husk `@aws_api_key` for at autentisering skal fungere i AWS Amplify og ikke bare lokalt.
-- Kjør ```amplify pull``` for å deploye endringer.
+- Kjør ```amplify push``` for å deploye endringer. Kode vil nå genereres hos AWS.
+- Kjør ```amplify pull``` for å hente ned generert kode.
 ### Eksempel 2: Opprette ny operasjon:
 - Opprett en ny type for operasjonen du ønsker å lage, f.eks. `Query`, `Mutation`, eller `Subscription`. Deretter lager man en ny linje under den typen hvor man definerer operasjonen sin på formen: 
 ```graphql

@@ -97,7 +97,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
   const caseCardRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={caseCardRef} className={styles.card}>
+    <div ref={caseCardRef} className={`${styles.card} ${laast ? styles.cardLocked : ""}`}>
       <ContextMenu menu={contextMenuArray} node={caseCardRef} />
       <div className={styles.header}>
         <div className={styles.customerAvatar}></div>
@@ -107,7 +107,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
         />
       </div>
       <div className={styles.details}>
-        <div>{new Date(createdAt!).toLocaleDateString()}</div>
+        <div>{new Date(createdAt!).toLocaleDateString("nb-NO")}</div>
         <DoubleClickEditInput
           value={kontakt || ""}
           placeholder={"Kontakt"}
@@ -125,8 +125,6 @@ const CaseCard: React.FC<CaseCardProps> = ({
             handleEditCaseTextarea("profilert", value)
           }
         />
-      </div>
-      <div>
         <button 
           className={laast ? styles.locked : styles.unlocked} 
           onClick={handleLockCase} 

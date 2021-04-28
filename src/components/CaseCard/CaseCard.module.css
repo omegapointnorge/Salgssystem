@@ -2,8 +2,8 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    width: 300px;
-    height: 200px;
+    width: 302px;
+    height: 202px;
     padding: 0.5rem;
     background: rgb(139, 146, 150);
     font-size: 0.9rem;
@@ -30,6 +30,12 @@
     grid-gap: 5px;
     grid-template: 1fr 4fr / 1fr 1fr;
     min-height: 0;
+}
+
+.cardLocked{
+    background: rgb(109, 116, 120);
+    width: 300px;   /* Låsen "strammer inn" casen */
+    height: 200px;  /* Låsen "strammer inn" casen */
 }
 
 .locked {

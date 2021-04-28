@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import avatar1 from "../../assets/avatar1.png";
 import avatar2 from "../../assets/avatar2.png";
 import avatar3 from "../../assets/avatar3.png";
@@ -8,11 +8,13 @@ import styles from "./Ansvarlig.module.css";
 
 interface AnsvarligProps {
   ansvarlig: string;
+  laast: boolean | null | undefined;
   onChange: (ansvarlig: string) => void;
 }
 
 export const Ansvarlig: React.FC<AnsvarligProps> = ({
   ansvarlig,
+  laast,
   onChange,
 }) => {
   const contextMenuArray: IcontextMenuItem[] = [
@@ -36,18 +38,29 @@ export const Ansvarlig: React.FC<AnsvarligProps> = ({
     },
   ];
 
+  const [isLaast, setLaast] = useState(laast);
+
+  useEffect(() => {
+  setLaast(laast)
+  }, [laast]);
+
   const observed = React.useRef<HTMLDivElement>(null);
 
   const avatarImage = contextMenuArray.find(
     (element) => element.name === ansvarlig
   )?.image;
 
+  function getMenu(){
+    if(!isLaast)
+      return <ContextMenu menu={contextMenuArray} node={observed} />
+  }
+
   return (
     <div ref={observed}>
-      <ContextMenu menu={contextMenuArray} node={observed} />
+      {getMenu()}
       <div ref={observed} className={styles.ownerAvatar}>
         {avatarImage && (
-          <img src={avatarImage} alt="avatar" className={styles.ownerAvatar} />
+          <img src={avatarImage} alt={`${ansvarlig}-avatar`} className={styles.ownerAvatar} />
         )}
       </div>
     </div>

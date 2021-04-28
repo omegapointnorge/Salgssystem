@@ -5,18 +5,25 @@ import React, { KeyboardEvent, useState, useRef, useEffect } from "react";
 interface TagContainerProps {
   caseTags: string[];
   placeholder?: string;
+  laast: boolean | null | undefined;
   onChangeTags: (caseTags: string[]) => void;
 }
 
 const TagContainer: React.FC<TagContainerProps> = ({
   caseTags = [],
   placeholder = "",
+  laast,
   onChangeTags,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState("");
+  const [isLaast, setLaast] = useState(laast);
+
+  useEffect(() => {
+    setLaast(laast)
+  }, [laast]);
 
   useEffect(() => {
     if (editMode) {
@@ -28,7 +35,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
     const handleClickOutside = (event: MouseEvent) => {
       if (!editMode) return;
 
-      if (!containerRef.current?.contains(event.target as Node)) {
+      if (!containerRef.current?.contains(event.target as Node) && !isLaast) {
         setInputValue("");
         setEditMode(false);
       }
@@ -41,7 +48,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
   }, [containerRef, editMode]);
 
   const onEnterPressedTags = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && !isLaast) {
       if (inputValue.length > 0) {
         onChangeTags([...caseTags, inputValue]);
       } else {
@@ -55,10 +62,15 @@ const TagContainer: React.FC<TagContainerProps> = ({
     const newTags = [...caseTags].filter((_, i) => i !== index);
     onChangeTags(newTags);
   };
+
+
   return (
     <div
       className={styles.tagContainer}
-      onDoubleClick={() => setEditMode(true)}
+      onDoubleClick={() => {
+        if(!isLaast)
+          setEditMode(true)
+      }}
       ref={containerRef}
     >
       {editMode ? (
@@ -71,6 +83,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
           onChange={(e) => setInputValue(e.currentTarget.value)}
           onKeyDown={(e) => onEnterPressedTags(e)}
           autoComplete="off"
+          disabled={isLaast ? true : false} /* Stygt, men fungerte ikke å bare ha isLaast :| */
         />
       ) : null}
       <div className={styles.tags}>
@@ -79,7 +92,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
             <CaseTag
               key={i}
               onClickHandler={() => {
-                if (editMode) {
+                if (editMode && !isLaast) {
                   onClickTag(i);
                 }
               }}

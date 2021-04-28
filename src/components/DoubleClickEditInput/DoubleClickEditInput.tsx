@@ -4,17 +4,24 @@ import styles from "./DoubleClickEditInput.module.css";
 interface DoubleClickEditInputProps {
   value: string;
   placeholder?: string;
+  laast: boolean | null | undefined;
   handleInputChange: (value: string) => void;
 }
 
 const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
   value,
   placeholder = "",
+  laast,
   handleInputChange,
 }) => {
   const [state, setState] = useState(value);
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isLaast, setLaast] = useState(laast);
+
+  useEffect(() => {
+    setLaast(laast)
+  }, [laast]);
 
   useEffect(() => {
     if (editMode) {
@@ -48,6 +55,7 @@ const DoubleClickEditInput: React.FC<DoubleClickEditInputProps> = ({
       }}
       onBlur={handleEdit}
       autoComplete="off"
+      disabled={isLaast ? true : false} /* Stygt, men fungerte ikke å bare ha isLaast :| */
     />
   );
 };

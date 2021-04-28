@@ -11,6 +11,7 @@ interface ItemProps {
 const isInvalid = (caseObject: SalgsCase): boolean => {
   const isStatusUnassigned = caseObject.status === Status.UNASSIGNED;
   const isKontaktInvalid = !!!caseObject.kontakt;
+  const isLaast = caseObject.laast ? true : false;
   // const isAnsvarligInvalid = !!!caseObject.ansvarlig;
   // const isKundeInvalid = !!!caseObject.kunde;
   const isCaseTagsInvalid =
@@ -19,8 +20,10 @@ const isInvalid = (caseObject: SalgsCase): boolean => {
     !caseObject.profilert || caseObject.profilert!.length === 0;
 
   return (
-    isStatusUnassigned &&
-    (isKontaktInvalid || isCaseTagsInvalid || isProfilertInvalid)
+    isLaast ||
+    (isStatusUnassigned && 
+      (isKontaktInvalid || isCaseTagsInvalid || isProfilertInvalid)
+      )
   );
 };
 

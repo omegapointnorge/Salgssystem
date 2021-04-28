@@ -11,18 +11,5 @@
       "StackId": "arn:aws:cloudformation:eu-central-1:086374110786:stack/amplify-salgssystem-dev-152650/cfefd310-8be3-11eb-9a22-0a341c5d7b1a",
       "AmplifyAppId": "dwf84vda9juvi"
     }
-  },
-  "master": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-salgssystem-master-140638-authRole",
-      "UnauthRoleArn": "arn:aws:iam::086374110786:role/amplify-salgssystem-master-140638-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::086374110786:role/amplify-salgssystem-master-140638-authRole",
-      "Region": "eu-central-1",
-      "DeploymentBucketName": "amplify-salgssystem-master-140638-deployment",
-      "UnauthRoleName": "amplify-salgssystem-master-140638-unauthRole",
-      "StackName": "amplify-salgssystem-master-140638",
-      "StackId": "arn:aws:cloudformation:eu-central-1:086374110786:stack/amplify-salgssystem-master-140638/8c7074f0-9219-11eb-a5d1-027318cdbf96",
-      "AmplifyAppId": "dwf84vda9juvi"
-    }
   }
 }
